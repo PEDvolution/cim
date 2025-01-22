@@ -1,0 +1,1006 @@
+@prefix bacnet: <http://data.ashrae.org/bacnet/2020#> .
+@prefix brick: <https://brickschema.org/schema/Brick#> .
+@prefix bsh: <https://brickschema.org/schema/BrickShape#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix ns2: <http://www.linkedmodel.org/schema/dtype#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix qudtqk: <http://qudt.org/vocab/quantitykind/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rec: <https://w3id.org/rec#> .
+@prefix ref: <https://brickschema.org/schema/Brick/ref#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix sdo: <http://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix tag: <https://brickschema.org/schema/BrickTag#> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ped: <https://pedvolution.eu/ontology/> .
+
+
+#################################################################
+#  EV Charging  Classes
+#################################################################
+
+ped:electricVehicleChargerDirectionality a rdfs:Class ;
+    rdfs:subClassOf brick:electricVehicleChargerDirectionality ;
+    rdfs:label "has electric vehicle charger directionality"@en ;
+    skos:definition "Indicates if the EVSE charger supports bidirectional charging or just unidirectional charging of the EV battery" .
+
+ped:electricVehicleChargerType a rdfs:Class ;
+    rdfs:subClassOf brick:electricVehicleChargerType ;
+    rdfs:label "has electric vehicle charger type"@en ;
+    skos:definition "Which type of EVSE charger this is, e.g. Level 1 (up to up to 2.5kW of AC power on 1 phase 120V input), Level 2 (direct AC power but can use higher voltage and up to 3 phases), or Level 3 (direct DC power)" .
+
+ped:electricVehicleConnectorType a rdfs:Class ;
+    rdfs:subClassOf brick:electricVehicleConnectorType ;
+    rdfs:label "has electric vehicle connector type"@en ;
+    skos:definition "Identifies which kind of connector the port has. This property helps identify the physical connection required between the vehicle and the charging equipment." .
+
+ped:Electric_Vehicle_Charging_Hub  a rdfs:Class  ;
+    rdfs:subClassOf brick:Electric_Vehicle_Charging_Hub ;
+    rdfs:label "Electric Vehicle Charging Hub"@en ;
+    skos:definition "A collection of charging stations for charging electric vehicles. A hub may be located in a parking lot, for example" .
+
+ped:Electric_Vehicle_Charging_Port  a rdfs:Class  ;
+    rdfs:subClassOf brick:Electric_Vehicle_Charging_Port ;
+    rdfs:label "Electric Vehicle Charging Port"@en ;
+    skos:definition "An individual point of attachment for charing a single electric vehicle" .
+
+ped:Electric_Vehicle_Charging_Station  a rdfs:Class  ;
+    rdfs:subClassOf brick:Electric_Vehicle_Charging_Station ;
+    rdfs:label "Electric Vehicle Charging Station"@en ;
+    skos:definition "An individual piece of equipment supplying electrical power for charging electric vehicles. Contains 1 or more electric vehicle charging ports" .
+
+
+bsh:haselectricVehicleChargerTypeShape a sh:PropertyShape ;
+    rdfs:label "has has electric vehicle charger type property"@en ;
+    sh:node bsh:ElectricVehicleChargingTypeShape ;
+    sh:path brick:electricVehicleChargerType .
+
+bsh:haselectricVehicleConnectorTypeShape a sh:PropertyShape ;
+    rdfs:label "has has electric vehicle connector type property"@en ;
+    sh:node bsh:ElectricVehicleConnectorTypeShape ;
+    sh:path brick:electricVehicleConnectorType .
+
+bsh:haselectricVehicleChargerDirectionalityShape a sh:PropertyShape ;
+    rdfs:label "has has electric vehicle charger directionality property"@en ;
+    sh:node bsh:ElectricVehicleChargingDirectionalityShape ;
+    sh:path brick:electricVehicleChargerDirectionality .
+
+
+#################################################################
+#  HVAC  Classes
+#################################################################
+
+ped:HVAC_Valve  a owl:Class, sh:NodeShape ;
+    rdfs:subClassOf brick:HVAC_Valve ;
+    rdfs:label "HVAC Valve"@en .
+
+ped:Heat_Pump_Condensing_Unit  a owl:Class,
+        sh:NodeShape  ;
+    rdfs:subClassOf brick:Heat_Pump_Condensing_Unit ;
+    rdfs:label "Heat Pump Condensing Unit"@en ;
+    skos:definition "An outdoor HVAC unit that functions in both heating and cooling modes. It includes a reversing valve along with a condenser coil and compressor, enabling the switch between cooling and heating by reversing refrigerant flow." .
+
+ped:Heating_Valve  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Heating_Valve ;
+    rdfs:label "Heating Valve"@en ;
+    skos:definition "A valve that controls air temperature by modulating the amount of hot water flowing through a heating coil" .
+ 
+ped:Pump  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Pump ;
+    rdfs:label "Pump"@en ;
+    skos:definition "Machine for imparting energy to a fluid, causing it to do work, drawing a fluid into itself through an entrance port, and forcing the fluid out through an exhaust port" .
+  
+ped:Refrigerant_Metering_Device  a owl:Class,
+        sh:NodeShape ;  ;
+    rdfs:subClassOf brick:Refrigerant_Metering_Device ;
+    rdfs:label "Refrigerant Metering Device"@en ;
+    skos:definition "Responsible for regulating refrigerant flow, which includes mechanisms like TXVs, EXVs, and capillary tubes" .
+
+ped:Supply_Air_Plenum  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Supply_Air_Plenum ;
+    rdfs:label "Supply Air Plenum"@en ;
+    skos:definition "A component of the HVAC the receives air from the air handling unit to distribute to the building" .
+
+ped:Zone_Air_Temperature_Sensor  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Zone_Air_Temperature_Sensor ;
+    rdfs:label "Zone Air Temperature Sensor"@en ;
+    skos:definition "A physical or virtual sensor which represents the temperature of an HVAC Zone" .
+
+ped:Chiller  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Chiller ;
+    rdfs:label "Chiller"@en ;
+    skos:definition "Refrigerating machine used to transfer heat between fluids. Chillers are either direct expansion with a compressor or absorption type." .
+
+ped:Condensing_Unit  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Condensing_Unit ;
+    rdfs:label "Condensing Unit"@en ;
+    skos:definition "An outdoor HVAC unit that typically condenses refrigerant from gas to liquid, integral to the refrigeration cycle. It comprises a condenser coil, compressor, fan, and potentially a reversing valve in heat pump applications." .
+
+ped:Filter  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Filter ;
+    rdfs:label "Filter"@en ;
+    skos:definition "Device to remove gases from a mixture of gases or to remove solid material from a fluid." .
+
+ped:Heat_Exchanger  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Heat_Exchanger ;
+    rdfs:label "Heat_Exchanger"@en ;
+    skos:definition "A heat exchanger is a piece of equipment built for efficient heat transfer from one medium to another. The media may be separated by a solid wall to prevent mixing or they may be in direct contact (BEDES)." .
+
+ped:Heating_Ventilation_Air_Conditioning_System  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Heating_Ventilation_Air_Conditioning_System ;
+    rdfs:label "Heating Ventilation Air Conditioning System"@en ;
+    skos:definition "The equipment, distribution systems and terminals that provide, either collectively or individually, the processes of heating, ventilating or air conditioning to a building or portion of a building" .
+
+ped:Damper  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Damper ;
+    rdfs:label "Damper"@en ;
+    skos:definition "Element inserted into an air-distribution system or element of an air-distribution system permitting modification of the air resistance of the system and consequently changing the airflow rate or shutting off the airflow" .
+
+ped:Terminal_Unit  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Terminal_Unit ;
+    rdfs:label "Terminal Unit"@en ;
+    skos:definition "A device that regulates the volumetric flow rate and/or the temperature of the controlled medium." .
+
+ped:HVACZone  a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:HVACZone ;
+    rdfs:label "HVAC zone"@en .
+   
+qudtqk:VolumeFlowRatio a qudt:QuantityKind ;
+    rdfs:label "Volume Flow Ratio"@en ;
+    dcterms:description """Volume flow ratio is commonly used in fluid dynamics and engineering,
+  referring to the ratio of the flow rates of two or more fluid streams within a system. In HVAC systems,
+  the flow ratio could compare the amount of fresh air introduced to the amount of recirculated air."""^^xsd:string ;
+    qudt:applicableUnit unit:FRACTION,
+        unit:GR,
+        unit:NUM,
+        unit:PERCENT,
+        unit:PERMITTIVITY_REL,
+        unit:PPB,
+        unit:PPM,
+        unit:PPQ,
+        unit:PPT,
+        unit:PPTH,
+        unit:PPTM,
+        unit:PSU,
+        unit:UNITLESS ;
+    qudt:hasDimensionVector <http://qudt.org/vocab/dimensionvector/A0E0L0I0M0H0T0D1> ;
+    qudt:plainTextDescription """Volume flow ratio is commonly used in fluid dynamics and engineering,
+  referring to the ratio of the flow rates of two or more fluid streams within a system. In HVAC systems,
+  the flow ratio could compare the amount of fresh air introduced to the amount of recirculated air."""^^xsd:string ;
+    qudt:qkdvDenominator <http://qudt.org/vocab/dimensionvector/A0E0L3I0M0H0T-1D0> ;
+    qudt:qkdvNumerator <http://qudt.org/vocab/dimensionvector/A0E0L3I0M0H0T-1D0> ;
+    rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
+    skos:broader qudtqk:DimensionlessRatio .
+
+ped:Average_Exhaust_Air_Static_Pressure_Sensor  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Average_Exhaust_Air_Static_Pressure_Sensor ;
+    rdfs:label "Average Exhaust Air Static Pressure Sensor"@en ;
+    skos:definition "The computed average static pressure of air in exhaust regions of an HVAC system over some period of time." .
+
+ped:Chilled_Water_Storage_Tank  a rdfs:Class  ;
+    rdfs:subClassOf brick:Chilled_Water_Storage_Tank ;
+    rdfs:label "Chilled Water Storage Tank"@en ;
+    skos:definition "A tank specifically designed to store chilled water in HVAC systems." .
+
+ped:Compressor  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Compressor ;
+    rdfs:label "Compressor"@en ;
+    skos:definition "(1) device for mechanically increasing the pressure of a gas. (2) often described as being either open, hermetic, or semihermetic to describe how the compressor and motor drive is situated in relation to the gas or vapor being compressed. Types include centrifugal, axial flow, reciprocating, rotary screw, rotary vane, scroll, or diaphragm. 1. device for mechanically increasing the pressure of a gas. 2. specific machine, with or without accessories, for compressing refrigerant vapor." .
+
+ped:Condenser_Water_Valve  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Condenser_Water_Valve ;
+    rdfs:label "Condenser Water Valve"@en ;
+    skos:definition "A valve that modulates the flow of condenser water." .
+
+ped:Cooling_Tower  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Cooling_Tower ;
+    rdfs:label "Cooling Tower"@en ;
+    skos:definition "A cooling tower is a heat rejection device that rejects waste heat to the atmosphere through the cooling of a water stream to a lower temperature. Cooling towers may either use the evaporation of water to remove process heat and cool the working fluid to near the wet-bulb air temperature or, in the case of closed circuit dry cooling towers, rely solely on air to cool the working fluid to near the dry-bulb air temperature." .
+
+ped:Cooling_Tower_Fan  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Cooling_Tower_Fan ;
+    rdfs:label "Cooling Tower Fan"@en ;
+    skos:definition "A fan that pulls air through a cooling tower and across the louvers where the water falls to aid in heat exchange by the process of evaporation." .
+
+ped:Cooling_Valve  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Cooling_Valve ;
+    rdfs:label "Cooling Valve"@en ;
+    skos:definition "A valve that controls air temperature by modulating the amount of cold water flowing through a cooling coil." .
+
+ped:Core_Temperature_Sensor  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Core_Temperature_Sensor ;
+    rdfs:label "Core Temperature Sensor"@en ;
+    skos:definition "Measures the internal temperature of the radiant layer at the heat source or sink level of the radiant heating and cooling HVAC system." .
+
+ped:Dry_Cooler  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Dry_Cooler ;
+    rdfs:label "Dry Cooler"@en ;
+    skos:definition "A dry cooler is a fluid cooler that uses air, a relatively dry, non-liquid fluid to accomplish process cooling. (https://submer.com/submer-academy/library/dry-cooler/)" .
+
+ped:Economizer  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Economizer;
+    rdfs:label "Economizer"@en ;
+    skos:definition "Device that, on proper variable sensing, initiates control signals or actions to conserve energy. A control system that reduces the mechanical heating and cooling requirement." .
+
+ped:HVAC_Zone  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:HVAC_Zone;
+    rdfs:label "HVAC Zone"@en ;
+    skos:definition "a space or group of spaces, within a building with heating, cooling, and ventilating requirements, that are sufficiently similar so that desired conditions (e.g., temperature) can be maintained throughout using a single sensor (e.g., thermostat or temperature sensor).." .
+
+ped:Hot_Water_Storage_Tank  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Hot_Water_Storage_Tank;
+    rdfs:label "Hot Water Storage Tank"@en ;
+    skos:definition "A tank designed to store hot water in an HVAC system." .
+
+ped:Humidifier  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Humidifier;
+    rdfs:label "Humidifier"@en ;
+    skos:definition "A device that adds moisture to air or other gases." .
+
+ped:Makeup_Water_Valve  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Makeup_Water_Valve;
+    rdfs:label "Makeup Water Valve"@en ;
+    skos:definition "A valve regulating the flow of makeup water into a water holding tank, e.g. a cooling tower, hot water tank." .
+
+ped:Motor_Control_Center  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Motor_Control_Center;
+    rdfs:label "Motor Control Center"@en ;
+    skos:definition "The Motor Control Center is a specialized type of switchgear which provides electrical power to major mechanical systems in the building such as HVAC components." .
+
+ped:Outside_Face_Surface_Temperature_Sensor  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Outside_Face_Surface_Temperature_Sensor;
+    rdfs:label "Outside Face Surface Temperature Sensor"@en ;
+    skos:definition "Measures the outside surface (relative to the space) of the radiant panel of a radiant heating and cooling HVAC system." .
+
+ped:Return_Air_Plenum  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Return_Air_Plenum;
+    rdfs:label "Return Air Plenum"@en ;
+    skos:definition "A service room devoted to the operation and routing of water in a building. Usually distinct from the HVAC subsystems." .
+
+ped:Plumbing_Room  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Plumbing_Room;
+    rdfs:label "Plumbing Room"@en ;
+    skos:definition "A component of the HVAC the receives air from the room to recirculate or exhaust to or from the building." .
+
+ped:Return_Fan  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Return_Fan;
+    rdfs:label "Return Fan"@en ;
+    skos:definition "Fan moving return air -- air that is circulated from the building back into the HVAC system." .
+
+ped:Space_Heater   a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Space_Heater;
+    rdfs:label "Space Heater"@en ;
+    skos:definition "A heater used to warm the air in an enclosed area, such as a room or office." .
+
+ped:Wall_Air_Conditioner  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Wall_Air_Conditioner;
+    rdfs:label "Wall Air Conditioner"@en ;
+    skos:definition "A wall air conditioner, also known as a window air conditioner when installed in a window frame, is a self-contained unit that cools a room by drawing in warm air, cooling it over a refrigerant coil, and recirculating it back into the space." .
+
+ped:Zone_CO2_Level_Sensor a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Zone_CO2_Level_Sensor;
+    rdfs:label "Zone CO2 Level Sensor"@en ;
+    skos:definition "A physical or virtual sensor which represents the CO2 level of an HVAC Zone." .
+
+ped:Zone_Damper  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Zone_Damper;
+    rdfs:label "Zone Damper"@en ;
+    skos:definition "Dampers open and close to regulate zone temperatures in an HVAC system." .
+
+
+ped:Air_Handler_Unit  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:Air_Handler_Unit;
+    rdfs:label "Air_Handler_Unit"@en ;
+    skos:definition "Assembly consisting of sections containing a fan or fans and other necessary equipment to perform one or more of the following functions: circulating, filtration, heating, cooling, heat recovery, humidifying, dehumidifying, and mixing of air. Is usually connected to an air-distribution system." .
+
+ped:Computer_Room_Air_Conditioning  a owl:Class,
+        sh:NodeShape ;
+    rdfs:subClassOf brick:CRAC;
+    rdfs:label "Computer_Room_Air_Conditioning"@en ;
+    skos:definition "Computer_Room_Air_Conditioning." .
+
+ped:Computer_Room_Air_Handler  a owl:Class,
+        sh:NodeShape   ;
+    rdfs:subClassOf brick:CRAH;
+    rdfs:label "Computer_Room_Air_Handler"@en ;
+    skos:definition "A computer room air handler (CRAH) uses fans, cooling coils and a water-chiller system to remove heat." .
+
+ped:Cold_Deck  a owl:Class,sh:NodeShape   ;
+    rdfs:subClassOf brick:Cold_Deck;
+    rdfs:label "Cold Deck"@en ;
+    skos:definition "Part of a dual duct air handling unit that supplies cooling to a building." .
+
+
+ped:Discharge_Air_Static_Pressure_Sensor  a owl:Class,sh:NodeShape ; 
+    rdfs:subClassOf brick:Discharge_Air_Static_Pressure_Sensor;
+    rdfs:label "Discharge Air Static Pressure Sensor"@en ;
+    skos:definition "The static pressure of air within discharge regions of an HVAC system." .
+
+ped:Discharge_Fan  a owl:Class,sh:NodeShape ;
+    rdfs:subClassOf brick:Discharge_Fan;
+    rdfs:label "Discharge Fan"@en ;
+    skos:definition "Fan moving air discharged from HVAC vents." .
+
+ped:Embedded_Temperature_Sensor  a owl:Class,sh:NodeShape ;
+    rdfs:subClassOf brick:Embedded_Temperature_Sensor;
+    rdfs:label "Embedded Temperature Sensor"@en ;
+    skos:definition "Measures the internal temperature of the radiant layer of the radiant heating and cooling HVAC system." .
+
+ped:HVAC_System  a owl:Class,sh:NodeShape ;
+    rdfs:subClassOf brick:HVAC_System;
+    rdfs:label "HVAC System"@en ;
+    skos:definition "See Heating_Ventilation_Air_Conditioning_System." .
+
+ped:Heat_Exchanger  a owl:Class,sh:NodeShape ;
+    rdfs:subClassOf brick:Heat_Exchanger;
+    rdfs:label "Heat Exchanger"@en ;
+    skos:definition "Heat_Exchanger." .
+
+ped:Hot_Deck  a owl:Class,sh:NodeShape ;
+    rdfs:subClassOf brick:Hot_Deck;
+    rdfs:label "Hot Deck"@en ;
+    skos:definition "Part of a dual duct air handling unit that supplies heating to a building." .
+
+ped:Isolation_Valve  a owl:Class,sh:NodeShape ;
+    rdfs:subClassOf brick:Isolation_Valve;
+    rdfs:label "Isolation Valve"@en ;
+    skos:definition "A valve that stops the flow of a fluid, usually for maintenance or safety purposes." .
+
+ped:Mechanical_Room  a owl:Class,sh:NodeShape ;
+    rdfs:subClassOf brick:Mechanical_Room;
+    rdfs:label "Mechanical Room"@en ;
+    skos:definition "A class of service rooms where mechanical equipment (HVAC) operates." .
+
+ped:Thermostat  a owl:Class,sh:NodeShape ;
+    rdfs:subClassOf brick:Thermostat;
+    rdfs:label "Thermostat"@en ;
+    skos:definition "An automatic control device used to maintain temperature at a fixed or adjustable setpoint." .
+
+ped:Boiler  a owl:Class,sh:NodeShape ;
+    rdfs:subClassOf brick:Boiler;
+    rdfs:label "Boiler"@en ;
+    skos:definition "A closed, pressure vessel that uses fuel or electricity for heating water or other fluids to supply steam or hot water for heating, humidification, or other applications." .
+
+ped:Bypass_Valve  a owl:Class,sh:NodeShape ;
+    rdfs:subClassOf brick:Bypass_Valve;
+    rdfs:label "Bypass Valve"@en ;
+    skos:definition "A type of valve installed in a bypass pipeline." .
+
+ped:Duct_Fan_Coil_Unit  a owl:Class,sh:NodeShape ;
+    rdfs:subClassOf brick:Duct_Fan_Coil_Unit;
+    rdfs:label "Duct Fan Coil Unit"@en ;
+    skos:definition "An inline HVAC component, the Duct Fan Coil Unit is integrated within the ductwork system, rather than within the served space, to distribute conditioned air through ducts to various areas or rooms.." .
+
+ped:Exhaust_Air_Static_Pressure_Sensor  a owl:Class,sh:NodeShape ;
+    rdfs:subClassOf brick:Exhaust_Air_Static_Pressure_Sensor;
+    rdfs:label "Exhaust Air Static Pressure Sensor"@en ;
+    skos:definition "The static pressure of air within exhaust regions of an HVAC system." .
+
+ped:Heat_Recovery_Condensing_Unit  a owl:Class,sh:NodeShape ;
+    rdfs:subClassOf brick:Heat_Recovery_Condensing_Unit;
+    rdfs:label "Heat Recovery Condensing Unit"@en ;
+    skos:definition "An advanced outdoor HVAC unit equipped for both heating and cooling, with the added capability of heat recovery. It efficiently recycles heat from the cooling process for heating purposes, featuring components like a condenser coil, compressor, and heat recovery systems." .
+
+ped:Packaged_Heat_Pump  a owl:Class,sh:NodeShape ;
+    rdfs:subClassOf brick:Packaged_Heat_Pump;
+    rdfs:label "Packaged Heat Pump"@en ;
+    skos:definition "A self-contained unit designed to transfer heat energy to or from a designated space, capable of offering both heating and cooling functions." .
+
+ped:Steam_Valve  a owl:Class,sh:NodeShape ;
+    rdfs:subClassOf brick:Steam_Valve;
+    rdfs:label "Steam Valve"@en ;
+    skos:definition "A Steam Valve." .
+
+ped:Supply_Air_Static_Pressure_Sensor  a owl:Class,sh:NodeShape ;
+    rdfs:subClassOf brick:Supply_Air_Static_Pressure_Sensor;
+    rdfs:label "Supply Air Static Pressure Sensor"@en ;
+    skos:definition "The static pressure of air within supply regions of an HVAC system." .
+
+ped:Supply_Fan  a owl:Class,sh:NodeShape ;
+    rdfs:subClassOf brick:Supply_Fan;
+    rdfs:label "Supply Fan"@en ;
+    skos:definition "Fan moving supply air -- air that is supplied from the HVAC system into the building." .
+
+ped:Air_Plenum  a owl:Class,sh:NodeShape ;
+    rdfs:subClassOf brick:Air_Plenum;
+    rdfs:label "Air Plenum"@en ;
+    skos:definition "A component of the HVAC the receives air from the air handling unit or room to distribute or exhaust to or from the building." .
+
+ped:Radiant_Panel_Temperature_Sensor  a owl:Class,sh:NodeShape ;
+    rdfs:subClassOf brick:Radiant_Panel_Temperature_Sensor;
+    rdfs:label "Radiant Panel Temperature Sensor"@en ;
+    skos:definition "Measures the temperature of the radiant panel of the radiant heating and cooling HVAC system." .
+
+ped:Fan  a owl:Class,sh:NodeShape ;
+    rdfs:subClassOf brick:Fan;
+    rdfs:label "Fan"@en ;
+    skos:definition "Any device with two or more blades or vanes attached to a rotating shaft used to produce an airflow for the purpose of comfort, ventilation, exhaust, heating, cooling, or any other gaseous transport." .
+
+ped:Air_Handling_Unit  a owl:Class,sh:NodeShape ;
+    rdfs:subClassOf brick:Air_Handling_Unit;
+    rdfs:label "Air Handling Unit"@en ;
+    skos:definition "Air_Handling_Unit." .
+
+ped:Hot_Water  a owl:Class,sh:NodeShape ;
+    rdfs:subClassOf brick:Hot_Water;
+    rdfs:label "Hot Water"@en ;
+    skos:definition "Hot water used for HVAC heating or supply to hot taps." .
+
+ped:HVAC_Equipment  a owl:Class,sh:NodeShape ;
+    rdfs:subClassOf brick:HVAC_Equipment;
+    rdfs:label "HVAC Equipment"@en ;
+    skos:definition "See Heating_Ventilation_Air_Conditioning_System." .
+
+#################################################################
+#  Building Construction Characteristics Classes
+#################################################################
+
+ped:yearBuilt a rdfs:Class ;
+    rdfs:subClassOf brick:yearBuilt ;
+    rdfs:label "Year of Construction"@en ;
+    skos:definition "Four digit year that a building was first built. (adopted from Project Haystack)." .
+
+bsh:YearBuiltShape a owl:Class,
+        sh:NodeShape,
+        brick:EntityPropertyValue ;
+    rdfs:subClassOf bsh:ValueShape ;
+    sh:property [ a sh:PropertyShape ;
+            sh:datatype xsd:nonNegativeInteger ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path brick:value ] .
+
+bsh:hasyearBuiltShape a sh:PropertyShape ;
+    rdfs:label "has Year built property"@en ;
+    sh:node bsh:YearBuiltShape ;
+    sh:path ped:yearBuilt .
+
+bsh:valueShape a sh:PropertyShape ;
+    sh:class rdfs:Resource ;
+    sh:path brick:value .
+
+#################################################################
+#  Data properties
+#################################################################
+
+rec:coordinates a owl:DatatypeProperty ;
+    rdfs:label "coordinates"@en .
+
+ped:timestamp a rdf:Property,
+        owl:DatatypeProperty ;
+    rdfs:label "Timestamp"@en ;
+    rdfs:subPropertyOf brick:Relationship .
+
+
+rec:xRotationalScaleFactor a owl:DatatypeProperty ;
+    rdfs:label "xRotationalScaleFactor"@en .
+
+rec:yRotationalScaleFactor a owl:DatatypeProperty ;
+    rdfs:label "yRotationalScaleFactor"@en .
+
+
+
+rec:value a owl:DatatypeProperty ;
+    rdfs:label "value"@en .
+
+rec:weight a owl:DatatypeProperty ;
+    rdfs:label "weight"@en .
+
+rec:widthScaleFactor a owl:DatatypeProperty ;
+    rdfs:label "widthScaleFactor"@en .
+
+rec:timestamp a owl:DatatypeProperty ;
+    rdfs:label "timestamp"@en .
+
+rec:tripDirection a owl:DatatypeProperty ;
+    rdfs:label "tripDirection"@en .
+
+rec:turnoverDate a owl:DatatypeProperty ;
+    rdfs:label "turnoverDate"@en .
+
+rec:status a owl:DatatypeProperty ;
+    rdfs:label "status"@en .
+
+rec:severity a owl:DatatypeProperty ;
+    rdfs:label "severity"@en .
+
+rec:standard a owl:DatatypeProperty ;
+    rdfs:label "standard"@en .
+
+rec:start a owl:DatatypeProperty ;
+    rdfs:label "start"@en .
+
+rec:startLevel a owl:DatatypeProperty ;
+    rdfs:label "startLevel"@en .
+
+rec:serialNumber a owl:DatatypeProperty ;
+    rdfs:label "serialNumber"@en .
+
+rec:rentableArea a owl:DatatypeProperty ;
+    rdfs:label "rentableArea"@en .
+
+rec:seatingCapacity a owl:DatatypeProperty ;
+    rdfs:label "seatingCapacity"@en .
+
+rec:region a owl:DatatypeProperty ;
+    rdfs:label "region"@en .
+
+rec:postalCode a owl:DatatypeProperty ;
+    rdfs:label "postalCode"@en .
+
+rec:poeType a owl:DatatypeProperty ;
+    rdfs:label "poeType"@en .
+
+rec:portSpeed a owl:DatatypeProperty ;
+    rdfs:label "portSpeed"@en .
+
+rec:originX a owl:DatatypeProperty ;
+    rdfs:label "originX"@en .
+
+rec:originY a owl:DatatypeProperty ;
+    rdfs:label "originY"@en .
+
+rec:netArea a owl:DatatypeProperty ;
+    rdfs:label "netArea"@en .
+
+rec:numberOfPorts a owl:DatatypeProperty ;
+    rdfs:label "numberOfPorts"@en .
+
+
+rec:maxOccupancy a owl:DatatypeProperty ;
+    rdfs:label "maxOccupancy"@en .
+
+rec:modelNumber a owl:DatatypeProperty ;
+    rdfs:label "modelNumber"@en .
+
+rec:logo a owl:DatatypeProperty ;
+    rdfs:label "logo"@en .
+
+rec:maintenanceInterval a owl:DatatypeProperty ;
+    rdfs:label "maintenanceInterval"@en .
+
+rec:levelNumber a owl:DatatypeProperty ;
+    rdfs:label "levelNumber"@en .
+
+rec:installationDate a owl:DatatypeProperty ;
+    rdfs:label "installationDate"@en .
+
+rec:heightRUs a owl:DatatypeProperty ;
+    rdfs:label "heightRUs"@en .
+
+rec:heightScaleFactor a owl:DatatypeProperty ;
+    rdfs:label "heightScaleFactor"@en .
+
+rec:givenName a owl:DatatypeProperty ;
+    rdfs:label "givenName"@en .
+
+rec:grossArea a owl:DatatypeProperty ;
+    rdfs:label "grossArea"@en .
+
+rec:endLevel a owl:DatatypeProperty ;
+    rdfs:label "endLevel"@en .
+
+rec:familyName a owl:DatatypeProperty ;
+    rdfs:label "familyName"@en .
+
+rec:gender a owl:DatatypeProperty ;
+    rdfs:label "gender"@en .
+
+rec:generation a owl:DatatypeProperty ;
+    rdfs:label "generation"@en .
+
+rec:end a owl:DatatypeProperty ;
+    rdfs:label "end"@en .
+
+rec:createdTime a owl:DatatypeProperty ;
+    rdfs:label "createdTime"@en .
+
+rec:currentLevel a owl:DatatypeProperty ;
+    rdfs:label "currentLevel"@en .
+
+rec:country a owl:DatatypeProperty ;
+    rdfs:label "country"@en .
+
+rec:commissioningDate a owl:DatatypeProperty ;
+    rdfs:label "commissioningDate"@en .
+
+rec:closedTime a owl:DatatypeProperty ;
+    rdfs:label "closedTime"@en .
+
+rec:city a owl:DatatypeProperty ;
+    rdfs:label "city"@en .
+
+rec:assetTag a owl:DatatypeProperty ;
+    rdfs:label "assetTag"@en .
+
+rec:batteryPercentage a owl:DatatypeProperty ;
+    rdfs:label "batteryPercentage"@en .
+
+rec:addressLine1 a owl:DatatypeProperty ;
+    rdfs:label "addressLine1"@en .
+
+rec:addressLine2 a owl:DatatypeProperty ;
+    rdfs:label "addressLine2"@en .
+
+rec:acknowledgedTime a owl:DatatypeProperty ;
+    rdfs:label "acknowledgedTime"@en .
+
+ref:storedAt a owl:DatatypeProperty ;
+    rdfs:label "storedAt",
+        "storedAt"^^xsd:string ;
+    skos:definition "A reference to where the data for this TimeseriesReference is stored"@en .
+
+ref:hasTimeseriesId a owl:DatatypeProperty ;
+    rdfs:label "hasTimeseriesId",
+        "hasTimeseriesId"^^xsd:string ;
+    skos:definition "The unique identifier (primary key) for this TimeseriesReference in some database"@en .
+
+ped:latitude a owl:DatatypeProperty;
+        
+    rdfs:label "Latitude"@en ;
+    rdfs:subPropertyOf sdo:latitude,
+        brick:Relationship .
+
+ped:longitude a owl:DatatypeProperty;
+        
+    rdfs:label "Longitude"@en ;
+    rdfs:subPropertyOf sdo:longitude,
+        brick:Relationship .
+
+brick:aggregationInterval a owl:DatatypeProperty ;
+    rdfs:label "aggregationInterval"@en .
+
+#################################################################
+#  Object properties
+#################################################################
+
+ped:ambientTemperatureOfMeasurement a owl:AsymmetricProperty,
+        owl:ObjectProperty,
+        owl:IrreflexiveProperty;
+        
+    rdfs:label "ambientTemperatureOfMeasurement"@en ;
+    rdfs:subPropertyOf brick:Relationship .
+
+ref:hasTimeseriesReference a owl:ObjectProperty ;
+    rdfs:label "hasTimeseriesReference",
+        "hasTimeseriesReference"^^xsd:string ;
+    rdfs:range ref:TimeseriesReference ;
+    rdfs:subPropertyOf ref:hasExternalReference ;
+    skos:definition "Metadata for accessing related timeseries data: Relates a data source (such as a Brick Point or 223 Property) to the TimeseriesReference that indicates where and how the data for this point is stored"@en .
+
+vcard:hasAddress a owl:ObjectProperty ;
+    rdfs:label "hasAddress"@en .
+
+bsh:connectedToShape a sh:PropertyShape ;
+    sh:path ped:connectedTo .
+
+ped:connectedTo a owl:IrreflexiveProperty,
+        owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "Connected To"@en ;
+    rdfs:subPropertyOf brick:Relationship .
+
+ped:hasAmbientTemperature a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasAmbientTemperature"@en ;
+    rdfs:subPropertyOf brick:Relationship .
+
+rec:address a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "address"@en .
+
+ped:hasInputSubstance a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Has input substance"@en ;
+    rdfs:subPropertyOf brick:Relationship ;
+    skos:definition "The subject receives the given substance as an input to its internal process"@en .
+
+ped:hasOutputSubstance a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Has output substance"@en ;
+    rdfs:subPropertyOf brick:Relationship ;
+    skos:definition "The subject produces or exports the given substance from its internal process"@en .
+
+ped:isAssociatedWith a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Is associated with"@en ;
+    rdfs:subPropertyOf brick:Relationship ;
+    owl:inverseOf brick:hasAssociatedTag ;
+    skos:definition "The tag is associated with the given class"@en .
+
+ped:isLocationOf a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Is location of"@en ;
+    rdfs:subPropertyOf brick:Relationship ;
+    owl:equivalentProperty rec:isLocationOf ;
+    owl:inverseOf brick:hasLocation ;
+    skos:definition "Subject is the physical location encapsulating the object"@en .
+
+ped:isSubMeterOf a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "is sub-meter of"@en ;
+    rdfs:subPropertyOf brick:Relationship ;
+    owl:inverseOf brick:hasSubMeter ;
+    skos:definition "Indicates the parent for which this meter is a submeter"@en .
+
+rec:architectedBy a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "architectedBy"@en .
+
+rec:area a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "area"@en .
+
+rec:capacity a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "capacity"@en .
+
+rec:commissionedBy a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "commissionedBy"@en .
+
+rec:constructedBy a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "constructedBy"@en .
+
+rec:containsElement a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "containsElement"@en .
+
+rec:coordinateSystem a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "coordinateSystem"@en .
+
+rec:createdBy a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "createdBy"@en .
+
+rec:georeference a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "georeference"@en .
+
+rec:hasMember a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasMember"@en .
+
+rec:initialCost a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "initialCost"@en .
+
+rec:installedBy a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "installedBy"@en .
+
+rec:leaseOf a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "leaseOf"@en .
+
+rec:leasee a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "leasee"@en .
+
+rec:leasor a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "leasor"@en .
+
+rec:manufacturedBy a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "manufacturedBy"@en .
+
+rec:mountedOn a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "mountedOn"@en .
+
+rec:objectOfInterest a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "objectOfInterest"@en .
+
+rec:operatedBy a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "operatedBy"@en .
+
+rec:ownedBy a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "ownedBy"@en .
+
+rec:owns a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "owns"@en .
+
+rec:producedBy a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "producedBy"@en .
+
+rec:regulatedBy a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "regulatedBy"@en .
+
+rec:regulates a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "regulates"@en .
+
+rec:relatedTo a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "relatedTo"@en .
+
+rec:servicedBy a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "servicedBy"@en .
+
+rec:targetPoint a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "targetPoint"@en .
+
+ped:hasSubstance a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty ;
+    rdfs:label "Has Substance"@en ;
+    rdfs:subPropertyOf brick:Relationship .
+
+ped:isFedBy a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Is fed by"@en ;
+    rdfs:subPropertyOf brick:Relationship ;
+    owl:equivalentProperty rec:isFedBy ;
+    owl:inverseOf brick:feeds .
+
+ped:isMeteredBy a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "is metered by"@en ;
+    rdfs:subPropertyOf brick:Relationship ;
+    owl:inverseOf brick:meters ;
+    skos:definition "Indicates the meter measuring the consumption/production of some substance by the subject entity"@en .
+
+ped:isPointOf a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Is point of"@en ;
+    rdfs:subPropertyOf brick:Relationship ;
+    owl:equivalentProperty rec:isPointOf ;
+    owl:inverseOf brick:hasPoint ;
+    skos:definition "The subject is a source of telemetry related to the object. In some systems the source of telemetry may be represented as a digital/analog input/output point"@en .
+
+
+rec:isLocationOf a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "isLocationOf"@en .
+
+
+ped:meters a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "meters"@en ;
+    rdfs:subPropertyOf brick:Relationship ;
+    owl:inverseOf brick:isMeteredBy ;
+    skos:definition "Indicates the entity whose consumption/production of some substance is measured by this meter."@en .
+
+rec:sourcePoint a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "sourcePoint"@en .
+
+ped:feeds a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Feeds"@en ;
+    rdfs:subPropertyOf brick:Relationship ;
+    owl:equivalentProperty rec:feeds ;
+    owl:inverseOf brick:isFedBy ;
+    skos:definition "The subject is upstream of the object in the context of some sequential process; some media is passed between them"@en .
+
+ped:isPartOf a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "Is part of"@en ;
+    rdfs:subPropertyOf brick:Relationship ;
+    owl:inverseOf brick:hasPart .
+
+rec:hasPoint a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasPoint"@en .
+
+
+rec:locatedIn a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "locatedIn"@en .
+
+qudt:hasQuantityKind a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:label "has quantity kind"^^xsd:string ;
+    rdfs:isDefinedBy <http://qudt.org/2.1/schema/shacl/qudt> .
+
+rec:hasPart a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "hasPart"@en ;
+    rdfs:subPropertyOf brick:hasPart .
+
+rec:includes a owl:AsymmetricProperty,
+        owl:IrreflexiveProperty,
+        owl:ObjectProperty ;
+    rdfs:label "includes"@en .
+
+
