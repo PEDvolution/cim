@@ -1,0 +1,2945 @@
+@prefix : <http://example.org/ontolog-test#> .
+@prefix g: <http://www.opengis.net/gml#> .
+@prefix em: <https://w3id.org/omega-x/ontology/Electromobility/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix bot: <https://w3id.org/bot#> .
+@prefix bsh: <https://brickschema.org/schema/BrickShape#> .
+@prefix ets: <https://w3id.org/omega-x/ontology/EventsTimeSeries> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix gml: <http://www.opengis.net/ont/gml#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix ped: <https://pedvolution.eu/ontology/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix core: <htttp://example.org/ontology/core#> .
+@prefix prop: <https://w3id.org/omega-x/Ontology/Property/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix seas: <https://w3id.org/seas/> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+@prefix brick: <https://brickschema.org/schema/Brick#> .
+@prefix solar: <https://w3id.org/omega-x/ontology/Renewables/> .
+@prefix s4city: <https://saref.etsi.org/saref4city/> .
+@prefix s4ener: <https://saref.etsi.org/saref4ener/> .
+@prefix citygml: <http://www.opengis.net/citygml/1.0#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ener_ade: <http://example.org/ontology#> .
+
+@base <http://example.org/ontology#> .
+
+<http://example.org/ontology#> rdf:type owl:Ontology ;
+                                owl:versionIRI <http://example.org/energy-ade-ontology#> ;
+                                owl:imports <http://qudt.org/2.1/vocab/sou> ,
+                                            <http://www.opengis.net/ont/gml> ,
+                                            s4city: ,
+                                            s4ener: .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://www.w3.org/2000/01/rdf-schema#comment:definition
+rdfs:comment:definition rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2002/07/owl#maxCardinality
+owl:maxCardinality rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#definition
+<http://www.w3.org/2004/02/skos/core#definition> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/shacl#in
+sh:in rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/shacl#maxCount
+sh:maxCount rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/shacl#minCount
+sh:minCount rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/shacl#path
+sh:path rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/shacl#property
+sh:property rdf:type owl:AnnotationProperty .
+
+
+###  https://brickschema.org/schema/Brick#value
+brick:value rdf:type owl:AnnotationProperty .
+
+
+###  https://pedvolution.eu/ontology/value
+ped:value rdf:type owl:AnnotationProperty ;
+          rdfs:label "Value"@en ;
+          rdfs:comment:definition "The basic value of an entity property" ;
+          rdfs:subPropertyOf brick:value .
+
+
+###  https://w3id.org/omega-x/Ontology/Property/isMeasuredIn
+prop:isMeasuredIn rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://example.org/ontology#test
+ener_ade:test rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://example.org/ontology#aggregatedBuildingConstruction
+ener_ade:aggregatedBuildingConstruction rdf:type owl:ObjectProperty ;
+                                        rdfs:subPropertyOf owl:topObjectProperty ;
+                                        rdfs:domain ener_ade:AbstractBuilding ;
+                                        rdfs:range ener_ade:AbstractConstruction ;
+                                        rdfs:comment "Association of a complete building with \"average\" material properties"@en .
+
+
+###  http://example.org/ontology#averageInternalGains
+ener_ade:averageInternalGains rdf:type owl:ObjectProperty ;
+                              rdfs:domain ener_ade:UsageZone ;
+                              rdfs:range ener_ade:HeatExchangeType ;
+                              rdfs:comment "Aggregated average heat energy per year dissipated by the occupants and facilities in a usage zone over the whole year (positive for heat source, negative for heat sink/cool source)."@en .
+
+
+###  http://example.org/ontology#boundedBy
+ener_ade:boundedBy rdf:type owl:ObjectProperty ;
+                   rdfs:domain ener_ade:ThermalZone ;
+                   rdfs:range ener_ade:ThermalBoundary ;
+                   rdfs:comment "Reference of a ThermalZone to it's bounding ThermalBoundary objects."@en .
+
+
+###  http://example.org/ontology#buildingType
+ener_ade:buildingType rdf:type owl:ObjectProperty ;
+                      rdfs:domain ener_ade:AbstractBuilding ;
+                      rdfs:range ener_ade:BuildingTypeValue .
+
+
+###  http://example.org/ontology#construction
+ener_ade:construction rdf:type owl:ObjectProperty ;
+                      rdfs:domain ener_ade:ThermalBoundary ,
+                                  ener_ade:ThermalOpening ;
+                      rdfs:range ener_ade:AbstractConstruction ;
+                      rdfs:comment "Association of material parameters with the opaque part of the thermal boundary."@en .
+
+
+###  http://example.org/ontology#constructionWeight
+ener_ade:constructionWeight rdf:type owl:ObjectProperty ;
+                            rdfs:domain ener_ade:AbstractBuilding ;
+                            rdfs:range ener_ade:ConstractionWeightValue ;
+                            rdfs:comment "Classification of building according with construction structure."@en .
+
+
+###  http://example.org/ontology#contains
+ener_ade:contains rdf:type owl:ObjectProperty ;
+                  rdfs:domain ener_ade:UsageZone ;
+                  rdfs:range ener_ade:BuildingUnit ;
+                  rdfs:comment "Association between UsageZone class and BuildingUnit class."@en .
+
+
+###  http://example.org/ontology#coolingSchedule
+ener_ade:coolingSchedule rdf:type owl:ObjectProperty ;
+                         rdfs:domain ener_ade:UsageZone ;
+                         rdfs:range ener_ade:AbstructSchedule ;
+                         rdfs:comment "Temperature schedule of the active cooling inside the usage zone."@en .
+
+
+###  http://example.org/ontology#delimits
+ener_ade:delimits rdf:type owl:ObjectProperty ;
+                  rdfs:domain ener_ade:ThermalBoundary ;
+                  rdfs:range ener_ade:ThermalZone ;
+                  rdfs:comment """In case two ThermalZones are referenced via the relation \"delimits\", the following rule concerning the order of the related objects applys:
+
+- For ThermalBoundary objects of type \"intermediaryFloor\", the first related object is the upper ThermalZone, and the second related object is the lower ThermalZone.
+- For all other ThermalBoundary types, the first related ThermalZone is in contact with the last Layer of the corresponding AbstractConstruction, and the second related ThermalZone is in contact with the first Layer of the corresponding AbstractConstruction."""@en .
+
+
+###  http://example.org/ontology#energyPerformanceCertification
+ener_ade:energyPerformanceCertification rdf:type owl:ObjectProperty ;
+                                        rdfs:domain ener_ade:AbstractBuilding ,
+                                                    ener_ade:BuildingUnit ;
+                                        rdfs:range ener_ade:EnergyPerformanceCertification ;
+                                        rdfs:comment "Energy Efficiency Rating according with a given certification or label (e.g. PassivHaus, LEED Platinium, KfW Effizienzhaus 100)."@en .
+
+
+###  http://example.org/ontology#equipedWith
+ener_ade:equipedWith rdf:type owl:ObjectProperty ;
+                     rdfs:domain ener_ade:BuildingUnit ,
+                                 ener_ade:UsageZone ;
+                     rdfs:range ener_ade:Facilities ;
+                     rdfs:comment "Association between UsageZone class and Facilities class."@en .
+
+
+###  http://example.org/ontology#floorArea
+ener_ade:floorArea rdf:type owl:ObjectProperty ;
+                   rdfs:domain ener_ade:AbstractBuilding ,
+                               ener_ade:BuildingUnit ,
+                               ener_ade:ThermalZone ,
+                               ener_ade:UsageZone ;
+                   rdfs:range ener_ade:FloorArea .
+
+
+###  http://example.org/ontology#hasBuildingAssetCharacteristics
+ener_ade:hasBuildingAssetCharacteristics rdf:type owl:ObjectProperty ;
+                                         rdfs:domain ener_ade:BuildingUnit ;
+                                         rdfs:range ped:BuildingEnergyAssetCharacteristics .
+
+
+###  http://example.org/ontology#hasBuildingConstructionCharacteristics
+ener_ade:hasBuildingConstructionCharacteristics rdf:type owl:ObjectProperty ;
+                                                rdfs:domain ener_ade:BuildingUnit ;
+                                                rdfs:range ped:BuildingConstructionCharacteristics .
+
+
+###  http://example.org/ontology#hasThermalDistributionSystem
+ener_ade:hasThermalDistributionSystem rdf:type owl:ObjectProperty ;
+                                      rdfs:domain ped:DHC_Characteristics ;
+                                      rdfs:range ener_ade:ThermalDistributionSystem .
+
+
+###  http://example.org/ontology#hasThermalStorageSystem
+ener_ade:hasThermalStorageSystem rdf:type owl:ObjectProperty ;
+                                 rdfs:domain ped:DHC_Characteristics ;
+                                 rdfs:range ener_ade:ThermalStorageSystem .
+
+
+###  http://example.org/ontology#hasUnit
+ener_ade:hasUnit rdf:type owl:ObjectProperty ;
+                 rdfs:domain ener_ade:Measure ;
+                 rdfs:range qudt:Unit .
+
+
+###  http://example.org/ontology#hasWeatherData
+ener_ade:hasWeatherData rdf:type owl:ObjectProperty ;
+                        rdfs:domain ener_ade:CityObject ,
+                                    ener_ade:WeatherStation ;
+                        rdfs:range ener_ade:WeatherData ;
+                        rdfs:comment "Links a weather station or city to weather or climate data ." .
+
+
+###  http://example.org/ontology#hasWeatherDataType
+ener_ade:hasWeatherDataType rdf:type owl:ObjectProperty ;
+                            rdfs:domain ener_ade:WeatherData ;
+                            rdfs:range ener_ade:WeatherDataTypeValue .
+
+
+###  http://example.org/ontology#heatingSchedule
+ener_ade:heatingSchedule rdf:type owl:ObjectProperty ;
+                         rdfs:domain ener_ade:UsageZone ;
+                         rdfs:range ener_ade:AbstructSchedule ;
+                         rdfs:comment "Temperature schedule of the active heating inside the usage zone."@en .
+
+
+###  http://example.org/ontology#heightAboveGround
+ener_ade:heightAboveGround rdf:type owl:ObjectProperty ;
+                           rdfs:domain ener_ade:AbstractBuilding ;
+                           rdfs:range ener_ade:HeightAboveGround ;
+                           rdfs:comment "Building height above general ground-level. This elevation lies anywhere between the lowest and the highest ground points of the construction."@en .
+
+
+###  http://example.org/ontology#heightReference
+ener_ade:heightReference rdf:type owl:ObjectProperty ;
+                         rdfs:domain ener_ade:HeightAboveGround ;
+                         rdfs:range ener_ade:ElevationReferenceValue .
+
+
+###  http://example.org/ontology#household
+ener_ade:household rdf:type owl:ObjectProperty ;
+                   rdfs:domain ener_ade:Occupants ;
+                   rdfs:range ener_ade:HouseHold .
+
+
+###  http://example.org/ontology#householdType
+ener_ade:householdType rdf:type owl:ObjectProperty ;
+                       rdfs:domain ener_ade:HouseHold ;
+                       rdfs:range ener_ade:HouseholdTypeValue .
+
+
+###  http://example.org/ontology#indoorShading
+ener_ade:indoorShading rdf:type owl:ObjectProperty ;
+                       rdfs:domain ener_ade:ThermalOpening .
+
+
+###  http://example.org/ontology#interiorRoom
+ener_ade:interiorRoom rdf:type owl:ObjectProperty ;
+                      rdfs:domain ener_ade:ThermalZone ;
+                      rdfs:range ener_ade:CityObject_Building_Room ;
+                      rdfs:comment "Reference of a ThermalZone to the corresponding physical rooms (Room) of the building."@en .
+
+
+###  http://example.org/ontology#level
+ener_ade:level rdf:type owl:ObjectProperty ;
+               rdfs:domain ener_ade:RefurbishmentMeasure ;
+               rdfs:range ener_ade:RefurbishmentClassValue .
+
+
+###  http://example.org/ontology#nominalFlow
+ener_ade:nominalFlow rdf:type owl:ObjectProperty ;
+                     rdfs:domain ener_ade:ThermalDistributionSystem ;
+                     rdfs:range ener_ade:Measure ;
+                     rdfs:comment "Indicates the flow rate of the medium. (Unit of measurement m/s)." .
+
+
+###  http://example.org/ontology#occupantType
+ener_ade:occupantType rdf:type owl:ObjectProperty ;
+                      rdfs:domain ener_ade:Occupants ;
+                      rdfs:range ener_ade:OccupantTypeValue .
+
+
+###  http://example.org/ontology#occupiedBy
+ener_ade:occupiedBy rdf:type owl:ObjectProperty ;
+                    rdfs:domain ener_ade:BuildingUnit ,
+                                ener_ade:UsageZone ;
+                    rdfs:range ener_ade:Occupants ;
+                    rdfs:comment "Association between UsageZone class and Occupants class."@en .
+
+
+###  http://example.org/ontology#outdoorShading
+ener_ade:outdoorShading rdf:type owl:ObjectProperty ;
+                        rdfs:domain ener_ade:ThermalOpening .
+
+
+###  http://example.org/ontology#ownershipType
+ener_ade:ownershipType rdf:type owl:ObjectProperty ;
+                       rdfs:domain ener_ade:BuildingUnit ;
+                       rdfs:range ener_ade:OwnershipTypeValue ;
+                       rdfs:comment "Type of organisations, associations, businesses etc. that owns the building (e.g. individual, public authority, property management company, non-profit organisation etc.)."@en .
+
+
+###  http://example.org/ontology#position
+ener_ade:position rdf:type owl:ObjectProperty ;
+                  rdfs:domain ener_ade:WeatherData ,
+                              ener_ade:WeatherStation ;
+                  rdfs:range gml:Point ;
+                  rdfs:comment "A position described by GML Ontology"@en .
+
+
+###  http://example.org/ontology#preparationTemperature
+ener_ade:preparationTemperature rdf:type owl:ObjectProperty ;
+                                rdfs:domain ener_ade:ThermalStorageSystem ;
+                                rdfs:range ener_ade:Measure ;
+                                rdfs:comment "Indicates the preparation temperature of the thermal storage system." .
+
+
+###  http://example.org/ontology#referencePoint
+ener_ade:referencePoint rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf owl:topObjectProperty ;
+                        rdfs:domain ener_ade:AbstractBuilding ;
+                        rdfs:range gml:Point ;
+                        rdfs:comment "Geographical location of the building."@en .
+
+
+###  http://example.org/ontology#refurbishmentMeasure
+ener_ade:refurbishmentMeasure rdf:type owl:ObjectProperty ;
+                              rdfs:subPropertyOf owl:topObjectProperty ;
+                              rdfs:domain ener_ade:AbstractBuilding ;
+                              rdfs:range ener_ade:RefurbishmentMeasure ;
+                              rdfs:comment "Reference designation of the degree of refurbishment. This reference may be European (from the Tabula project) or local (used for the Energy Action Plan of a city)."@en .
+
+
+###  http://example.org/ontology#relatesTo
+ener_ade:relatesTo rdf:type owl:ObjectProperty ;
+                   rdfs:domain ener_ade:ThermalBoundary ,
+                               ener_ade:ThermalOpening ;
+                   rdfs:range ener_ade:CityObject_Building_BoundarySurface ,
+                              ener_ade:CityObject_Building_Opening ;
+                   rdfs:comment "Reference of a ThermalOpening to the corresponding physical opening or openings (Door or Window) of the building."@en .
+
+
+###  http://example.org/ontology#relativeToTerrain
+ener_ade:relativeToTerrain rdf:type owl:ObjectProperty ;
+                           rdfs:domain ener_ade:ThermalOpening ,
+                                       ener_ade:ThermalZone ;
+                           rdfs:range ener_ade:RelativeToTerrain .
+
+
+###  http://example.org/ontology#relativeToWater
+ener_ade:relativeToWater rdf:type owl:ObjectProperty ;
+                         rdfs:domain ener_ade:ThermalOpening ;
+                         rdfs:range ener_ade:RelativeToWater .
+
+
+###  http://example.org/ontology#residenceType
+ener_ade:residenceType rdf:type owl:ObjectProperty ;
+                       rdfs:domain ener_ade:HouseHold .
+
+
+###  http://example.org/ontology#returnTemperature
+ener_ade:returnTemperature rdf:type owl:ObjectProperty ;
+                           rdfs:domain ener_ade:ThermalDistributionSystem ;
+                           rdfs:range ener_ade:Measure ;
+                           rdfs:comment "Indicates return temperature of the medium." .
+
+
+###  http://example.org/ontology#supplyTemperature
+ener_ade:supplyTemperature rdf:type owl:ObjectProperty ;
+                           rdfs:subPropertyOf owl:topObjectProperty ;
+                           rdfs:domain ener_ade:ThermalDistributionSystem ;
+                           rdfs:range ener_ade:Measure ;
+                           rdfs:comment "Indicates supply temperature of the medium." .
+
+
+###  http://example.org/ontology#surfaceGeometry
+ener_ade:surfaceGeometry rdf:type owl:ObjectProperty ;
+                         rdfs:domain ener_ade:ThermalBoundary ,
+                                     ener_ade:ThermalOpening ;
+                         rdfs:range gml:MultiSurface .
+
+
+###  http://example.org/ontology#thermalBoundaryType
+ener_ade:thermalBoundaryType rdf:type owl:ObjectProperty ;
+                             rdfs:domain ener_ade:ThermalBoundary ;
+                             rdfs:range ener_ade:ThermalBoundaryTypeValue ;
+                             rdfs:comment "Topological classification of the thermal boundary."@en .
+
+
+###  http://example.org/ontology#thermalLossesFactor
+ener_ade:thermalLossesFactor rdf:type owl:ObjectProperty ;
+                             rdfs:domain ener_ade:ThermalDistributionSystem ;
+                             rdfs:range ener_ade:Measure ;
+                             rdfs:comment "Indicates the thermal losses factor. U*A" .
+
+
+###  http://example.org/ontology#thermalZone
+ener_ade:thermalZone rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf owl:topObjectProperty ;
+                     rdfs:domain ener_ade:AbstractBuilding ;
+                     rdfs:range ener_ade:AbstractThermalZone ;
+                     rdfs:comment "Relation with a thermal zone of the building. A thermal zone is considered as isothermal and serves as space unit for the building heating/cooling calculation."@en .
+
+
+###  http://example.org/ontology#transmittance
+ener_ade:transmittance rdf:type owl:ObjectProperty ;
+                       rdfs:domain ener_ade:ShadingType ;
+                       rdfs:range ener_ade:Transmittance ;
+                       rdfs:comment "Effectiveness of the shading device in transmitting an incident radiant flux of a given wavelength range."@en .
+
+
+###  http://example.org/ontology#type
+ener_ade:type rdf:type owl:ObjectProperty ;
+              rdfs:domain ener_ade:FloorArea ,
+                          ener_ade:VolumeType ;
+              rdfs:range ener_ade:FloorAreaTypeValue ,
+                         ener_ade:VolumeTypeValue ;
+              rdfs:comment "Categorization of a method to calculate the floor area."@en .
+
+
+###  http://example.org/ontology#usageZone
+ener_ade:usageZone rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf owl:topObjectProperty ;
+                   rdfs:domain ener_ade:AbstractBuilding ;
+                   rdfs:range ener_ade:AbstractUsageZone ;
+                   rdfs:comment "Relation with a usage zone of the building. A usage zone has homogeneous usage type and indoor climate set-points."@en .
+
+
+###  http://example.org/ontology#usageZoneType
+ener_ade:usageZoneType rdf:type owl:ObjectProperty ;
+                       rdfs:domain ener_ade:UsageZone .
+
+
+###  http://example.org/ontology#values
+ener_ade:values rdf:type owl:ObjectProperty ;
+                rdfs:domain ener_ade:WeatherData ;
+                rdfs:range ets:ValueSet ;
+                rdfs:comment "Time Series of data"@en ;
+                rdfs:label "values"@en .
+
+
+###  http://example.org/ontology#ventilationSchedule
+ener_ade:ventilationSchedule rdf:type owl:ObjectProperty ;
+                             rdfs:domain ener_ade:UsageZone ;
+                             rdfs:range ener_ade:AbstructSchedule ;
+                             rdfs:comment "Air change rate [1/h] schedule of the ventilation system inside the usage zone."@en .
+
+
+###  http://example.org/ontology#volume
+#ener_ade:volume rdf:type owl:ObjectProperty ;
+#                rdfs:domain ener_ade:AbstractBuilding ,
+#                            ener_ade:ThermalZone ;
+#                rdfs:range ener_ade:VolumeType ;
+#                rdfs:comment "Volume of a ThermalZone. Different calculation methods (e.g. net volume, gross volume) can be selected."@en .
+
+###  http://example.org/ontology#volume
+ener_ade:volume rdf:type owl:DatatypeProperty ;
+                rdfs:domain ener_ade:AbstractBuilding ,
+                            ener_ade:ThermalZone,ener_ade:ThermalStorageSystem ;
+                rdfs:range [
+                      a rdfs:Datatype ;
+                      owl:oneOf (
+                     "netVolume"
+                     "grossVolume"
+                     "energyReferenceVolume" 
+                      ) ;
+                     ] ;
+
+ rdfs:comment "Volume of a ThermalZone. Different calculation methods (e.g. net volume, gross volume) can be selected."@en .
+
+
+
+###  http://example.org/ontology#volumeGeometry
+ener_ade:volumeGeometry rdf:type owl:ObjectProperty ;
+                        rdfs:domain ener_ade:ThermalZone ,
+                                    ener_ade:UsageZone ;
+                        rdfs:range gml:Solid .
+
+
+###  http://example.org/ontology#wavelengthRange
+ener_ade:wavelengthRange rdf:type owl:ObjectProperty ;
+                         rdfs:domain ener_ade:Transmittance ;
+                         rdfs:range ener_ade:WavelengthRangeType ;
+                         rdfs:comment "Wavelength range of the incident radiant flux, for which the transmittance ratio is defined."@en .
+
+
+###  http://example.org/ontology#energy:refurbishmentMeasure
+ener_ade:energy:refurbishmentMeasure rdf:type owl:ObjectProperty ;
+                                     rdfs:domain ener_ade:ThermalBoundary ;
+                                     rdfs:range ener_ade:RefurbishmentMeasure ;
+                                     rdfs:comment "Information on a refurbishment measure."@en .
+
+
+###  http://www.w3.org/2002/07/owl#topObjectProperty
+owl:topObjectProperty rdfs:comment ""@en .
+
+
+###  https://brickschema.org/schema/BrickShape#haselectricVehicleConnectorTypeShape
+bsh:haselectricVehicleConnectorTypeShape rdf:type owl:ObjectProperty .
+
+
+###  https://pedvolution.eu/ontology/PowerOutput
+ped:PowerOutput rdf:type owl:ObjectProperty ;
+                rdfs:domain ped:ElectricVehicleChargingStation ;
+                rdfs:range qudt:QuantityValue ;
+                rdfs:comment "How much power a charger can generate, expressed in kilowatts (kW)."@en ;
+                rdfs:label "Power Output"@en .
+
+
+###  https://pedvolution.eu/ontology/PowerOutputUnit
+ped:PowerOutputUnit rdf:type owl:ObjectProperty ;
+                    rdfs:domain ped:ElectricVehicleChargingStation ;
+                    rdfs:range unit:KiloW ;
+                    rdfs:comment "The unit of measurement for input voltage (always Volts)."@en ;
+                    rdfs:label "Input Voltage Unit"@en .
+
+
+###  https://pedvolution.eu/ontology/consistOfCells
+ped:consistOfCells rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf solar:consistOfCells ;
+                   rdfs:domain ped:SolarString ;
+                   rdfs:range seas:SolarCell ;
+                   rdfs:comment "Links, if it exists, the solar string (module) to the solar cell(s)."@en ;
+                   rdfs:label "consist of cells"@en .
+
+
+###  https://pedvolution.eu/ontology/consistOfPanels
+ped:consistOfPanels rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf solar:consistOfPanels ;
+                    rdfs:domain ped:SolarString ;
+                    rdfs:range ped:SolarPlanel ;
+                    rdfs:comment "Links, if it exists, the solar string to the solar panel(s)."@en ;
+                    rdfs:label "consist of panels"@en .
+
+
+###  https://pedvolution.eu/ontology/consistOfStrings
+ped:consistOfStrings rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf solar:consistOfStrings ;
+                     rdfs:domain ped:SolarArray ;
+                     rdfs:range ped:SolarString ;
+                     rdfs:comment "Links, if it exists, the solar string (module) to the solar panel(s)."@en ;
+                     rdfs:label "consist of strings"@en .
+
+
+###  https://pedvolution.eu/ontology/hasBuildingUnits
+ped:hasBuildingUnits rdf:type owl:ObjectProperty ;
+                     rdfs:domain ped:Building ;
+                     rdfs:range ener_ade:BuildingUnit .
+
+
+###  https://pedvolution.eu/ontology/hasBuildings
+ped:hasBuildings rdf:type owl:ObjectProperty ;
+                 rdfs:domain ped:Ped ;
+                 rdfs:range ped:Building .
+
+
+###  https://pedvolution.eu/ontology/hasChargingSpeed
+ped:hasChargingSpeed rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf em:hasChargingSpeed ;
+                     rdfs:domain ped:ElectricVehicleChargingStation ;
+                     rdfs:range ped:ChargingSpeed ;
+                     rdfs:comment "links an Electric Vehicle Supply Equipment to its charging speed."@en ;
+                     rdfs:isDefinedBy ped: ;
+                     rdfs:label "has Charging Speed"@en .
+
+
+###  https://pedvolution.eu/ontology/hasDistrictEconomicCharacteristics
+ped:hasDistrictEconomicCharacteristics rdf:type owl:ObjectProperty ;
+                                       rdfs:domain ped:Ped ;
+                                       rdfs:range ped:DistrictEconomicCharacteristics .
+
+
+###  https://pedvolution.eu/ontology/hasDistrictHVAC_Characteristics
+#ped:hasDistrictHVAC_Characteristics rdf:type owl:ObjectProperty ;
+#                                    rdfs:domain ped:Ped ;
+#                                    rdfs:range ped:DistrictHVAC_Characteristics .
+
+
+###  https://pedvolution.eu/ontology/hasDistrictSocialCharacteristics
+ped:hasDistrictSocialCharacteristics rdf:type owl:ObjectProperty ;
+                                     rdfs:domain ped:Ped ;
+                                     rdfs:range ped:DistrictSocialCharacteristics .
+
+
+###  https://pedvolution.eu/ontology/hasElectricVehicleChargerDirectionalityShape
+ped:hasElectricVehicleChargerDirectionalityShape rdf:type owl:ObjectProperty ;
+                                                 rdfs:domain ped:ElectricVehicleChargingStation ;
+                                                 rdfs:range brick:electricVehicleChargerDirectionality .
+
+
+###  https://pedvolution.eu/ontology/hasElectricVehicleChargerType
+ped:hasElectricVehicleChargerType rdf:type owl:ObjectProperty ;
+                                  rdfs:domain ped:ElectricVehicleChargingStation ;
+                                  rdfs:range ped:ElectricVehicleChargerType ;
+                                  rdfs:comment "Indicates which type of EVSE charger this station provides, such as Level 1, Level 2, or Level 3."@en ;
+                                  rdfs:label "has electric vehicle charger type"@en .
+
+
+###  https://pedvolution.eu/ontology/hasElectricVehicleChargingPort
+ped:hasElectricVehicleChargingPort rdf:type owl:ObjectProperty ;
+                                   rdfs:domain ped:ElectricVehicleChargingStation ;
+                                   rdfs:range ped:ElectricVehicleChargingPort ;
+                                   rdfs:comment "Indicates the relation between an Electric Vehicle Charging Station and one or more Electric Vehicle Charging Ports ."@en ;
+                                   rdfs:label "hasElectricVehicleChargingPort"@en .
+
+
+###  https://pedvolution.eu/ontology/hasElectricVehicleConnectorTypeShape
+ped:hasElectricVehicleConnectorTypeShape rdf:type owl:ObjectProperty ;
+                                         rdfs:subPropertyOf bsh:haselectricVehicleConnectorTypeShape ;
+                                         rdfs:domain ped:ElectricVehicleChargingPort ;
+                                         rdfs:range ped:ElectricVehicleConnectorTypeShape ;
+                                         rdfs:comment "Indicates the type of EVSE connector shape used at the charging station, such as Type 1 (CSS), Type 2 (CSS), GB/T, Type 1 (SAE J1772), Type 2 (IEC 62196), CHAdeMO, CCS, Tesla Supercharger, or Wireless."@en ;
+                                         rdfs:label "has electric vehicle connector type shape"@en .
+
+
+###  https://pedvolution.eu/ontology/hasHVAC_Equipment
+ped:hasHVAC_Equipment rdf:type owl:ObjectProperty ;
+                      rdfs:domain ped:HVACBuildingCharacteristics ;
+                      rdfs:range ped:HVAC_Equipment ;
+                      rdfs:comment "Associates HVACBuildingCharacteristics to an installed HVAC Equipment "@en ;
+                      rdfs:label "has HVAC Equipment"@en .
+
+
+###  https://pedvolution.eu/ontology/hasHVAC_System
+ped:hasHVAC_System rdf:type owl:ObjectProperty ;
+                   rdfs:domain ped:HVACBuildingCharacteristics ;
+                   rdfs:range ped:HVAC_System ;
+                   rdfs:comment "Associates HVACBuildingCharacteristics to  HVAC System"@en ;
+                   rdfs:label "has HVAC Equipment"@en .
+
+
+###  https://pedvolution.eu/ontology/hasInverter
+ped:hasInverter rdf:type owl:ObjectProperty ;
+                rdfs:domain ped:SolarPanelCharacteristics ;
+                rdfs:range ped:Inverter ;
+                rdfs:comment "Links, the SolarPanelCharacteristics to Inverter equipment(s)."@en ;
+                rdfs:label "hasInverter"@en .
+
+
+###  https://pedvolution.eu/ontology/hasLocationAsPool
+ped:hasLocationAsPool rdf:type owl:ObjectProperty ;
+                      rdfs:domain ped:ElectricVehicleChargingStationPool ;
+                      rdfs:range geo:Point .
+
+
+###  https://pedvolution.eu/ontology/hasMaxInputDCPower
+ped:hasMaxInputDCPower rdf:type owl:ObjectProperty ;
+                       rdfs:domain ped:Inverter ;
+                       rdfs:range prop:inverterMaxInputDCPower ;
+                       rdfs:comment "Inverter equipment."@en ;
+                       rdfs:label "Inverter"@en .
+
+
+###  https://pedvolution.eu/ontology/hasStorage
+ped:hasStorage rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf s4ener:hasStorage ;
+               rdfs:domain ped:BatterySystemCharacteristics ;
+               rdfs:range s4ener:Storage ;
+               rdfs:label "has storage"@en .
+
+
+###  https://pedvolution.eu/ontology/hasTechnicalCharacteristics
+ped:hasTechnicalCharacteristics rdf:type owl:ObjectProperty ;
+                                rdfs:domain ped:Ped ;
+                                rdfs:range ped:TechnicalCharacteristics .
+
+
+###  https://pedvolution.eu/ontology/hasYearlyElectricityProduction
+ped:hasYearlyElectricityProduction rdf:type owl:ObjectProperty ;
+                                   rdfs:domain ped:SolarPanelCharacteristics ;
+                                   rdfs:range ped:yearlyElectricityProduction ;
+                                   rdfs:comment "Links the expected or measured yearly electricity output (kW/h) to Solar Panel Characteristics."@en ;
+                                   rdfs:label "hasYearlyElectricityProduction"@en .
+
+
+###  https://pedvolution.eu/ontology/hasYearlyHeatProduction
+ped:hasYearlyHeatProduction rdf:type owl:ObjectProperty ;
+                            rdfs:domain ped:SolarPanelCharacteristics ;
+                            rdfs:range ped:yearlyThermalProduction ;
+                            rdfs:comment "Links the expected Yearly thermal power output of thermal or hybrid PVth systems (kW/h) to Solar Panel Characteristics."@en ;
+                            rdfs:label "hasYearlyElectricityProduction"@en .
+
+
+###  https://pedvolution.eu/ontology/has_PV_PowerOutput
+ped:has_PV_PowerOutput rdf:type owl:ObjectProperty ;
+                       rdfs:domain ped:SolarPanelCharacteristics ;
+                       rdfs:range ped:PV_PowerOutput ;
+                       rdfs:comment "Links the power output under standard test conditions of a solar panel to Solar Panel Characteristics."@en ;
+                       rdfs:label "has_PV_PowerOutput"@en .
+
+
+###  https://pedvolution.eu/ontology/has_thermalPowerOutput
+ped:has_thermalPowerOutput rdf:type owl:ObjectProperty ;
+                           rdfs:domain ped:SolarPanelCharacteristics ;
+                           rdfs:range ped:thermalPowerOutput ;
+                           rdfs:comment "Links the peak thermal power output of a solar panel to Solar Panel Characteristics."@en ;
+                           rdfs:label "has_thermalPowerOutput"@en .
+
+
+###  https://pedvolution.eu/ontology/includesElectricVehicleChargingStations
+ped:includesElectricVehicleChargingStations rdf:type owl:ObjectProperty ;
+                                            rdfs:domain ped:EVChargingCharacteristics ;
+                                            rdfs:range ped:ElectricVehicleChargingStation .
+
+
+###  https://pedvolution.eu/ontology/includesSolarArrays
+ped:includesSolarArrays rdf:type owl:ObjectProperty ;
+                        rdfs:domain ped:SolarPanelCharacteristics ;
+                        rdfs:range ped:SolarArray .
+
+
+###  https://pedvolution.eu/ontology/inputVoltageUnit
+ped:inputVoltageUnit rdf:type owl:ObjectProperty ;
+                     rdfs:domain ped:ElectricVehicleChargingStation ;
+                     rdfs:range unit:V ;
+                     rdfs:comment "The unit of measurement for input voltage (always Volts)."@en ;
+                     rdfs:label "Input Voltage Unit"@en .
+
+
+###  https://pedvolution.eu/ontology/isPartOfPool
+ped:isPartOfPool rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf em:isPartOfPool ;
+                 rdfs:domain ped:ElectricVehicleChargingStation ;
+                 rdfs:range ped:ElectricVehicleChargingStationPool ;
+                 rdfs:comment "links an Electric Vehicle Charging Station to its Electric Vehicle Charging Station Pool."@en ;
+                 rdfs:isDefinedBy ped: ;
+                 rdfs:label "is part of pool"@en .
+
+
+###  https://pedvolution.eu/ontology/panelOrientation
+ped:panelOrientation rdf:type owl:ObjectProperty ;
+                     rdfs:domain ped:SolarPanelCharacteristics ;
+                     rdfs:range ped:PanelOrientationValue ;
+                     rdfs:comment "The azimuthal orientation (North, South East)."@en ;
+                     rdfs:label "panelOrientation"@en .
+
+
+###  https://w3id.org/omega-x/Ontology/Property/hasUnit
+prop:hasUnit rdf:type owl:ObjectProperty ;
+             rdfs:range prop:Unit ;
+             rdfs:comment "The link that indicates what unit is used for a specific property Value."@en ;
+             rdfs:label "Has Unit"@en .
+
+
+###  https://w3id.org/omega-x/Ontology/Property/isEvaluatedIn
+prop:isEvaluatedIn rdf:type owl:ObjectProperty ;
+                   rdfs:domain prop:QualitativeProperty ;
+                   rdfs:range prop:Category ;
+                   rdfs:comment "The property that links a qualitative property with the category it is evaluated in."@en ;
+                   rdfs:label "Is Evaluated In"@en .
+
+
+###  https://w3id.org/omega-x/ontology/EventsTimeSerieshasTemporalContext
+ets:hasTemporalContext rdf:type owl:ObjectProperty ;
+                       rdfs:domain ets:ValueSet ;
+                       rdfs:range time:TemporalEntity ;
+                       rdfs:comment "Associates a temporal context for value set coverage. This represents the timeseries entire coverage interval, a data point or an event validity time, i.e time period in which collected values still valid. "@en ;
+                       rdfs:label "Has Temporal Context"@en .
+
+
+###  https://w3id.org/omega-x/ontology/Electromobility/hasChargingSpeed
+em:hasChargingSpeed rdf:type owl:ObjectProperty .
+
+
+###  https://w3id.org/omega-x/ontology/Electromobility/isPartOfPool
+em:isPartOfPool rdf:type owl:ObjectProperty .
+
+
+###  https://w3id.org/omega-x/ontology/Renewables/consistOfCells
+solar:consistOfCells rdf:type owl:ObjectProperty .
+
+
+###  https://w3id.org/omega-x/ontology/Renewables/consistOfPanels
+solar:consistOfPanels rdf:type owl:ObjectProperty .
+
+
+###  https://w3id.org/omega-x/ontology/Renewables/consistOfStrings
+solar:consistOfStrings rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://example.org/ontology#area
+ener_ade:area rdf:type owl:DatatypeProperty ;
+              rdfs:domain ener_ade:ThermalBoundary ,
+                          ener_ade:ThermalOpening ;
+              rdfs:range xsd:float ;
+              rdfs:comment "Area of the surface [m²], portion of the related thermal boundary surface."@en .
+
+
+###  http://example.org/ontology#azimuth
+ener_ade:azimuth rdf:type owl:DatatypeProperty ;
+                 rdfs:domain ener_ade:ThermalBoundary ;
+                 rdfs:range xsd:double ;
+                 rdfs:comment "Azimuth angle of the normal surface vector. By convention: azimuth = 0 for north orientation;- Horizontal surfaces have an azimuth = 0."@en .
+
+
+###  http://example.org/ontology#certificationId
+ener_ade:certificationId rdf:type owl:DatatypeProperty ;
+                         rdfs:domain ener_ade:EnergyPerformanceCertification ;
+                         rdfs:range xsd:string ;
+                         rdfs:comment "Labeling system for the erergy certificate."@en .
+
+
+###  http://example.org/ontology#convectiveFraction
+ener_ade:convectiveFraction rdf:type owl:DatatypeProperty ;
+                            rdfs:domain ener_ade:UsageZone ;
+                            rdfs:range xsd:float ;
+                            rdfs:comment "Scale.Ratio of convective heat exchange over total heat exchange."@en .
+
+
+###  http://example.org/ontology#date
+ener_ade:date rdf:type owl:DatatypeProperty ;
+              rdfs:domain ener_ade:RefurbishmentMeasure ;
+              rdfs:range xsd:dateTime .
+
+
+###  http://example.org/ontology#description
+ener_ade:description rdf:type owl:DatatypeProperty ;
+                     rdfs:domain ener_ade:RefurbishmentMeasure ;
+                     rdfs:range xsd:string .
+
+
+###  http://example.org/ontology#distributionPerimeter
+ener_ade:distributionPerimeter rdf:type owl:DatatypeProperty ;
+                               rdfs:domain ener_ade:ThermalDistributionSystem ;
+                               rdfs:range [ rdf:type rdfs:Datatype ;
+                                            owl:oneOf [ rdf:type rdf:List ;
+                                                        rdf:first "building" ;
+                                                        rdf:rest [ rdf:type rdf:List ;
+                                                                   rdf:first "dwelling" ;
+                                                                   rdf:rest [ rdf:type rdf:List ;
+                                                                              rdf:first "groupOfBuildings" ;
+                                                                              rdf:rest [ rdf:type rdf:List ;
+                                                                                         rdf:first "room" ;
+                                                                                         rdf:rest [ rdf:type rdf:List ;
+                                                                                                    rdf:first "staircase" ;
+                                                                                                    rdf:rest [ rdf:type rdf:List ;
+                                                                                                               rdf:first "storey" ;
+                                                                                                               rdf:rest rdf:nil
+                                                                                                             ]
+                                                                                                  ]
+                                                                                       ]
+                                                                            ]
+                                                                 ]
+                                                      ]
+                                          ] ;
+                               rdfs:comment "Indicates the perimeter of the energy distribution system, e.g. a group od buildings, one complete building, a building storey," .
+
+
+###  http://example.org/ontology#effectiveThermalCapacity
+ener_ade:effectiveThermalCapacity rdf:type owl:DatatypeProperty ;
+                                  rdfs:domain ener_ade:ThermalZone ;
+                                  rdfs:range xsd:double ;
+                                  rdfs:comment "Thermal capacity [Wh/K] of the zone including the contributing construction layers and zone furniture."@en .
+
+
+###  http://example.org/ontology#fraction
+ener_ade:fraction rdf:type owl:DatatypeProperty ;
+                  rdfs:domain ener_ade:Transmittance ;
+                  rdfs:range xsd:float ;
+                  rdfs:comment "Fraction (between 0 and 1) of energy transmittance"@en .
+
+
+###  http://example.org/ontology#hasValue
+ener_ade:hasValue rdf:type owl:DatatypeProperty ;
+                  rdfs:domain ener_ade:Measure ;
+                  rdfs:range xsd:decimal ;
+                  rdfs:comment "Represents the numeric value of a measurement.Supports both integers and floating-point value" ;
+                  rdfs:label "Has Value" .
+
+
+###  http://example.org/ontology#inclination
+ener_ade:inclination rdf:type owl:DatatypeProperty ;
+                     rdfs:domain ener_ade:ThermalBoundary ;
+                     rdfs:range xsd:double ;
+                     rdfs:comment """Inclination angle of the normal surface vector.
+By convention, inclination = 0 for horizontal planes."""@en .
+
+
+###  http://example.org/ontology#indirectlyHeatedAreaRatio
+ener_ade:indirectlyHeatedAreaRatio rdf:type owl:DatatypeProperty ;
+                                   rdfs:domain ener_ade:ThermalZone ;
+                                   rdfs:range xsd:double .
+
+
+###  http://example.org/ontology#infiltrationRate
+ener_ade:infiltrationRate rdf:type owl:DatatypeProperty ;
+                          rdfs:domain ener_ade:ThermalZone ;
+                          rdfs:range xsd:double ;
+                          rdfs:comment "Air change rate [1/h] due to air leakage of the zone shell.Values between 0-1."@en .
+
+
+###  http://example.org/ontology#isCirculation
+ener_ade:isCirculation rdf:type owl:DatatypeProperty ;
+                       rdfs:domain ener_ade:ThermalDistributionSystem ;
+                       rdfs:range xsd:boolean ;
+                       rdfs:comment "Indicates circulating system or not." .
+
+
+###  http://example.org/ontology#isCooled
+ener_ade:isCooled rdf:type owl:DatatypeProperty ;
+                  rdfs:domain ener_ade:ThermalZone ;
+                  rdfs:range xsd:boolean ;
+                  rdfs:comment "true if the thermal zone has energy systems for space cooling."@en .
+
+
+###  http://example.org/ontology#isHeated
+ener_ade:isHeated rdf:type owl:DatatypeProperty ;
+                  rdfs:domain ener_ade:ThermalZone ;
+                  rdfs:range xsd:boolean ;
+                  rdfs:comment "true if the thermal zone has energy systems for space heating."@en .
+
+
+###  http://example.org/ontology#isLandmarked
+ener_ade:isLandmarked rdf:type owl:DatatypeProperty ;
+                      rdfs:domain ener_ade:AbstractBuilding ;
+                      rdfs:range xsd:boolean ;
+                      rdfs:comment "Landmark / heritage status of the building."@en .
+
+
+###  http://example.org/ontology#latentFraction
+ener_ade:latentFraction rdf:type owl:DatatypeProperty ;
+                        rdfs:domain ener_ade:UsageZone ;
+                        rdfs:range xsd:float ;
+                        rdfs:comment "Scale.Ratio of latent heat exchange over total heat exchange."@en .
+
+
+###  http://example.org/ontology#maximumCoverRatio
+ener_ade:maximumCoverRatio rdf:type owl:DatatypeProperty ;
+                           rdfs:domain ener_ade:ShadingType ;
+                           rdfs:range xsd:float ;
+                           rdfs:comment "Maximum fraction of the related opening which can be covered with the shading device."@en .
+
+
+###  http://example.org/ontology#medium_type
+ener_ade:medium_type rdf:type owl:DatatypeProperty ;
+                     rdfs:domain ener_ade:ThermalDistributionSystem ;
+                     rdfs:range [ rdf:type rdfs:Datatype ;
+                                  owl:oneOf [ rdf:type rdf:List ;
+                                              rdf:first "air" ;
+                                              rdf:rest [ rdf:type rdf:List ;
+                                                         rdf:first "steam" ;
+                                                         rdf:rest [ rdf:type rdf:List ;
+                                                                    rdf:first "water" ;
+                                                                    rdf:rest rdf:nil
+                                                                  ]
+                                                       ]
+                                            ]
+                                ] ;
+                     rdfs:comment "Indicates medium type value (e.g. air, steam and water)." .
+
+
+###  http://example.org/ontology#model
+ener_ade:model rdf:type owl:DatatypeProperty ;
+               rdfs:domain ener_ade:ThermalDistributionSystem ;
+               rdfs:range xsd:string ;
+               rdfs:comment "Indicates the type of model." .
+
+
+###  http://example.org/ontology#name
+ener_ade:name rdf:type owl:DatatypeProperty ;
+              rdfs:domain ener_ade:ShadingType ;
+              rdfs:range xsd:string .
+
+
+###  http://example.org/ontology#numberOfBaths
+ener_ade:numberOfBaths rdf:type owl:DatatypeProperty ;
+                       rdfs:domain ener_ade:DHWFacilities ;
+                       rdfs:range xsd:integer .
+
+
+###  http://example.org/ontology#numberOfDevices
+ener_ade:numberOfDevices rdf:type owl:DatatypeProperty ;
+                         rdfs:domain ener_ade:ThermalDistributionSystem ;
+                         rdfs:range xsd:integer ;
+                         rdfs:comment "Indicates the total number of devices used." .
+
+
+###  http://example.org/ontology#numberOfRooms
+ener_ade:numberOfRooms rdf:type owl:DatatypeProperty ;
+                       rdfs:domain ener_ade:BuildingUnit ;
+                       rdfs:range xsd:integer ;
+                       rdfs:comment "The number of rooms in the building unit."@en ;
+                       rdfs:label "Number of Rooms"@en .
+
+
+###  http://example.org/ontology#numberOfWashBasins
+ener_ade:numberOfWashBasins rdf:type owl:DatatypeProperty ;
+                            rdfs:domain ener_ade:DHWFacilities ;
+                            rdfs:range xsd:integer .
+
+
+###  http://example.org/ontology#openableRatio
+ener_ade:openableRatio rdf:type owl:DatatypeProperty ;
+                       rdfs:domain ener_ade:ThermalOpening ;
+                       rdfs:range xsd:float .
+
+
+###  http://example.org/ontology#ownerName
+ener_ade:ownerName rdf:type owl:DatatypeProperty ;
+                   rdfs:domain ener_ade:BuildingUnit ;
+                   rdfs:range xsd:string .
+
+
+###  http://example.org/ontology#radiantFraction
+ener_ade:radiantFraction rdf:type owl:DatatypeProperty ;
+                         rdfs:domain ener_ade:UsageZone ;
+                         rdfs:range xsd:float ;
+                         rdfs:comment "Scale. Ratio of radiant heat exchange over total heat exchange."@en .
+
+
+###  http://example.org/ontology#rating
+ener_ade:rating rdf:type owl:DatatypeProperty ;
+                rdfs:domain ener_ade:EnergyPerformanceCertification ;
+                rdfs:range xsd:string ;
+                rdfs:comment """Degree or value resulting from the certification assessment.
+ (e.g. PassivHaus, LEED Platinium, KfW Effizienzhaus 100)"""@en .
+
+
+###  http://example.org/ontology#stationName
+ener_ade:stationName rdf:type owl:DatatypeProperty ;
+                     rdfs:domain ener_ade:WeatherStation ;
+                     rdfs:range xsd:string ;
+                     rdfs:comment "The name of Weather Station"@en .
+
+
+###  http://example.org/ontology#test
+ener_ade:test rdf:type owl:DatatypeProperty ;
+              rdfs:domain ener_ade:Transmittance ;
+              rdfs:range [ rdf:type rdfs:Datatype ;
+                           owl:oneOf [ rdf:type rdf:List ;
+                                       rdf:first 1 ;
+                                       rdf:rest [ rdf:type rdf:List ;
+                                                  rdf:first 2 ;
+                                                  rdf:rest [ rdf:type rdf:List ;
+                                                             rdf:first 3 ;
+                                                             rdf:rest rdf:nil
+                                                           ]
+                                                ]
+                                     ]
+                         ] .
+
+
+###  http://example.org/ontology#totalValue
+ener_ade:totalValue rdf:type owl:DatatypeProperty ;
+                    rdfs:domain ener_ade:UsageZone ;
+                    rdfs:range xsd:float ;
+                    rdfs:comment "Measure. Total heat exchange value (positve for heat source, negative for heat sink/cool source). The unit of measure of his attribute depends on the class and attribute for which the data type is used."@en .
+
+
+###  http://example.org/ontology#uom
+ener_ade:uom rdf:type owl:DatatypeProperty ;
+             rdfs:domain ener_ade:VolumeType ;
+             rdfs:range xsd:string ;
+             rdfs:comment "Unit of Measurement"@en .
+
+
+###  http://example.org/ontology#usedFloors
+ener_ade:usedFloors rdf:type owl:DatatypeProperty ;
+                    rdfs:domain ener_ade:UsageZone ;
+                    rdfs:range xsd:string ;
+                    rdfs:comment """List of the number of floors part of the usage zone (0 = ground level).
+It is represented as as a comma-separated string. 
+For instance:
+
+\"0,1,2\"^^xsd:string"""@en .
+
+
+###  http://example.org/ontology#value
+ener_ade:value rdf:type owl:DatatypeProperty ;
+               rdfs:domain ener_ade:FloorArea ,
+                           ener_ade:HeightAboveGround ,
+                           ener_ade:VolumeType ;
+               rdfs:range xsd:float ;
+               rdfs:comment "Area value"@en .
+
+
+###  http://example.org/ontology#yearOfManufacture
+ener_ade:yearOfManufacture rdf:type owl:DatatypeProperty ;
+                           rdfs:domain ener_ade:ThermalDistributionSystem ;
+                           rdfs:range xsd:integer .
+
+
+###  https://pedvolution.eu/ontology/EVC_Station_PoolName
+ped:EVC_Station_PoolName rdf:type owl:DatatypeProperty ;
+                         rdfs:domain ped:ElectricVehicleChargingStationPool ;
+                         rdfs:range xsd:string .
+
+
+###  https://pedvolution.eu/ontology/hasDescription
+ped:hasDescription rdf:type owl:DatatypeProperty ;
+                   rdfs:domain ped:Ped ;
+                   rdfs:range rdfs:Literal ;
+                   rdfs:label "has description"@en .
+
+
+###  https://pedvolution.eu/ontology/hasName
+ped:hasName rdf:type owl:DatatypeProperty ;
+            rdfs:domain ped:Ped ;
+            rdfs:range rdfs:Literal ;
+            rdfs:label "has name"@en .
+
+
+###  https://pedvolution.eu/ontology/inputVoltage
+ped:inputVoltage rdf:type owl:DatatypeProperty ;
+                 rdfs:domain ped:ElectricVehicleChargingStation ;
+                 rdfs:range xsd:decimal ;
+                 rdfs:comment "The input voltage required for the electric vehicle charging station, expressed in volts (V)" .
+
+
+###  https://pedvolution.eu/ontology/inverterInfo
+ped:inverterInfo rdf:type owl:DatatypeProperty ;
+                 rdfs:domain ped:Inverter ;
+                 rdfs:range xsd:string ;
+                 rdfs:comment "Description of the inverter (model,efficiency,max capacity, etc)."@en ;
+                 rdfs:label "has_thermalPowerOutput"@en .
+
+
+###  https://pedvolution.eu/ontology/panelInclination
+ped:panelInclination rdf:type owl:DatatypeProperty ;
+                     rdfs:domain ped:SolarPanelCharacteristics ;
+                     rdfs:range xsd:float ;
+                     rdfs:comment "The tilt angle from the horizontal."@en ;
+                     rdfs:label "panelInclination"@en .
+
+
+###  https://w3id.org/omega-x/ontology/EventsTimeSeriesvalue
+ets:value rdf:type owl:DatatypeProperty ;
+          rdfs:domain ets:PropertyValue ;
+          rdfs:comment "The value associated with a property value ."@en ;
+          rdfs:label "Value"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://example.org/ontology#AbstractBuilding
+ener_ade:AbstractBuilding rdf:type owl:Class .
+
+
+###  http://example.org/ontology#AbstractConstruction
+ener_ade:AbstractConstruction rdf:type owl:Class ;
+                              rdfs:comment "Abstract base class of Construction and ConstructionOrientation."@en .
+
+
+###  http://example.org/ontology#AbstractThermalZone
+ener_ade:AbstractThermalZone rdf:type owl:Class ;
+                             rdfs:comment "Abstract base class of the class ThermalZone."@en .
+
+
+###  http://example.org/ontology#AbstractUsageZone
+ener_ade:AbstractUsageZone rdf:type owl:Class .
+
+
+###  http://example.org/ontology#AbstructSchedule
+ener_ade:AbstructSchedule rdf:type owl:Class ;
+                          rdfs:comment "Base class for all kinds of schedules related to the building usage: heating and cooling schedules (set-point temperatures), ventilation schedules (mechanical air change rate), occupancy rate and facilities operation schedules."@en .
+
+
+###  http://example.org/ontology#BuildingTypeValue
+ener_ade:BuildingTypeValue rdf:type owl:Class .
+
+
+###  http://example.org/ontology#BuildingUnit
+ener_ade:BuildingUnit rdf:type owl:Class ;
+                      rdfs:comment "A building unit is a part of usage zone, such as dwelling or workplace, which is related to a single occupant entity."@en ;
+                      rdfs:label "Building Unit"@en .
+
+
+###  http://example.org/ontology#CityObject
+ener_ade:CityObject rdf:type owl:Class ;
+                    rdfs:subClassOf s4city:City ;
+                    rdfs:label "CityObject"@en .
+
+
+###  http://example.org/ontology#CityObject_Building_BoundarySurface
+ener_ade:CityObject_Building_BoundarySurface rdf:type owl:Class .
+
+
+###  http://example.org/ontology#CityObject_Building_Opening
+ener_ade:CityObject_Building_Opening rdf:type owl:Class .
+
+
+###  http://example.org/ontology#CityObject_Building_Room
+ener_ade:CityObject_Building_Room rdf:type owl:Class .
+
+
+###  http://example.org/ontology#ConstractionWeightValue
+ener_ade:ConstractionWeightValue rdf:type owl:Class .
+
+
+###  http://example.org/ontology#CurrentUseValue
+ener_ade:CurrentUseValue rdf:type owl:Class .
+
+
+###  http://example.org/ontology#DHWFacilities
+ener_ade:DHWFacilities rdf:type owl:Class ;
+                       rdfs:subClassOf ener_ade:Facilities .
+
+
+###  http://example.org/ontology#ElectricalAppliances
+ener_ade:ElectricalAppliances rdf:type owl:Class ;
+                              rdfs:subClassOf ener_ade:DHWFacilities .
+
+
+###  http://example.org/ontology#ElevationReferenceValue
+ener_ade:ElevationReferenceValue rdf:type owl:Class .
+
+
+###  http://example.org/ontology#EnergyPerformanceCertification
+ener_ade:EnergyPerformanceCertification rdf:type owl:Class ;
+                                        rdfs:comment "Energy performance certification."@en .
+
+
+###  http://example.org/ontology#EnergySystem
+ener_ade:EnergySystem rdf:type owl:Class .
+
+
+###  http://example.org/ontology#Facilities
+ener_ade:Facilities rdf:type owl:Class .
+
+
+###  http://example.org/ontology#FloorArea
+ener_ade:FloorArea rdf:type owl:Class .
+
+
+###  http://example.org/ontology#FloorAreaTypeValue
+ener_ade:FloorAreaTypeValue rdf:type owl:Class .
+
+
+###  http://example.org/ontology#HeatExchangeType
+ener_ade:HeatExchangeType rdf:type owl:Class .
+
+
+###  http://example.org/ontology#HeightAboveGround
+ener_ade:HeightAboveGround rdf:type owl:Class .
+
+
+###  http://example.org/ontology#HouseHold
+ener_ade:HouseHold rdf:type owl:Class .
+
+
+###  http://example.org/ontology#HouseholdTypeValue
+ener_ade:HouseholdTypeValue rdf:type owl:Class .
+
+
+###  http://example.org/ontology#Measure
+ener_ade:Measure rdf:type owl:Class ;
+                 rdfs:comment "A class representing a measured value with a unit." ;
+                 rdfs:label "Measure" .
+
+
+###  http://example.org/ontology#OccupantTypeValue
+ener_ade:OccupantTypeValue rdf:type owl:Class .
+
+
+###  http://example.org/ontology#Occupants
+ener_ade:Occupants rdf:type owl:Class .
+
+
+###  http://example.org/ontology#OwnershipTypeValue
+ener_ade:OwnershipTypeValue rdf:type owl:Class .
+
+
+###  http://example.org/ontology#RefurbishmentClassValue
+ener_ade:RefurbishmentClassValue rdf:type owl:Class ;
+                                 rdfs:comment "Level of the refurbishment measure."@en .
+
+
+###  http://example.org/ontology#RefurbishmentMeasure
+ener_ade:RefurbishmentMeasure rdf:type owl:Class ;
+                              rdfs:comment "Information on a refurbishment measure."@en .
+
+
+###  http://example.org/ontology#RelativeToTerrain
+ener_ade:RelativeToTerrain rdf:type owl:Class .
+
+
+###  http://example.org/ontology#RelativeToWater
+ener_ade:RelativeToWater rdf:type owl:Class .
+
+
+###  http://example.org/ontology#ResidenceTypeValue
+ener_ade:ResidenceTypeValue rdf:type owl:Class .
+
+
+###  http://example.org/ontology#ShadingType
+ener_ade:ShadingType rdf:type owl:Class ;
+                     rdfs:comment "Shading system of the considered opening"@en .
+
+
+###  http://example.org/ontology#ThermalBoundary
+ener_ade:ThermalBoundary rdf:type owl:Class .
+
+
+###  http://example.org/ontology#ThermalBoundaryTypeValue
+ener_ade:ThermalBoundaryTypeValue rdf:type owl:Class .
+
+
+###  http://example.org/ontology#ThermalDistributionSystem
+ener_ade:ThermalDistributionSystem rdf:type owl:Class .
+
+
+###  http://example.org/ontology#ThermalOpening
+ener_ade:ThermalOpening rdf:type owl:Class .
+
+
+###  http://example.org/ontology#ThermalStorageSystem
+ener_ade:ThermalStorageSystem rdf:type owl:Class .
+
+
+###  http://example.org/ontology#ThermalZone
+ener_ade:ThermalZone rdf:type owl:Class .
+
+
+###  http://example.org/ontology#Transmittance
+ener_ade:Transmittance rdf:type owl:Class .
+
+
+###  http://example.org/ontology#UsageZone
+ener_ade:UsageZone rdf:type owl:Class .
+
+
+###  http://example.org/ontology#VolumeType
+ener_ade:VolumeType rdf:type owl:Class ;
+                    rdfs:comment "Volume of e.g. a ThermalZone or UsageZone."@en .
+
+
+###  http://example.org/ontology#VolumeTypeValue
+ener_ade:VolumeTypeValue rdf:type owl:Class .
+
+
+###  http://example.org/ontology#WavelengthRangeType
+ener_ade:WavelengthRangeType rdf:type owl:Class .
+
+
+###  http://example.org/ontology#WeatherData
+ener_ade:WeatherData rdf:type owl:Class ;
+                     rdfs:comment "Data structure to model weather or climate data at the location of a building" .
+
+
+###  http://example.org/ontology#WeatherDataTypeValue
+ener_ade:WeatherDataTypeValue rdf:type owl:Class ;
+                              rdfs:comment "Enumeration of weather parameter types." ;
+                              rdfs:label "WeatherDataTypeValue" .
+
+
+###  http://example.org/ontology#WeatherStation
+ener_ade:WeatherStation rdf:type owl:Class .
+
+
+###  http://qudt.org/schema/qudt/QuantityValue
+qudt:QuantityValue rdf:type owl:Class .
+
+
+###  http://qudt.org/vocab/unit/KiloW
+unit:KiloW rdf:type owl:Class .
+
+
+###  http://qudt.org/vocab/unit/V
+unit:V rdf:type owl:Class .
+
+
+###  http://www.opengis.net/ont/geosparql#Feature
+geo:Feature rdf:type owl:Class ;
+            rdfs:subClassOf geo:SpatialObject ;
+            owl:disjointWith geo:Geometry ;
+            rdfs:comment "This class represents the top-level feature type. This class is equivalent to GFI_Feature defined in ISO 19156:2011, and it is superclass of all feature types."@en ;
+            rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> ;
+            rdfs:label "Feature"@en .
+
+
+###  http://www.opengis.net/ont/geosparql#Geometry
+geo:Geometry rdf:type owl:Class .
+
+
+###  http://www.opengis.net/ont/geosparql#Point
+geo:Point rdf:type owl:Class .
+
+
+###  http://www.opengis.net/ont/geosparql#SpatialObject
+geo:SpatialObject rdf:type owl:Class ;
+                  rdfs:comment "The class spatial-object represents everything that can have a spatial representation. It is superclass of feature and geometry."@en ;
+                  rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> ;
+                  rdfs:label "SpatialObject"@en .
+
+
+###  http://www.w3.org/2006/time#TemporalEntity
+time:TemporalEntity rdf:type owl:Class .
+
+
+###  http://www.w3.org/ns/shacl#NodeShape
+sh:NodeShape rdf:type owl:Class .
+
+
+###  http://www.w3.org/ns/shacl#PropertyShape
+sh:PropertyShape rdf:type owl:Class .
+
+
+###  https://brickschema.org/schema/Brick#electricVehicleChargerDirectionality
+brick:electricVehicleChargerDirectionality rdf:type owl:Class .
+
+
+###  https://brickschema.org/schema/BrickShape#haselectricVehicleChargerDirectionalityShape
+bsh:haselectricVehicleChargerDirectionalityShape rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/AssetScheduleAndFlexibilityOperations
+ped:AssetScheduleAndFlexibilityOperations rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/BatterySystemCharacteristics
+ped:BatterySystemCharacteristics rdf:type owl:Class ;
+                                 rdfs:subClassOf ped:BuildingEnergyAssetCharacteristics,ped:TechnicalCharacteristics ,
+                                                 [ rdf:type owl:Restriction ;
+                                                   owl:onProperty ped:hasStorage ;
+                                                   owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                   owl:onClass s4ener:Storage
+                                                 ] .
+
+
+###  https://pedvolution.eu/ontology/Building
+ped:Building rdf:type owl:Class ;
+             rdfs:comment "An independent unit of the built environment with a characteristic spatial structure;"@en ;
+             rdfs:label "Building"@en .
+
+
+###  https://pedvolution.eu/ontology/BuildingConstructionCharacteristics
+ped:BuildingConstructionCharacteristics rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/BuildingEnergyAssetCharacteristics
+ped:BuildingEnergyAssetCharacteristics rdf:type owl:Class ;
+                                       rdfs:comment "Building Energy Asset Characteristics."@en ;
+                                       rdfs:label "BuildingEnergyAssetCharacteristics"@en .
+
+
+###  https://pedvolution.eu/ontology/BuildingFacilities
+ped:BuildingFacilities rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/Category
+ped:Category rdf:type owl:Class ;
+             rdfs:subClassOf prop:Category ;
+             rdfs:comment "A class of categories, used to enumerate possible values of qualitative properties."@en ;
+             rdfs:label "Category"@en .
+
+
+###  https://pedvolution.eu/ontology/CertificationAndAssessmentData
+ped:CertificationAndAssessmentData rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/ChargingSpeed
+ped:ChargingSpeed rdf:type owl:Class ;
+                  rdfs:subClassOf prop:QualitativeProperty .
+
+
+###  https://pedvolution.eu/ontology/ChargingSpeedCategory
+ped:ChargingSpeedCategory rdf:type owl:Class ;
+                          rdfs:subClassOf prop:Category ;
+                          rdfs:comment "Identified values for charging speed category."@en ;
+                          rdfs:isDefinedBy ped: ;
+                          rdfs:label "Charging Speed Category"@en .
+
+
+###  https://pedvolution.eu/ontology/ConsumptionAndProductionMeasurements
+ped:ConsumptionAndProductionMeasurements rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/Datasets
+ped:Datasets rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/DistrictEconomicCharacteristics
+ped:DistrictEconomicCharacteristics rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/DHC_Characteristics
+ped:DHC_Characteristics rdf:type owl:Class ;
+                                 rdfs:subClassOf ped:TechnicalCharacteristics,
+                                 [
+                                  rdf:type owl:Restriction ; 
+                                  owl:onProperty ener_ade:hasThermalDistributionSystem ;
+                                  owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                  owl:onClass ener_ade:ThermalDistributionSystem
+                                 ],
+                                 [
+                                  rdf:type owl:Restriction ; 
+                                  owl:onProperty ener_ade:hasThermalStorageSystem;
+                                  owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                  owl:onClass ener_ade:ThermalStorageSystem
+                                 ] .
+  
+
+###  https://pedvolution.eu/ontology/DistrictSocialCharacteristics
+ped:DistrictSocialCharacteristics rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/EVC_Station_PoolName
+ped:EVC_Station_PoolName rdf:type owl:Class ;
+                         rdfs:subClassOf em:name .
+
+
+###  https://pedvolution.eu/ontology/EVChargingCharacteristics
+ped:EVChargingCharacteristics rdf:type owl:Class ;
+                              rdfs:subClassOf ped:BuildingEnergyAssetCharacteristics ,
+                                              ped:TechnicalCharacteristics ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty ped:includesElectricVehicleChargingStations ;
+                                                owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                owl:onClass ped:ElectricVehicleChargingStation
+                                              ] ;
+                              rdfs:comment "Electric Vehicle Charging Characteristics."@en ;
+                              rdfs:label "EVChargingCharacteristics"@en .
+
+
+###  https://pedvolution.eu/ontology/EconomicData
+ped:EconomicData rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/ElectricVehicleChargerType
+ped:ElectricVehicleChargerType rdf:type owl:Class ;
+                               rdfs:comment "Represents different types of EVSE chargers, such as Level 1, Level 2, and Level 3."@en ;
+                               rdfs:label "Electric Vehicle Charger Type"@en .
+
+
+###  https://pedvolution.eu/ontology/ElectricVehicleChargingDirectionalityShape
+ped:ElectricVehicleChargingDirectionalityShape rdf:type owl:Class ;
+                                               rdfs:subClassOf brick:ElectricVehicleChargingDirectionalityShape ;
+                                               rdfs:comment "EVSE charger supports bidirectional charging or just unidirectional charging of the EV battery" ;
+                                               rdfs:label "ElectricVehicleChargingDirectionalityShape"@en ;
+                                               sh:property [ rdf:type sh:PropertyShape ;
+                                                             sh:in [ ] ;
+                                                           sh:maxCount 1 ;
+                                                           sh:minCount 1 ;
+                                                           sh:path ped:value
+                                               ] .
+
+
+###  https://pedvolution.eu/ontology/ElectricVehicleChargingPort
+ped:ElectricVehicleChargingPort rdf:type owl:Class ;
+                                rdfs:subClassOf brick:Electrical_Equipment ;
+                                rdfs:label "ElectricVehicleChargingPort"@en ;
+                                <http://www.w3.org/2004/02/skos/core#definition> "An individual point of attachment for charging a single electric vehicle"@en .
+
+
+###  https://pedvolution.eu/ontology/ElectricVehicleChargingStation
+ped:ElectricVehicleChargingStation rdf:type owl:Class ;
+                                   rdfs:subClassOf em:ElectricVehicleChargingStation ,
+                                                   [ rdf:type owl:Restriction ;
+                                                     owl:onProperty ped:hasElectricVehicleChargingPort ;
+                                                     owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                     owl:onClass ped:ElectricVehicleChargingPort
+                                                   ] ;
+                                   owl:disjointWith ped:ElectricVehicleSupplyEquipment ,
+                                                    ped:ElectricVehicleSupplyEquipmentConnector ;
+                                   rdfs:comment "(source eMIP) A Charging Station is a physical element, visible for the users, on which Charging Points are available. The Charging Station is also the �Human-Machine Interface� (HMI) between the charge infrastructure and the end users."@en ;
+                                   rdfs:isDefinedBy ped: ;
+                                   rdfs:label "Electric Vehicle Charging Station"@en ;
+                                   rdfs:seeAlso <https://www.gireve.com/wp-content/uploads/2022/09/Gireve_Tech_eMIP-V0.7.4_ImplementationGuide_1.0.7_en.pdf> .
+
+
+###  https://pedvolution.eu/ontology/ElectricVehicleChargingStationPool
+ped:ElectricVehicleChargingStationPool rdf:type owl:Class ;
+                                       rdfs:subClassOf em:ElectricVehicleChargingStationPool ;
+                                       rdfs:comment "(source eMIP) A Charging Pool is a location where charging infrastructure elements can be found. A Charging Pool may contain several Charging Stations."@en ;
+                                       rdfs:isDefinedBy ped: ;
+                                       rdfs:label "Electric Vehicle Charging Station Pool"@en ;
+                                       rdfs:seeAlso <https://www.gireve.com/wp-content/uploads/2022/09/Gireve_Tech_eMIP-V0.7.4_ImplementationGuide_1.0.7_en.pdf> .
+
+
+###  https://pedvolution.eu/ontology/ElectricVehicleConnectorTypeShape
+ped:ElectricVehicleConnectorTypeShape rdf:type owl:Class ;
+                                      rdfs:subClassOf brick:ElectricVehicleConnectorTypeShape ;
+                                      rdfs:comment "Represents different types of EVSE connector shapes, such as Type 1, Type 2, GB/T, CHAdeMO, CCS, Tesla Supercharger, and Wireless."@en ;
+                                      rdfs:label "Electric Vehicle Connector Type Shape"@en .
+
+
+###  https://pedvolution.eu/ontology/ElectricVehicleSupplyEquipment
+ped:ElectricVehicleSupplyEquipment rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/ElectricVehicleSupplyEquipmentConnector
+ped:ElectricVehicleSupplyEquipmentConnector rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/EnergyAndMeteringMeasurements
+ped:EnergyAndMeteringMeasurements rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/EnergyChargingCharacteristics
+ped:EnergyChargingCharacteristics rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/GeoSpatialData
+ped:GeoSpatialData rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/HVACBuildingCharacteristics
+ped:HVACBuildingCharacteristics rdf:type owl:Class ;
+                                rdfs:subClassOf ped:BuildingEnergyAssetCharacteristics ,
+                                                [ rdf:type owl:Restriction ;
+                                                  owl:onProperty ped:hasHVAC_Equipment ;
+                                                  owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                  owl:onClass ped:HVAC_Equipment
+                                                ] ,
+                                                [ rdf:type owl:Restriction ;
+                                                  owl:onProperty ped:hasHVAC_System ;
+                                                  owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                  owl:onClass ped:HVAC_System
+                                                ] ;
+                                rdfs:comment "HVAC Building Characteristics."@en ;
+                                rdfs:label "HVAC Building Characteristics"@en .
+
+
+###  https://pedvolution.eu/ontology/HVAC_Equipment
+ped:HVAC_Equipment rdf:type owl:Class ;
+                   rdfs:subClassOf brick:HVAC_Equipment .
+
+
+###  https://pedvolution.eu/ontology/HVAC_System
+ped:HVAC_System rdf:type owl:Class ;
+                rdfs:subClassOf brick:HVAC_System .
+
+
+###  https://pedvolution.eu/ontology/HVAC_SystemCharacteristics
+ped:HVAC_SystemCharacteristics rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/HeatingAndCoolingInfrastructures
+ped:HeatingAndCoolingInfrastructures rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/Inverter
+ped:Inverter rdf:type owl:Class ;
+             rdfs:comment "Inverter equipment."@en ;
+             rdfs:label "Inverter"@en .
+
+
+###  https://pedvolution.eu/ontology/Observations
+ped:Observations rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/PV_PowerOutput
+ped:PV_PowerOutput rdf:type owl:Class ;
+                   rdfs:comment "The peak power output of the PV solar panel under standard test conditions."@en ;
+                   rdfs:isDefinedBy ped: ;
+                   rdfs:label "PV_PowerOutput"@en ;
+                   prop:isMeasuredIn unit:KiloW .
+
+
+###  https://pedvolution.eu/ontology/PanelOrientationValue
+ped:PanelOrientationValue rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/PanelOrientationValueType
+ped:PanelOrientationValueType rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/Ped
+ped:Ped rdf:type owl:Class ;
+        rdfs:subClassOf s4city:District .
+
+
+###  https://pedvolution.eu/ontology/Properties
+ped:Properties rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/Quality
+ped:Quality rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/QuantitativeProperty
+ped:QuantitativeProperty rdf:type owl:Class ;
+                         rdfs:subClassOf prop:Property ;
+                         rdfs:comment "Physical quantities associated to numerical values and unit of measures"@en ;
+                         rdfs:label "Quantitative property"@en .
+
+
+###  https://pedvolution.eu/ontology/Roles
+ped:Roles rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/Site
+ped:Site rdf:type owl:Class ;
+         rdfs:subClassOf bot:Site ;
+         rdfs:comment "An area containing one or more buildings"@en ;
+         rdfs:label "Site"@en .
+
+
+###  https://pedvolution.eu/ontology/SocialData
+ped:SocialData rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/SolarArray
+ped:SolarArray rdf:type owl:Class ;
+               rdfs:subClassOf solar:SolarArray ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty ped:consistOfStrings ;
+                                 owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                 owl:onClass ped:SolarString
+                               ] ;
+               rdfs:comment "Solar arrays consists of one or many strings (modules) of solar panels."@en ;
+               rdfs:label "Solar Array"@en .
+
+
+###  https://pedvolution.eu/ontology/SolarPanelCharacteristics
+ped:SolarPanelCharacteristics rdf:type owl:Class ;
+                              rdfs:subClassOf ped:BuildingEnergyAssetCharacteristics ,
+                                              ped:TechnicalCharacteristics ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty ped:hasInverter ;
+                                                owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                owl:onClass ped:SolarPanelCharacteristics
+                                              ] ,
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty ped:includesSolarArrays ;
+                                                owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                owl:onClass ped:SolarArray
+                                              ] ;
+                              rdfs:comment "Solar Panel Characteristics."@en ;
+                              rdfs:label "SolarPanelCharacteristic"@en .
+
+
+###  https://pedvolution.eu/ontology/SolarPlanel
+ped:SolarPlanel rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/SolarString
+ped:SolarString rdf:type owl:Class ;
+                rdfs:subClassOf solar:SolarString ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty ped:consistOfPanels ;
+                                  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                  owl:onClass seas:SolarCell
+                                ] ;
+                rdfs:comment "Solar strings (modules) consist of one or many solar panels."@en ;
+                rdfs:label "Solar String"@en .
+
+
+###  https://pedvolution.eu/ontology/TechnicalCharacteristics
+ped:TechnicalCharacteristics rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/TechnicalData
+ped:TechnicalData rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/WaterDistribution
+ped:WaterDistribution rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/WeatherAndClimateData
+ped:WeatherAndClimateData rdf:type owl:Class .
+
+
+###  https://pedvolution.eu/ontology/hasElectricVehicleChargerDirectionalityShape
+ped:hasElectricVehicleChargerDirectionalityShape rdf:type owl:Class ;
+                                                 rdfs:subClassOf bsh:haselectricVehicleChargerDirectionalityShape .
+
+
+###  https://pedvolution.eu/ontology/hasLocationAsPool
+ped:hasLocationAsPool rdf:type owl:Class ;
+                      rdfs:subClassOf em:hasLocationAsPool .
+
+
+###  https://pedvolution.eu/ontology/thermalPowerOutput
+ped:thermalPowerOutput rdf:type owl:Class ;
+                       rdfs:comment "The peak thermal power output (for thermal or hybrid PVth systems)."@en ;
+                       rdfs:isDefinedBy ped: ;
+                       rdfs:label "thermalPowerOutput"@en ;
+                       prop:isMeasuredIn unit:KiloW .
+
+
+###  https://pedvolution.eu/ontology/yearlyElectricityProduction
+ped:yearlyElectricityProduction rdf:type owl:Class ;
+                                rdfs:comment "The expected or measured yearly electricity output (kW/h)."@en ;
+                                rdfs:isDefinedBy ped: ;
+                                rdfs:label "yearlyElectricityProduction"@en ;
+                                prop:isMeasuredIn unit:KiloW-HR .
+
+
+###  https://pedvolution.eu/ontology/yearlyHeatProduction
+ped:yearlyHeatProduction rdf:type owl:Class ;
+                         rdfs:comment "Yearly thermal power output of thermal or hybrid PVth systems (kW/h)."@en ;
+                         rdfs:isDefinedBy ped: ;
+                         rdfs:label "yearlyHeatProduction"@en ;
+                         prop:isMeasuredIn unit:KiloW-HR .
+
+
+###  https://pedvolution.eu/ontology/yearlyThermalProduction
+ped:yearlyThermalProduction rdf:type owl:Class .
+
+
+###  https://saref.etsi.org/saref4city/AdministrativeArea
+s4city:AdministrativeArea rdf:type owl:Class ;
+                          rdfs:subClassOf geo:Feature ;
+                          rdfs:comment "An administrative division, unit, entity, area or region, also referred to as a subnational entity, constituent unit, or country subdivision, is a portion of a country or other region delineated for the purpose of administration. (https://en.wikipedia.org/wiki/Administrative_division)"@en ;
+                          rdfs:label "Administrative area"@en .
+
+
+###  https://saref.etsi.org/saref4city/City
+s4city:City rdf:type owl:Class ;
+            rdfs:subClassOf s4city:AdministrativeArea ;
+            rdfs:comment "A city is a large human settlement. A city is distinguished from other human settlements by its relatively great size, but also by its functions and its special symbolic status, which may be conferred by a central authority. (https://en.wikipedia.org/wiki/City)"@en ;
+            rdfs:label "City"@en .
+
+
+###  https://saref.etsi.org/saref4city/CityObject
+s4city:CityObject rdf:type owl:Class ;
+                  rdfs:subClassOf geo:Feature ;
+                  rdfs:comment "Generic class for describing city objects."@en ;
+                  rdfs:label "City object"@en .
+
+
+###  https://saref.etsi.org/saref4city/Country
+s4city:Country rdf:type owl:Class ;
+               rdfs:subClassOf s4city:AdministrativeArea ;
+               rdfs:comment "A country is a region that is identified as a distinct national entity in political geography. (https://en.wikipedia.org/wiki/Country)"@en ;
+               rdfs:label "Country"@en .
+
+
+###  https://saref.etsi.org/saref4city/District
+s4city:District rdf:type owl:Class ;
+                rdfs:subClassOf s4city:AdministrativeArea ;
+                rdfs:comment "A district is a type of administrative division that, in some countries, is managed by local government. Across the world, areas known as \"districts\" vary greatly in size, spanning regions or counties, several municipalities, subdivisions of municipalities, school district, or political district. (https://en.wikipedia.org/wiki/District)"@en ;
+                rdfs:label "District"@en .
+
+
+###  https://saref.etsi.org/saref4city/Neighbourhood
+s4city:Neighbourhood rdf:type owl:Class ;
+                     rdfs:subClassOf s4city:AdministrativeArea ;
+                     rdfs:comment "A neighbourhood (British English), or neighborhood (American English; see spelling differences), is a geographically localised community within a larger city, town, suburb or rural area. (https://en.wikipedia.org/wiki/Neighbourhood)"@en ;
+                     rdfs:label "Neighbourhood"@en .
+
+
+###  https://w3id.org/bot#Building
+bot:Building rdf:type owl:Class .
+
+
+###  https://w3id.org/bot#Site
+bot:Site rdf:type owl:Class .
+
+
+###  https://w3id.org/omega-x/Ontology/Property/Category
+prop:Category rdf:type owl:Class ;
+              rdfs:subClassOf ets:PropertyValue ;
+              rdfs:comment "A class of categories, used to enumerate possible values of qualitative properties."@en ;
+              rdfs:label "Category"@en .
+
+
+###  https://w3id.org/omega-x/Ontology/Property/ChargingSpeed
+prop:ChargingSpeed rdf:type owl:Class ;
+                   rdfs:subClassOf prop:QualitativeProperty .
+
+
+###  https://w3id.org/omega-x/Ontology/Property/ChargingSpeedCategory
+prop:ChargingSpeedCategory rdf:type owl:Class ;
+                           rdfs:subClassOf prop:Category .
+
+
+###  https://w3id.org/omega-x/Ontology/Property/CubicMeter-HR
+prop:CubicMeter-HR rdf:type owl:Class ;
+                   rdfs:subClassOf prop:Unit ;
+                   rdfs:comment ""@en ;
+                   rdfs:isDefinedBy prop: ;
+                   rdfs:label "Cubic Meter per Hour"@en .
+
+
+###  https://w3id.org/omega-x/Ontology/Property/DCPower
+prop:DCPower rdf:type owl:Class .
+
+
+###  https://w3id.org/omega-x/Ontology/Property/Property
+prop:Property rdf:type owl:Class ;
+              rdfs:comment "A characteristic of the real world that can be observed."@en ;
+              rdfs:label "Property"@en .
+
+
+###  https://w3id.org/omega-x/Ontology/Property/QualitativeProperty
+prop:QualitativeProperty rdf:type owl:Class ;
+                         rdfs:subClassOf prop:Property ;
+                         owl:disjointWith prop:QuantitativeProperty ;
+                         rdfs:comment "A qualitative property is a characteristic of real world with possible values defined by a defined category. Qualitative properties have non numerical values."@en ;
+                         rdfs:label "Qualitative Property"@en .
+
+
+###  https://w3id.org/omega-x/Ontology/Property/QuantitativeProperty
+prop:QuantitativeProperty rdf:type owl:Class ;
+                          rdfs:subClassOf prop:Property ;
+                          rdfs:comment "Physical quantities associated to numerical values and unit of measures"@en ;
+                          rdfs:label "Quantitative property"@en .
+
+
+###  https://w3id.org/omega-x/Ontology/Property/Unit
+prop:Unit rdf:type owl:Class ;
+          rdfs:comment "A standard of measurement for quantities."@en ;
+          rdfs:label "Unit"@en .
+
+
+###  https://w3id.org/omega-x/Ontology/Property/inverterMaxInputDCPower
+prop:inverterMaxInputDCPower rdf:type owl:Class ;
+                             rdfs:subClassOf prop:DCPower ,
+                                             prop:inverterProperty ;
+                             rdfs:comment "The maximum input DC  power of an inverter."@en ;
+                             rdfs:isDefinedBy prop: ;
+                             rdfs:label "Inverter Max Input DC Power"@en ;
+                             prop:isMeasuredIn unit:W .
+
+
+###  https://w3id.org/omega-x/Ontology/Property/inverterProperty
+prop:inverterProperty rdf:type owl:Class .
+
+
+###  https://w3id.org/omega-x/ontology/EventsTimeSeriesPropertyValue
+ets:PropertyValue rdf:type owl:Class ;
+                  rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                    owl:onProperty prop:hasUnit ;
+                                    owl:someValuesFrom prop:Unit
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty ets:value ;
+                                    owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                  ] ;
+                  rdfs:comment "A property value is the value associated with a unique property and a unit of measurement."@en ;
+                  rdfs:isDefinedBy <https://w3id.org/omega-x/ontology/EventsTimeSeries> ;
+                  rdfs:label "Property Value"@en .
+
+
+###  https://w3id.org/omega-x/ontology/EventsTimeSeriesValueSet
+ets:ValueSet rdf:type owl:Class ;
+             rdfs:subClassOf [ rdf:type owl:Restriction ;
+                               owl:onProperty ets:hasTemporalContext ;
+                               owl:someValuesFrom time:TemporalEntity
+                             ] ;
+             rdfs:comment "Container for a set of values. The four kinds of value set are: data points, data collections, events and time series."@en ;
+             rdfs:label "Value Set"@en .
+
+
+###  https://w3id.org/omega-x/ontology/Electromobility/ElectricVehicleChargingStation
+em:ElectricVehicleChargingStation rdf:type owl:Class .
+
+
+###  https://w3id.org/omega-x/ontology/Electromobility/ElectricVehicleChargingStationPool
+em:ElectricVehicleChargingStationPool rdf:type owl:Class .
+
+
+###  https://w3id.org/omega-x/ontology/Electromobility/hasLocationAsPool
+em:hasLocationAsPool rdf:type owl:Class .
+
+
+###  https://w3id.org/omega-x/ontology/Electromobility/name
+em:name rdf:type owl:Class .
+
+
+###  https://w3id.org/omega-x/ontology/Renewables/SolarArray
+solar:SolarArray rdf:type owl:Class .
+
+
+###  https://w3id.org/omega-x/ontology/Renewables/SolarString
+solar:SolarString rdf:type owl:Class .
+
+
+###  https://w3id.org/seas/SolarCell
+seas:SolarCell rdf:type owl:Class .
+
+################################# ped: Building definitions ###############
+###  http://example.org/ontology#PostalAddress
+ped:PostalAddress rdf:type owl:Class ;
+    rdfs:label "Postal address"^^xsd:string ;
+    rdfs:comment "Physical address of the architecture (site, building, sub-building, entrance room, etc.)";
+    rdfs:subClassOf [
+                    rdf:type owl:Restriction ; 
+                    owl:onProperty ped:addressLine1 ;
+                    owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                    owl:onClass xsd:string ;
+                   ],
+                   [
+                    rdf:type owl:Restriction ; 
+                    owl:onProperty ped:addressLine2 ;
+                    owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                    owl:onClass xsd:string ;
+                   ],
+                   [
+                    rdf:type owl:Restriction ; 
+                    owl:onProperty ped:City ;
+                    owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                    owl:onClass xsd:string ;
+                   ],
+                    [
+                    rdf:type owl:Restriction ; 
+                    owl:onProperty ped:Country ;
+                    owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                    owl:onClass xsd:string ;
+                   ] ,
+                   [
+                    rdf:type owl:Restriction ; 
+                    owl:onProperty ped:postalCode ;
+                    owl:cardinality "1"^^xsd:nonNegativeInteger ;
+                    owl:onClass xsd:string ;
+                   ] .
+
+###  http://example.org/ontology#hasPostalAddress                   
+ped:hasPostalAddress rdf:type owl:ObjectProperty;
+   rdfs:label "hasPostalAddress"@en ;
+   rdfs:domain ped:Building;
+   rdfs:range  ped:PostalAddress  .
+
+
+###  http://example.org/ontology#addressLine1
+ped:addressLine1 rdf:type owl:DatatypeProperty;
+    rdfs:label "addressLine1"@en ;
+    rdfs:domain ped:PostalAddress ;
+    rdfs:range xsd:string .
+
+###  http://example.org/ontology#addressLine2
+ped:addressLine2 rdf:type owl:DatatypeProperty ;
+    rdfs:label "addressLine2"@en ;
+    rdfs:domain ped:PostalAddress ;
+    rdfs:range xsd:string .
+
+###  http://example.org/ontology#postalCode
+ped:postalCode rdf:type owl:DatatypeProperty ;
+    rdfs:label "postalCode"@en ;
+    rdfs:domain ped:PostalAddress ;
+    rdfs:range xsd:string  .
+
+###  http://example.org/ontology#City
+ped:City rdf:type owl:DatatypeProperty ;
+    rdfs:label "City"@en ;
+    rdfs:domain ped:PostalAddress ;
+    rdfs:range xsd:string .
+
+###  http://example.org/ontology#Country
+ped:Country rdf:type owl:DatatypeProperty ;
+    rdfs:label "Country"@en ;
+    rdfs:domain ped:PostalAddress ;
+    rdfs:range xsd:string  .
+
+###  http://example.org/ontology#yearBuilt
+ped:yearBuilt rdf:type owl:DatatypeProperty ;
+    rdfs:label "Year built"@en ;
+    rdfs:domain ped:Building ;
+    rdfs:range [
+        a rdfs:Datatype ;
+        owl:onDatatype xsd:integer ;
+        owl:withRestrictions ( 
+            [ xsd:minInclusive "1000"^^xsd:integer ]
+            [ xsd:maxInclusive "9999"^^xsd:integer ]
+        )
+    ] ;
+    rdfs:comment "Four-digit year that a building was first built." .
+
+###  http://example.org/culturalClassification
+ped:culturalClassification a owl:DatatypeProperty ;
+    rdfs:label "Cultural Classification"@en ;
+    rdfs:domain ped:Building ;
+    rdfs:range [
+        a rdfs:Datatype ;
+        owl:onDatatype xsd:string ;
+        owl:oneOf (
+            "Archaeological"
+            "Historical"
+            "Architectural"
+            "Religious"
+            "Modernist"
+            "Heritage Site"
+            "UNESCO World Heritage"
+        )
+    ] ;
+    rdfs:comment "The cultural classification of a building, chosen from a predefined list."@en .
+
+### Define the Coordinates class
+ped:Coordinates a owl:Class ;
+    rdfs:label "Coordinates"@en ;
+    rdfs:comment "A class representing geographic coordinates (latitude and longitude)."@en .
+
+### Define latitude property
+ped:latitude a owl:DatatypeProperty ;
+    rdfs:label "Latitude"@en ;
+    rdfs:domain ped:Coordinates ;
+    rdfs:range xsd:double ;
+    rdfs:comment "Latitude of the building location."@en .
+
+### Define longitude property
+ped:longitude a owl:DatatypeProperty ;
+    rdfs:label "Longitude"@en ;
+    rdfs:domain ped:Coordinates ;
+    rdfs:range xsd:double ;
+    rdfs:comment "Longitude of the building location."@en .
+
+### Define the hasCoordinates property
+ped:hasCoordinates a owl:ObjectProperty ;
+    rdfs:label "Has Coordinates"@en ;
+    rdfs:domain ped:Building ;
+    rdfs:range ped:Coordinates ;
+    rdfs:comment "Links a building to its geographic coordinates."@en .
+
+########### example ########
+ped:NotreDame a ped:Building ;
+    rdfs:label "Notre Dame Cathedral"@en ;
+    ped:hasCoordinates ped:NotreDameCoords .
+
+ped:NotreDameCoords a ped:Coordinates ;
+    ped:latitude 48.852968 ;
+    ped:longitude 2.349902 .
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://example.org/ontology#AdvancedRefurbishment
+ener_ade:AdvancedRefurbishment rdf:type owl:NamedIndividual ,
+                                        ener_ade:RefurbishmentClassValue .
+
+
+###  http://example.org/ontology#Corporation
+ener_ade:Corporation rdf:type owl:NamedIndividual ,
+                              ener_ade:OwnershipTypeValue .
+
+
+
+
+###  http://example.org/ontology#Government
+ener_ade:Government rdf:type owl:NamedIndividual ,
+                             ener_ade:OwnershipTypeValue .
+
+
+###  http://example.org/ontology#NonOccupantPrivateOwner
+ener_ade:NonOccupantPrivateOwner rdf:type owl:NamedIndividual ,
+                                          ener_ade:OwnershipTypeValue .
+
+
+###  http://example.org/ontology#NonProfitOrganisation
+ener_ade:NonProfitOrganisation rdf:type owl:NamedIndividual ,
+                                        ener_ade:OwnershipTypeValue .
+
+
+###  http://example.org/ontology#OccupantPrivateOwner
+ener_ade:OccupantPrivateOwner rdf:type owl:NamedIndividual ,
+                                       ener_ade:OwnershipTypeValue .
+
+
+###  http://example.org/ontology#OtherOrCombination
+ener_ade:OtherOrCombination rdf:type owl:NamedIndividual ,
+                                     ener_ade:OwnershipTypeValue .
+
+
+###  http://example.org/ontology#PropertyManagementCompany
+ener_ade:PropertyManagementCompany rdf:type owl:NamedIndividual ,
+                                            ener_ade:OwnershipTypeValue .
+
+
+###  http://example.org/ontology#SolarPanel_1
+ener_ade:SolarPanel_1 rdf:type owl:NamedIndividual ,
+                               ener_ade:EnergySystem ;
+                      ener_ade:yearOfManufacture 2020 .
+
+
+###  http://example.org/ontology#UsualRefurbishment
+ener_ade:UsualRefurbishment rdf:type owl:NamedIndividual ,
+                                     ener_ade:RefurbishmentClassValue .
+
+
+###  http://example.org/ontology#airTemperature
+ener_ade:airTemperature rdf:type owl:NamedIndividual ,
+                                 ener_ade:WeatherDataTypeValue .
+
+
+###  http://example.org/ontology#apartmentBlock
+ener_ade:apartmentBlock rdf:type owl:NamedIndividual ,
+                                 ener_ade:BuildingTypeValue .
+
+
+###  http://example.org/ontology#atticFloor
+ener_ade:atticFloor rdf:type owl:NamedIndividual ,
+                             ener_ade:ThermalBoundaryTypeValue ;
+                    rdfs:comment "Horizontal partition separating the attic and the highest full storey."@en .
+
+
+###  http://example.org/ontology#basementCeiling
+ener_ade:basementCeiling rdf:type owl:NamedIndividual ,
+                                  ener_ade:ThermalBoundaryTypeValue ;
+                         rdfs:comment "Horizontal partition separating the basement floor and the ground floor."@en .
+
+
+###  http://example.org/ontology#bottomOfConstruction
+ener_ade:bottomOfConstruction rdf:type owl:NamedIndividual ,
+                                       ener_ade:ElevationReferenceValue ;
+                              rdfs:comment "The elevation has been captured at the bottom of the usable part of the construction. NOTE: The bottom of usable part of a building is generally its lowest underground floor."@en .
+
+
+###  http://example.org/ontology#bottomThermalBoundary
+ener_ade:bottomThermalBoundary rdf:type owl:NamedIndividual ,
+                                        ener_ade:ElevationReferenceValue ;
+                               rdfs:comment "The elevation has been captured at the bottom of the lowest Thermal Boundary."@en .
+
+
+###  http://example.org/ontology#cloudiness
+ener_ade:cloudiness rdf:type owl:NamedIndividual ,
+                             ener_ade:WeatherDataTypeValue .
+
+
+###  http://example.org/ontology#daylightIlluminance
+ener_ade:daylightIlluminance rdf:type owl:NamedIndividual ,
+                                      ener_ade:WeatherDataTypeValue .
+
+
+###  http://example.org/ontology#difusseSolarIrradiance
+ener_ade:difusseSolarIrradiance rdf:type owl:NamedIndividual ,
+                                         ener_ade:WeatherDataTypeValue .
+
+
+###  http://example.org/ontology#directSolarIrradiance
+ener_ade:directSolarIrradiance rdf:type owl:NamedIndividual ,
+                                        ener_ade:WeatherDataTypeValue .
+
+
+###  http://example.org/ontology#downwardTerrestrialRadiation
+ener_ade:downwardTerrestrialRadiation rdf:type owl:NamedIndividual ,
+                                               ener_ade:WeatherDataTypeValue .
+
+
+###  http://example.org/ontology#energyReferenceArea
+ener_ade:energyReferenceArea rdf:type owl:NamedIndividual ,
+                                      ener_ade:FloorAreaTypeValue ;
+                             rdfs:comment "Floor area determined by specific regulations."@en .
+
+
+###  http://example.org/ontology#energyReferenceVolume
+ener_ade:energyReferenceVolume rdf:type owl:NamedIndividual ,
+                                        ener_ade:VolumeTypeValue ;
+                               rdfs:comment "Volume determined by specific regulations."@en .
+
+
+###  http://example.org/ontology#entirelyAboveTerain
+ener_ade:entirelyAboveTerain rdf:type owl:NamedIndividual ,
+                                      ener_ade:RelativeToTerrain .
+
+
+###  http://example.org/ontology#entirelyAboveTerrain
+ener_ade:entirelyAboveTerrain rdf:type owl:NamedIndividual ;
+                              rdfs:comment "Object is located entirely above terrain."@en .
+
+
+###  http://example.org/ontology#entirelyAboveWaterSurface
+ener_ade:entirelyAboveWaterSurface rdf:type owl:NamedIndividual ,
+                                            ener_ade:RelativeToWater ;
+                                   rdfs:comment "Object is located entirely above water surface.."@en .
+
+
+###  http://example.org/ontology#entirelyBelowTerrain
+ener_ade:entirelyBelowTerrain rdf:type owl:NamedIndividual ,
+                                       ener_ade:RelativeToTerrain ;
+                              rdfs:comment "All parts of the object are located below terrain."@en ,
+                                           "Object is located entirely above water surface.."@en .
+
+
+###  http://example.org/ontology#entirelyBelowWaterSurface
+ener_ade:entirelyBelowWaterSurface rdf:type owl:NamedIndividual ,
+                                            ener_ade:RelativeToWater ;
+                                   rdfs:comment "All parts of the object are located below water surface."@en .
+
+
+###  http://example.org/ontology#entrancePoint
+ener_ade:entrancePoint rdf:type owl:NamedIndividual ,
+                                ener_ade:ElevationReferenceValue ;
+                       rdfs:comment "The elevation has been captured at the entrance of the construction, generally the bottom of entrance door."@en .
+
+
+###  http://example.org/ontology#generalEave
+ener_ade:generalEave rdf:type owl:NamedIndividual ,
+                              ener_ade:ElevationReferenceValue ;
+                     rdfs:comment "The elevation has been captured at eave level, anywhere between the lowest and the highest eave levels of the construction. NOTE: in case of a roof having a symmetry axis, values generalEave, lowestEave and highestEave are equivalent."@en .
+
+
+###  http://example.org/ontology#generalRoof
+ener_ade:generalRoof rdf:type owl:NamedIndividual ,
+                              ener_ade:ElevationReferenceValue ;
+                     rdfs:comment "The elevation has been captured at roof level, anywhere between the lowest edge roof level and the top of the construction."@en .
+
+
+###  http://example.org/ontology#generalRoofEdge
+ener_ade:generalRoofEdge rdf:type owl:NamedIndividual ,
+                                  ener_ade:ElevationReferenceValue ;
+                         rdfs:comment "The elevation has been captured at roof edge level, anywhere between the lowest and the highest roof edges of the construction. NOTE: in case of a roof having a symmetry axis, values generalRoofEdge, lowestRoofEdge and highestRoofEdge are equivalent."@en .
+
+
+###  http://example.org/ontology#globalSolarIrradiance
+ener_ade:globalSolarIrradiance rdf:type owl:NamedIndividual ,
+                                        ener_ade:WeatherDataTypeValue .
+
+
+###  http://example.org/ontology#grossFloorArea
+ener_ade:grossFloorArea rdf:type owl:NamedIndividual ,
+                                 ener_ade:FloorAreaTypeValue ;
+                        rdfs:comment "Floor area including inner and outer walls."@en .
+
+
+###  http://example.org/ontology#grossVolume
+ener_ade:grossVolume rdf:type owl:NamedIndividual ,
+                              ener_ade:VolumeTypeValue ;
+                     rdfs:comment "Volume including inner and outer walls."@en .
+
+
+###  http://example.org/ontology#groundSlab
+ener_ade:groundSlab rdf:type owl:NamedIndividual ,
+                             ener_ade:ThermalBoundaryTypeValue ;
+                    rdfs:comment "Lower horizontal ThermalBoundary of the ThermalZone, normally built on the ground."@en .
+
+
+###  http://example.org/ontology#heavy
+ener_ade:heavy rdf:type owl:NamedIndividual ,
+                        ener_ade:ConstractionWeightValue ;
+               rdfs:comment "Heavy construction"@en .
+
+
+###  http://example.org/ontology#highestEave
+ener_ade:highestEave rdf:type owl:NamedIndividual ,
+                              ener_ade:ElevationReferenceValue ;
+                     rdfs:comment "The elevation has been captured at the highest eave level of the construction."@en .
+
+
+###  http://example.org/ontology#highestPoint
+ener_ade:highestPoint rdf:type owl:NamedIndividual ,
+                               ener_ade:ElevationReferenceValue ;
+                      rdfs:comment "The elevation has been captured at the highest point of the construction, including the installations, such as chimneys and antennas."@en .
+
+
+###  http://example.org/ontology#highestRoofEdge
+ener_ade:highestRoofEdge rdf:type owl:NamedIndividual ,
+                                  ener_ade:ElevationReferenceValue ;
+                         rdfs:comment "The elevation has been captured at the highest roof edge level of the construction."@en .
+
+
+###  http://example.org/ontology#humidity
+ener_ade:humidity rdf:type owl:NamedIndividual ,
+                           ener_ade:WeatherDataTypeValue .
+
+
+###  http://example.org/ontology#indoorShading
+ener_ade:indoorShading rdf:type owl:NamedIndividual .
+
+
+###  http://example.org/ontology#industrial_building
+ener_ade:industrial_building rdf:type owl:NamedIndividual ,
+                                      ener_ade:BuildingTypeValue .
+
+
+###  http://example.org/ontology#infrarent
+ener_ade:infrarent rdf:type owl:NamedIndividual ,
+                            ener_ade:WavelengthRangeType ;
+                   rdfs:comment "Infrared spectrum (Wavelength range: 700 nm – 1000 mm), also called long-wave radiation. Range of thermal radiation exchanges close to ambient temperature."@en .
+
+
+###  http://example.org/ontology#interiorWall
+ener_ade:interiorWall rdf:type owl:NamedIndividual ,
+                               ener_ade:ThermalBoundaryTypeValue ;
+                      rdfs:comment "Vertical partition separating two Thermal Zones of the same building."@en .
+
+
+###  http://example.org/ontology#intermediaryFloor
+ener_ade:intermediaryFloor rdf:type owl:NamedIndividual ,
+                                    ener_ade:ThermalBoundaryTypeValue ;
+                           rdfs:comment "Horizontal partition separating two Thermal Zones of the same building."@en .
+
+
+###  http://example.org/ontology#light
+ener_ade:light rdf:type owl:NamedIndividual ,
+                        ener_ade:ConstractionWeightValue ;
+               rdfs:comment "Light Construction"@en .
+
+
+###  http://example.org/ontology#loneAdult
+ener_ade:loneAdult rdf:type owl:NamedIndividual ,
+                            ener_ade:HouseholdTypeValue ;
+                   rdfs:comment "An adult living alone (age above 18)." .
+
+
+###  http://example.org/ontology#lowestEave
+ener_ade:lowestEave rdf:type owl:NamedIndividual ,
+                             ener_ade:ElevationReferenceValue ;
+                    rdfs:comment "The elevation has been captured at the lowest eave level of the construction."@en .
+
+
+###  http://example.org/ontology#lowestFloorAboveGround
+ener_ade:lowestFloorAboveGround rdf:type owl:NamedIndividual ,
+                                         ener_ade:ElevationReferenceValue ;
+                                rdfs:comment "The elevation has been captured at the level of the lowest floor above ground. This value is of interest for over-hanging buildings or for buildings on pylons."@en .
+
+
+###  http://example.org/ontology#lowestRoofEdge
+ener_ade:lowestRoofEdge rdf:type owl:NamedIndividual ,
+                                 ener_ade:ElevationReferenceValue ;
+                        rdfs:comment "The elevation has been captured at the lowest roof edge level of the construction."@en .
+
+
+###  http://example.org/ontology#mainResidence
+ener_ade:mainResidence rdf:type owl:NamedIndividual ,
+                                ener_ade:ResidenceTypeValue ;
+                       rdfs:comment "Residence where a household lives for the greatest amount of time. Also called primary residence."@en .
+
+
+###  http://example.org/ontology#medium
+ener_ade:medium rdf:type owl:NamedIndividual ,
+                         ener_ade:ConstractionWeightValue .
+
+
+###  http://example.org/ontology#multi-family_house
+ener_ade:multi-family_house rdf:type owl:NamedIndividual ,
+                                     ener_ade:BuildingTypeValue .
+
+
+###  http://example.org/ontology#multiFamily
+ener_ade:multiFamily rdf:type owl:NamedIndividual ,
+                              ener_ade:HouseholdTypeValue ;
+                     rdfs:comment "Two or more families living in a building."@en .
+
+
+###  http://example.org/ontology#netFloorArea
+ener_ade:netFloorArea rdf:type owl:NamedIndividual ,
+                               ener_ade:FloorAreaTypeValue ;
+                      rdfs:comment "Floor area without taking into account inner and outer walls."@en .
+
+
+###  http://example.org/ontology#netVolume
+ener_ade:netVolume rdf:type owl:NamedIndividual ,
+                            ener_ade:VolumeTypeValue ;
+                   rdfs:comment "Volume without taking into account inner and outer walls."@en .
+
+
+###  http://example.org/ontology#office_building
+ener_ade:office_building rdf:type owl:NamedIndividual ,
+                                  ener_ade:BuildingTypeValue .
+
+
+###  http://example.org/ontology#oneFamily
+ener_ade:oneFamily rdf:type owl:NamedIndividual ,
+                            ener_ade:HouseholdTypeValue ;
+                   rdfs:comment "Only one family living in a building."@en .
+
+
+###  http://example.org/ontology#othersOrCombinations
+ener_ade:othersOrCombinations rdf:type owl:NamedIndividual ,
+                                       ener_ade:OccupantTypeValue .
+
+
+###  http://example.org/ontology#outdoorShading
+ener_ade:outdoorShading rdf:type owl:NamedIndividual .
+
+
+###  http://example.org/ontology#outerWall
+ener_ade:outerWall rdf:type owl:NamedIndividual ,
+                            ener_ade:ThermalBoundaryTypeValue ;
+                   rdfs:comment "Vertical ThermalBoundary with one side facing outdoor."@en .
+
+
+###  http://example.org/ontology#patients
+ener_ade:patients rdf:type owl:NamedIndividual ,
+                           ener_ade:OccupantTypeValue .
+
+
+###  http://example.org/ontology#pensionerCouple
+ener_ade:pensionerCouple rdf:type owl:NamedIndividual ,
+                                  ener_ade:HouseholdTypeValue ;
+                         rdfs:comment "An old couple living in a building (age above 60)."@en .
+
+
+###  http://example.org/ontology#residential
+ener_ade:residential rdf:type owl:NamedIndividual ,
+                              ener_ade:CurrentUseValue .
+
+
+###  http://example.org/ontology#residents
+ener_ade:residents rdf:type owl:NamedIndividual ,
+                            ener_ade:OccupantTypeValue .
+
+
+###  http://example.org/ontology#roof
+ener_ade:roof rdf:type owl:NamedIndividual ,
+                       ener_ade:ThermalBoundaryTypeValue ;
+              rdfs:comment "ThermalBoundary corresponding to the CityGML RoofSurface."@en .
+
+
+###  http://example.org/ontology#secondaryResidence
+ener_ade:secondaryResidence rdf:type owl:NamedIndividual ,
+                                     ener_ade:ResidenceTypeValue .
+
+
+###  http://example.org/ontology#sharedWall
+ener_ade:sharedWall rdf:type owl:NamedIndividual ,
+                             ener_ade:ThermalBoundaryTypeValue ;
+                    rdfs:comment "Vertical partition separating two different buildings."@en .
+
+
+###  http://example.org/ontology#single-family_house
+ener_ade:single-family_house rdf:type owl:NamedIndividual ,
+                                      ener_ade:BuildingTypeValue .
+
+
+###  http://example.org/ontology#solar
+ener_ade:solar rdf:type owl:NamedIndividual ,
+                        ener_ade:WavelengthRangeType ;
+               rdfs:comment "Solar radiation spectrum (Wavelength range: mainly 300 nm – 2500 nm), also called short-wave radiation."@en .
+
+
+###  http://example.org/ontology#students
+ener_ade:students rdf:type owl:NamedIndividual ,
+                           ener_ade:OccupantTypeValue .
+
+
+###  http://example.org/ontology#substantiallyAboveAndBelowTerrain
+ener_ade:substantiallyAboveAndBelowTerrain rdf:type owl:NamedIndividual ,
+                                                    ener_ade:RelativeToTerrain ;
+                                           rdfs:comment "Parts of the object are located above terrain, and other parts below terrain."@en .
+
+
+###  http://example.org/ontology#substantiallyAboveAndBelowWaterSurface
+ener_ade:substantiallyAboveAndBelowWaterSurface rdf:type owl:NamedIndividual ,
+                                                         ener_ade:RelativeToWater ;
+                                                rdfs:comment "Parts of the object are located above water surface, and other parts below water surface."@en .
+
+
+###  http://example.org/ontology#substantiallyAboveTerrain
+ener_ade:substantiallyAboveTerrain rdf:type owl:NamedIndividual ,
+                                            ener_ade:RelativeToTerrain ;
+                                   rdfs:comment "Object is located entirely above terrain."@en .
+
+
+###  http://example.org/ontology#substantiallyAboveWaterSurface
+ener_ade:substantiallyAboveWaterSurface rdf:type owl:NamedIndividual ,
+                                                 ener_ade:RelativeToWater ;
+                                        rdfs:comment "Most, but not all parts of the object are located above water surface."@en .
+
+
+###  http://example.org/ontology#substantiallyBelowTerrain
+ener_ade:substantiallyBelowTerrain rdf:type owl:NamedIndividual ,
+                                            ener_ade:RelativeToTerrain ;
+                                   rdfs:comment "Most, but not all parts of the object are located below terrain."@en .
+
+
+###  http://example.org/ontology#substantiallyBelowWaterSurface
+ener_ade:substantiallyBelowWaterSurface rdf:type owl:NamedIndividual ,
+                                                 ener_ade:RelativeToWater ;
+                                        rdfs:comment "Most, but not all parts of the object are located below water surface."@en .
+
+
+###  http://example.org/ontology#temporarilyAboveAndBelowWaterSurface
+ener_ade:temporarilyAboveAndBelowWaterSurface rdf:type owl:NamedIndividual ,
+                                                       ener_ade:RelativeToWater ;
+                                              rdfs:comment "The height of the water surface is varying and the object temporily is located above or below water level."@en .
+
+
+###  http://example.org/ontology#terracedHouse
+ener_ade:terracedHouse rdf:type owl:NamedIndividual ,
+                                ener_ade:BuildingTypeValue .
+
+
+###  http://example.org/ontology#terrestrialEmission
+ener_ade:terrestrialEmission rdf:type owl:NamedIndividual ,
+                                      ener_ade:WeatherDataTypeValue .
+
+
+###  http://example.org/ontology#topOfConstruction
+ener_ade:topOfConstruction rdf:type owl:NamedIndividual ,
+                                    ener_ade:ElevationReferenceValue ;
+                           rdfs:comment "The elevation has been captured at the top level of the construction. NOTE: for buildings, it is generally top of the roof."@en .
+
+
+###  http://example.org/ontology#topThermalBoundary
+ener_ade:topThermalBoundary rdf:type owl:NamedIndividual ,
+                                     ener_ade:ElevationReferenceValue ;
+                            rdfs:comment "The elevation has been captured at the top of the highest Thermal Boundary."@en .
+
+
+###  http://example.org/ontology#total
+ener_ade:total rdf:type owl:NamedIndividual ,
+                        ener_ade:WavelengthRangeType ;
+               rdfs:comment "Total electromagnetic spectrum."@en .
+
+
+###  http://example.org/ontology#unrelatedAdults
+ener_ade:unrelatedAdults rdf:type owl:NamedIndividual ,
+                                  ener_ade:HouseholdTypeValue ;
+                         rdfs:comment "Two or more adults having no family relation living together."@en .
+
+
+###  http://example.org/ontology#vacant
+ener_ade:vacant rdf:type owl:NamedIndividual ,
+                         ener_ade:HouseholdTypeValue ,
+                         ener_ade:ResidenceTypeValue ;
+                rdfs:comment "No one living in a building. An empty household."@en .
+
+
+###  http://example.org/ontology#veryLight
+ener_ade:veryLight rdf:type owl:NamedIndividual ,
+                            ener_ade:ConstractionWeightValue ;
+                   rdfs:comment "Very light construction."@en .
+
+
+###  http://example.org/ontology#visible
+ener_ade:visible rdf:type owl:NamedIndividual ,
+                          ener_ade:WavelengthRangeType ;
+                 rdfs:comment "Visible light spectrum (Wavelength range: 400 nm – 800 nm)."@en .
+
+
+###  http://example.org/ontology#visitors
+ener_ade:visitors rdf:type owl:NamedIndividual ,
+                           ener_ade:OccupantTypeValue .
+
+
+###  http://example.org/ontology#windSpeed
+ener_ade:windSpeed rdf:type owl:NamedIndividual ,
+                            ener_ade:WeatherDataTypeValue .
+
+
+###  http://example.org/ontology#workerCouple
+ener_ade:workerCouple rdf:type owl:NamedIndividual ,
+                               ener_ade:HouseholdTypeValue ;
+                      rdfs:comment "A working couple living in a household. A couple having a job."@en .
+
+
+###  http://example.org/ontology#workers
+ener_ade:workers rdf:type owl:NamedIndividual ,
+                          ener_ade:OccupantTypeValue .
+
+
+###  https://pedvolution.eu/ontology/Accelerated
+ped:Accelerated rdf:type owl:NamedIndividual ,
+                         ped:ChargingSpeed ;
+                rdfs:comment "Accelerated charging speed. "@en ;
+                rdfs:isDefinedBy ped: ;
+                rdfs:label "Accelerated"@en .
+
+
+###  https://pedvolution.eu/ontology/CCS
+ped:CCS rdf:type owl:NamedIndividual ,
+                 ped:ElectricVehicleConnectorTypeShape ;
+        rdfs:comment "CCS (Combined Charging System) connector shape for electric vehicles."@en ;
+        rdfs:label "CCS (Combined Charging System)"@en .
+
+
+###  https://pedvolution.eu/ontology/CHAdeMO
+ped:CHAdeMO rdf:type owl:NamedIndividual ,
+                     ped:ElectricVehicleConnectorTypeShape ;
+            rdfs:comment "CHAdeMO connector shape for electric vehicles."@en ;
+            rdfs:label "CHAdeMO"@en .
+
+
+###  https://pedvolution.eu/ontology/ChargingSpeed
+ped:ChargingSpeed rdf:type owl:NamedIndividual ;
+                  prop:isEvaluatedIn prop:ChargingSpeedCategory .
+
+
+###  https://pedvolution.eu/ontology/Chiller_1
+ped:Chiller_1 rdf:type owl:NamedIndividual ,
+                       ped:HVAC_Equipment ;
+              rdfs:comment "A chiller unit in the HVAC system." ;
+              rdfs:label "Chiller 1" .
+
+
+###  https://pedvolution.eu/ontology/East_orientation
+ped:East_orientation rdf:type owl:NamedIndividual ,
+                              ped:PanelOrientationValueType ;
+                     rdfs:comment "East orientation."@en ;
+                     rdfs:label "East orientation"@en .
+
+
+###  https://pedvolution.eu/ontology/Fast
+ped:Fast rdf:type owl:NamedIndividual ,
+                  ped:ChargingSpeed ;
+         rdfs:comment "Fast charging speed. "@en ;
+         rdfs:isDefinedBy ped: ;
+         rdfs:label "Fast"@en .
+
+
+###  https://pedvolution.eu/ontology/GBT
+ped:GBT rdf:type owl:NamedIndividual ,
+                 ped:ElectricVehicleConnectorTypeShape ;
+        rdfs:comment "GB/T connector shape for electric vehicles."@en ;
+        rdfs:label "GB/T"@en .
+
+
+###  https://pedvolution.eu/ontology/HVAC_Equipment
+ped:HVAC_Equipment rdf:type owl:NamedIndividual ,
+                            sh:NodeShape .
+
+
+###  https://pedvolution.eu/ontology/HVAC_System
+ped:HVAC_System rdf:type owl:NamedIndividual ,
+                         sh:NodeShape .
+
+
+###  https://pedvolution.eu/ontology/Level1
+ped:Level1 rdf:type owl:NamedIndividual ,
+                    ped:ElectricVehicleChargerType ;
+           rdfs:comment "Level 1 charging (up to 2.5kW of AC power on 1 phase 120V input)."@en ;
+           rdfs:label "Level 1 Charger"@en .
+
+
+###  https://pedvolution.eu/ontology/Level2
+ped:Level2 rdf:type owl:NamedIndividual ,
+                    ped:ElectricVehicleChargerType ;
+           rdfs:comment "Level 2 charging (direct AC power but can use higher voltage and up to 3 phases)."@en ;
+           rdfs:label "Level 2 Charger"@en .
+
+
+###  https://pedvolution.eu/ontology/Level3
+ped:Level3 rdf:type owl:NamedIndividual ,
+                    ped:ElectricVehicleChargerType ;
+           rdfs:comment "Level 3 charging (direct DC power)."@en ;
+           rdfs:label "Level 3 Charger"@en .
+
+
+###  https://pedvolution.eu/ontology/North-East_orientation
+ped:North-East_orientation rdf:type owl:NamedIndividual ,
+                                    ped:PanelOrientationValue ;
+                           rdfs:comment "North-East orientation."@en ;
+                           rdfs:label "North-East orientation"@en .
+
+
+###  https://pedvolution.eu/ontology/North-West_orientation
+ped:North-West_orientation rdf:type owl:NamedIndividual ,
+                                    ped:PanelOrientationValue ;
+                           rdfs:comment "North-West orientation."@en ;
+                           rdfs:label "North-West orientation"@en .
+
+
+###  https://pedvolution.eu/ontology/North_orientation
+ped:North_orientation rdf:type owl:NamedIndividual ,
+                               ped:PanelOrientationValue ;
+                      rdfs:comment "North orientation."@en ;
+                      rdfs:label "North orientation"@en .
+
+
+###  https://pedvolution.eu/ontology/South-East_orientation
+ped:South-East_orientation rdf:type owl:NamedIndividual ,
+                                    ped:PanelOrientationValue ;
+                           rdfs:comment "South-East orientation."@en ;
+                           rdfs:label "South-East orientation"@en .
+
+
+###  https://pedvolution.eu/ontology/South-West_orientation
+ped:South-West_orientation rdf:type owl:NamedIndividual ,
+                                    ped:PanelOrientationValue ;
+                           rdfs:comment "South-West orientation."@en ;
+                           rdfs:label "South-West orientation"@en .
+
+
+###  https://pedvolution.eu/ontology/South_orientation
+ped:South_orientation rdf:type owl:NamedIndividual ,
+                               ped:PanelOrientationValue ;
+                      rdfs:comment "South orientation."@en ;
+                      rdfs:label "South orientation"@en .
+
+
+###  https://pedvolution.eu/ontology/Standard
+ped:Standard rdf:type owl:NamedIndividual ,
+                      ped:ChargingSpeed ;
+             rdfs:comment "Standard charging speed. "@en ;
+             rdfs:isDefinedBy ped: ;
+             rdfs:label "Standard"@en .
+
+
+###  https://pedvolution.eu/ontology/TeslaSupercharger
+ped:TeslaSupercharger rdf:type owl:NamedIndividual ,
+                               ped:ElectricVehicleConnectorTypeShape ;
+                      rdfs:comment "Tesla Supercharger connector shape for electric vehicles."@en ;
+                      rdfs:label "Tesla Supercharger"@en .
+
+
+###  https://pedvolution.eu/ontology/Type1_CSS
+ped:Type1_CSS rdf:type owl:NamedIndividual ,
+                       ped:ElectricVehicleConnectorTypeShape ;
+              rdfs:comment "Type 1 (CSS) connector shape for electric vehicles."@en ;
+              rdfs:label "Type 1 (CSS)"@en .
+
+
+###  https://pedvolution.eu/ontology/Type1_SAE_J1772
+ped:Type1_SAE_J1772 rdf:type owl:NamedIndividual ,
+                             ped:ElectricVehicleConnectorTypeShape ;
+                    rdfs:comment "Type 1 (SAE J1772) connector shape for electric vehicles."@en ;
+                    rdfs:label "Type 1 (SAE J1772)"@en .
+
+
+###  https://pedvolution.eu/ontology/Type2_CSS
+ped:Type2_CSS rdf:type owl:NamedIndividual ,
+                       ped:ElectricVehicleConnectorTypeShape ;
+              rdfs:comment "Type 2 (CSS) connector shape for electric vehicles."@en ;
+              rdfs:label "Type 2 (CSS)"@en .
+
+
+###  https://pedvolution.eu/ontology/Type2_IEC_62196
+ped:Type2_IEC_62196 rdf:type owl:NamedIndividual ,
+                             ped:ElectricVehicleConnectorTypeShape ;
+                    rdfs:comment "Type 2 (IEC 62196) connector shape for electric vehicles."@en ;
+                    rdfs:label "Type 2 (IEC 62196)"@en .
+
+
+###  https://pedvolution.eu/ontology/West_orientation
+ped:West_orientation rdf:type owl:NamedIndividual ,
+                              ped:PanelOrientationValueType ;
+                     rdfs:comment "West orientation."@en ;
+                     rdfs:label "West orientation"@en .
+
+
+###  https://pedvolution.eu/ontology/Wireless
+ped:Wireless rdf:type owl:NamedIndividual ,
+                      ped:ElectricVehicleConnectorTypeShape ;
+             rdfs:comment "Wireless charging system for electric vehicles."@en ;
+             rdfs:label "Wireless"@en .
+
+
+###  https://w3id.org/omega-x/Ontology/Property/ChargingSpeed
+prop:ChargingSpeed rdf:type owl:NamedIndividual ;
+                   prop:isEvaluatedIn prop:ChargingSpeedCategory .
+
+
+###  https://w3id.org/omega-x/Ontology/Property/ChargingSpeedCategory
+prop:ChargingSpeedCategory rdf:type owl:NamedIndividual .
+
+
+###  https://w3id.org/omega-x/Ontology/Property/ExtremelyFast
+prop:ExtremelyFast rdf:type owl:NamedIndividual ,
+                            ped:ChargingSpeed ;
+                   rdfs:comment "Extremely Fast Fast charging speed. "@en ;
+                   rdfs:isDefinedBy ped: ;
+                   rdfs:label "Extremely Fast"@en .
+
+
+###  https://w3id.org/omega-x/Ontology/Property/UltraFast
+prop:UltraFast rdf:type owl:NamedIndividual ,
+                        ped:ChargingSpeed ;
+               rdfs:comment "Ultra Fast charging speed. "@en ;
+               rdfs:isDefinedBy ped: ;
+               rdfs:label "Ultra Fast"@en .
+
+
+[ owl:maxCardinality "1"^^xsd:nonNegativeInteger
+] .
+
+#################################################################
+#    Annotations
+#################################################################
+
+ener_ade:hasUnit rdfs:label "Has Unit" ;
+                  rdfs:comment "Represents the unit of measurement as defined in QUDT ontology." .
+
+
+ener_ade:indoorShading rdfs:comment "Shading system installed on the interior surface of the opening."@en .
+
+
+ener_ade:outdoorShading rdfs:comment "Shading system installed on the outside opening surface."@en .
+
+
+owl:topDataProperty rdfs:comment ""@en .
+
+
+ped:ChargingSpeed rdfs:label "Charging Speed Property"@en ;
+                  rdfs:isDefinedBy ped: ;
+                  rdfs:comment "The class of charging speed refers to the rate at which a system's battery can be recharged with electric energy."@en .
+
+
+ped:EVC_Station_PoolName rdfs:comment "designates an Electric Vehicle Charging Station Pool."@en ;
+                         rdfs:isDefinedBy ped: ;
+                         rdfs:label "name"@en .
+
+
+ped:HVAC_Equipment rdfs:label "HVAC_Equipment"@en ;
+                   rdfs:comment """devices that serve all or part of the building and may include electric power, lighting, transportation,
+                                 or service water heating, including, but not limited to, furnaces, boilers, air conditioners, heat pumps,
+                                 chillers, water heaters, lamps, luminaires, ballasts, elevators, escalators, or other devices or installations."""@en ;
+                   <http://www.w3.org/2004/02/skos/core#definition> "See Heating_Ventilation_Air_Conditioning_System." ;
+                   rdfs:label "HVAC Equipment"@en .
+
+
+ped:HVAC_System rdfs:label "HVAC System"@en ;
+                <http://www.w3.org/2004/02/skos/core#definition> "See Heating_Ventilation_Air_Conditioning_System." .
+
+
+ped:hasElectricVehicleChargerDirectionalityShape rdfs:label "has electric vehicle charger directionality property"@en ;
+                                                 rdfs:comment "Indicates if the EVSE charger supports bidirectional charging or just unidirectional charging of the EV battery" .
+
+
+ped:hasLocationAsPool rdfs:isDefinedBy ped: ;
+                      rdfs:label "has location as pool"@en ;
+                      rdfs:comment "links an Electric Vehicle Charging Station Pool to its location."@en .
+
+
+prop:ChargingSpeed rdfs:isDefinedBy prop: ;
+                   rdfs:comment "The class of charging speed refers to the rate at which a system's battery can be recharged with electric energy."@en ;
+                   rdfs:label "Charging Speed Property"@en .
+
+
+prop:ChargingSpeedCategory rdfs:label "Charging Speed Category"@en ;
+                           rdfs:comment "Identified values for charging speed category."@en ;
+                           rdfs:isDefinedBy prop: .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( ener_ade:BuildingUnit
+                ener_ade:EnergyPerformanceCertification
+                ener_ade:Facilities
+                ener_ade:FloorArea
+                ener_ade:FloorAreaTypeValue
+                ener_ade:HeatExchangeType
+                ener_ade:HouseHold
+                ener_ade:OccupantTypeValue
+                ener_ade:Occupants
+                ener_ade:OwnershipTypeValue
+                ener_ade:UsageZone
+                ener_ade:WeatherDataTypeValue
+                ener_ade:WeatherStation
+                geo:Geometry
+              )
+] .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
