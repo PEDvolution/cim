@@ -1,0 +1,1523 @@
+
+@prefix g: <http://www.opengis.net/gml#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix gml: <http://www.opengis.net/ont/gml#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix ped: <https://github.com/PEDvolution/cim/pedvolution-ontology.ttl> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix core: <htttp://example.org/ontology/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix s4city: <https://saref.etsi.org/saref4city/> .
+@prefix s4ener: <https://saref.etsi.org/saref4ener/> .
+@prefix citygml: <http://www.opengis.net/citygml/1.0#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix energy:<http://sig3d.org> .
+@prefix lec: <https://raw.githubusercontent.com/FZ-HANNOU/Omega-X/main/LocalEnergyCommunitiesOntology/LocalEnergyCommunitiesOntology-1.0.ttl> .
+@prefix prop: <https://w3id.org/omega-x/Ontology/Property> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
+@prefix brick: <https://brickschema.org/schema/Brick#> .
+@prefix bsh: <https://brickschema.org/schema/BrickShape#> .
+@prefix em: <https://w3id.org/omega-x/ontology/Electromobility/> .
+@prefix rec: <https://w3id.org/rec#> .
+@prefix qudt: <https://qudt.org/schema/qudt/> .
+
+
+@base <http://example.org/ontology#> .
+
+
+<http://example.org/ontology#> rdf:type owl:Ontology ;
+                                owl:versionInfo "v3.1.1" ;
+                                dcterms:issued "2026-02-11"^^xsd:date ;
+                                dcterms:modified "2026-05-29"^^xsd:date ;
+                                dcterms:title "PED   PEDVolution ontology"@en ;
+                                owl:imports    <http://www.opengis.net/ont/gml> ,
+                                s4city: .      
+
+                          
+
+
+################################# Classes #####################################################
+###  https://pedvolution.eu/ontology/Ped
+ped:Ped rdf:type owl:Class ;
+        rdfs:subClassOf s4city:District .
+
+###  cPed
+ped:SuperPed rdf:type owl:Class ;
+        rdfs:subClassOf [ rdf:type owl:Restriction ;
+                          owl:onProperty ped:hasPeds ;
+                          owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+                          owl:onClass ped:Ped
+                        ],
+
+ s4city:District;
+ rdfs:comment "Super Ped."@en ;
+ rdfs:label "Super Ped"@en .
+
+ped:Substation rdf:type owl:Class ;
+               rdfs:comment "Substation."@en ;
+               rdfs:label "Substation "@en .
+
+ped:Pipe rdf:type owl:Class ;
+         rdfs:comment "Pipe."@en ;
+         rdfs:label "Pipe "@en .
+
+
+
+ped:Building rdf:type owl:Class ;
+             rdfs:subClassOf geo:SpatialObject,rec:Building; 
+             rdfs:comment "An independent unit of the built environment with a characteristic spatial structure"@en ;
+             rdfs:label "Building"@en .
+
+ped:BuildingUnit rdf:type owl:Class ;
+                      rdfs:subClassOf energy:BuildingUnit;
+                      rdfs:comment "A building unit is a part of usage zone, such as dwelling or workplace, which is related to a single occupant entity."@en ;
+                      rdfs:label "Building Unit"@en .
+
+ped:DistrictTechnicalCharacteristics rdf:type owl:Class;
+               rdfs:comment "A class associated to Technical Characteristics of a District Area."@en ;
+               rdfs:label "DistrictTechnicalCharacteristics"@en .
+
+
+ped:DistrictHeatingAndCoolingInfrastructure rdf:type owl:Class ;
+                                            rdfs:comment "A class associated to District Heating And Cooling Infrastructure of a District Area."@en ;
+                                            rdfs:label "DistrictHeatingAndCoolingInfrastructure"@en .
+
+
+ped:BuildingEnergyAssetCharacteristics rdf:type owl:Class ;
+                                       rdfs:comment "Building Energy Asset Characteristics."@en ;
+                                       rdfs:label "BuildingEnergyAssetCharacteristics"@en .
+
+ped:PVSystemCharacteristics rdf:type owl:Class ;
+       rdfs:subClassOf geo:SpatialObject;
+       rdfs:comment "PV SystemCharacteristics."@en ;
+       rdfs:label "PV System Characteristics"@en .
+###
+
+
+ped:EVChargingCharacteristics rdf:type owl:Class ;
+                              rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                owl:onProperty ped:includesElectricVehicleChargingStations ;
+                                                owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                owl:onClass ped:ElectricVehicleChargingStation
+                                              ] ;
+                                              
+                              rdfs:comment "Electric Vehicle Charging Characteristics."@en ;
+                              rdfs:label "EVChargingCharacteristics"@en .
+
+ped:BatterySystemCharacteristics rdf:type owl:Class ;
+                                 rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                   owl:onProperty ped:hasStorage ;
+                                                   owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                   owl:onClass s4ener:Storage
+                                                 ],
+                                                 [ rdf:type owl:Restriction ;
+                                                   owl:onProperty ped:hasBattery ;
+                                                   owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                   owl:onClass lec:Battery;
+                                                 ],
+                                                 [ rdf:type owl:Restriction ;
+                                                   owl:onProperty ped:hasBatteries ;
+                                                   owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                   owl:onClass lec:Battery;
+                                                 ] .
+ 
+
+
+ped:BuildingConstructionCharacteristics rdf:type owl:Class ;
+                                 rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                   owl:onProperty ped:hasBuildingConstructionCharacteristics ;
+                                                   owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                   owl:onClass ped:BuildingUnit;
+                                                 ] .
+
+
+ped:HVACBuildingCharacteristics rdf:type owl:Class ;
+
+                                rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                  owl:onProperty ped:hasHVAC_System ;
+                                                  owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                  owl:onClass ped:HVAC_System
+                                                ],
+                                                [ rdf:type owl:Restriction ;
+                                                  owl:onProperty ped:Cooling_Season_Start_Date ;
+                                                  owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger;
+                                                  owl:onDataRange xsd:string
+                                                ],
+                                                [ rdf:type owl:Restriction ;
+                                                  owl:onProperty ped:Cooling_Season_End_Date;
+                                                  owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger;
+                                                  owl:onDataRange xsd:string
+                                                  
+                                                ],
+                                                [ rdf:type owl:Restriction ;
+                                                  owl:onProperty ped:Heating_Season_Start_Date ;
+                                                  owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger;
+                                                  owl:onDataRange xsd:string
+                                                  
+                                                ],
+                                                [ rdf:type owl:Restriction ;
+                                                  owl:onProperty ped:Heating_Season_End_Date;
+                                                  owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger;
+                                                  owl:onDataRange xsd:string
+                                                  
+                                                ],
+
+                                                [ rdf:type owl:Restriction ;
+                                                  owl:onProperty ped:AuxiliaryHeatingSystem ;
+                                                  owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger;
+                                                  owl:onDataRange xsd:string
+                                                  
+                                                ],
+                                                [ rdf:type owl:Restriction ;
+                                                  owl:onProperty ped:NumberOfRadiators;
+                                                  owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger;
+                                                  owl:onDataRange xsd:integer
+                                                ];
+                                         
+                                                
+
+                                rdfs:comment "HVAC Building Characteristics."@en ;
+                                rdfs:label "HVAC Building Characteristics"@en .
+
+
+ped:EnergyPrice rdf:type owl:Class ;
+                rdfs:comment "Represents the cost of energy resources, categorized by type and sector." ;
+                rdfs:label "EnergyPrice" .
+
+ped:EnergyType rdf:type owl:Class ;
+               rdfs:comment "Different categories of energy resources." ;
+               rdfs:label "EnergyType" .
+
+
+ped:EnergyUnit rdf:type owl:Class ;
+               rdfs:comment "The unit of energy resources." ;
+               rdfs:label "EnergyUnit" .
+
+
+
+ped:GeoSpatialData rdf:type owl:Class .
+
+ped:DistrictEnergyAsset rdf:type owl:Class ;
+ rdfs:subClassOf geo:SpatialObject ;
+ rdfs:label "District Enegy Asset"@en .
+
+ped:CHP_Plant rdf:type owl:Class ;
+ rdfs:subClassOf ped:DistrictEnergyAsset;
+ rdfs:label "CHP Plant"@en .
+
+ped:Hydro_Power_Plant rdf:type owl:Class ;
+ rdfs:subClassOf ped:DistrictEnergyAsset;
+ rdfs:label "Hydro Power Plant"@en .
+
+ped:ThermalEnergySource rdf:type owl:Class ;
+ rdfs:subClassOf ped:DistrictEnergyAsset;
+ rdfs:label "Thermal Energy Source"@en .
+
+ped:Heat_Generator rdf:type owl:Class ;
+ rdfs:subClassOf ped:DistrictEnergyAsset;
+ rdfs:label "Heat Generator"@en .
+
+
+ped:Heating_System_Efficiency rdf:type owl:Class ;
+             rdfs:subClassOf bsh:EfficiencyShape ;  
+             rdfs:comment "The percent efficiency of the conversion process (usually to power or energy) carried out by the entity"@en ;
+             rdfs:label "Heating_System_Efficiency"@en .
+
+
+ped:Cooling_System_Efficiency rdf:type owl:Class ;
+             rdfs:subClassOf bsh:EfficiencyShape ;  
+             rdfs:comment "The percent efficiency of the conversion process (usually to power or energy) carried out by the entity"@en ;
+             rdfs:label "Cooling_System_Efficiency"@en .
+
+
+ped:HVAC_Equipment rdf:type owl:Class ;
+             rdfs:subClassOf brick:HVAC_Equipment ;  
+             rdfs:comment "The equipment, distribution systems and terminals that provide, either collectively or individually, the processes of heating, ventilating or air conditioning to a building or portion of a building"@en ;
+             rdfs:label "HVAC_Equipment"@en .
+
+ped:Ventilation_System rdf:type owl:Class ;
+                rdfs:subClassOf ped:HVAC_System, 
+                                                [ rdf:type owl:Restriction ;
+                                                  owl:onProperty ped:Ventilation_System_Type;
+                                                  owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger;
+                                                  owl:onDataRange xsd:string
+                                                ];
+                                                          
+                rdfs:comment "Ventilation_System."@en ;
+                rdfs:label "Ventilation_System"@en .
+
+
+ped:Heating_System rdf:type owl:Class ;
+                rdfs:subClassOf ped:HVAC_System, 
+                                                [ rdf:type owl:Restriction ;
+                                                  owl:onProperty ped:Heating_System_Type;
+                                                  owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger;
+                                                  owl:onDataRange xsd:string
+                                                ];
+                                                          
+                rdfs:comment "Heating_System."@en ;
+                rdfs:label "Heating_System"@en .
+
+ped:Cooling_System rdf:type owl:Class ;
+                rdfs:subClassOf ped:HVAC_System, 
+                                                [ rdf:type owl:Restriction ;
+                                                  owl:onProperty ped:Cooling_System_Type;
+                                                  owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger;
+                                                  owl:onDataRange xsd:string
+                                                ];
+                                                          
+                rdfs:comment "Cooling_System."@en ;
+                rdfs:label "Cooling_System"@en .
+
+
+ped:HVAC_System rdf:type owl:Class ;
+                rdfs:subClassOf brick:Heating_Ventilation_Air_Conditioning_System, 
+                                                [ rdf:type owl:Restriction ;
+                                                  owl:onProperty ped:InstallationYear ;
+                                                  owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger;
+                                                  owl:onDataRange  xsd:string
+                                                ],
+                                                [ rdf:type owl:Restriction ;
+                                                  owl:onProperty ped:HVAC_Operating_Mode ;
+                                                  owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger;
+                                                  owl:onDataRange  xsd:string
+                                                ],
+                                                [ rdf:type owl:Restriction ;
+                                                  owl:onProperty ped:Fuel_Source;
+                                                  owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger;
+                                                  owl:onDataRange  xsd:string
+                                                ],
+                                                [ rdf:type owl:Restriction ;
+                                                  owl:onProperty ped:Distribution_System ;
+                                                  owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger;
+                                                  owl:onDataRange  xsd:string
+                                                ]
+
+                                                ,
+                                                [ rdf:type owl:Restriction ;
+                                                  owl:onProperty ped:Control_System ;
+                                                  owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger;
+                                                  owl:onDataRange  xsd:string
+                                                ];
+                                                          
+                rdfs:comment "The equipment, distribution systems and terminals that provide, either collectively or individually, the processes of heating, ventilating or air conditioning to a building or portion of a building."@en ;
+                rdfs:label "HVAC_System"@en .
+
+ped:ElectricVehicleConnectorTypeShape rdf:type owl:Class ;
+                                      rdfs:subClassOf brick:ElectricVehicleConnectorTypeShape ;
+                                      rdfs:comment "Represents different types of EVSE connector shapes, such as Type 1, Type 2, GB/T, CHAdeMO, CCS, Tesla Supercharger, and Wireless."@en ;
+                                      rdfs:label "Electric Vehicle Connector Type Shape"@en .
+
+
+
+brick:electricVehicleChargerDirectionality rdf:type owl:Class .
+
+#bsh:haselectricVehicleChargerDirectionalityShape rdf:type owl:Class .
+
+ped:ElectricVehicleChargingPort rdf:type owl:Class ;
+                                rdfs:subClassOf brick:Electric_Vehicle_Charging_Port ;
+                                rdfs:label "ElectricVehicleChargingPort"@en ;
+                                <http://www.w3.org/2004/02/skos/core#definition> "An individual point of attachment for charging a single electric vehicle"@en .
+
+
+
+ped:ElectricVehicleChargingStation rdf:type owl:Class ;
+                                   rdfs:subClassOf em:ElectricVehicleChargingStation;
+                                   rdfs:comment "(source eMIP) A Charging Station is a physical element, visible for the users, on which Charging Points are available. The Charging Station is also the  Human-Machine Interface  (HMI) between the charge infrastructure and the end users."@en ;
+                                   rdfs:isDefinedBy ped: ;
+                                   rdfs:label "Electric Vehicle Charging Station"@en ;
+                                   rdfs:seeAlso <https://www.gireve.com/wp-content/uploads/2022/09/Gireve_Tech_eMIP-V0.7.4_ImplementationGuide_1.0.7_en.pdf> .
+
+ped:ElectricVehicleSupplyEquipment rdf:type owl:Class ;
+                                   rdfs:subClassOf em:ElectricVehicleSupplyEquipment;
+                                   rdfs:isDefinedBy ped: ;
+	                           rdfs:comment """(source eMIP) A Charging Point, synonym of EVSE (Electric Vehicle Supply Equipment), is the energy supply element. An electrical vehicle can connect to a point on one of its connector. A Charging Point may have several Charging Connectors but only one vehicle could be charged at a time on a Charging Point."""@en;
+                                   rdfs:seeAlso <https://www.gireve.com/wp-content/uploads/2022/09/Gireve_Tech_eMIP-V0.7.4_ImplementationGuide_1.0.7_en.pdf>;
+                                   rdfs:label "Electric Vehicle Supply Equipment (EVSE)"@en; .
+
+ped:ElectricVehicleChargerType rdf:type owl:Class ;
+                               rdfs:comment "Represents different types of EVSE chargers, such as Level 1, Level 2, and Level 3."@en ;
+                               rdfs:label "Electric Vehicle Charger Type"@en .
+
+
+ped:IndustrialProcess rdf:type owl:Class ;
+               rdfs:subClassOf geo:SpatialObject; 
+               rdfs:comment "Industrial process such as manufacturing, power generation, chemical production."@en ;
+               rdfs:label "Industrial Process "@en .
+
+ped:GeothermalPlant rdf:type owl:Class ;
+         rdfs:subClassOf geo:SpatialObject, rec:Building; 
+         rdfs:comment "GeothermalPlant."@en ;
+         rdfs:label "Geothermal plant "@en .
+
+ped:Waste_Meter rdf:type owl:Class ;
+ rdfs:subClassOf brick:Waste_Meter ;
+ rdfs:comment: "A Waste Meter is used for tracking and categorizing various waste types in a building, aiding in waste management facilitating waste reduction, recycling, and disposal  strategies."@en ;  
+ rdfs:label:"Waste_Meter" .
+
+ped:RenovationCharacteristics rdf:type owl:Class;
+rdfs:comment "Renovation Characteristics"@en; 
+rdfs:label "Renovation Characteristics"@en .
+
+ped:WindowsCharacteristics rdf:type owl:Class;
+rdfs:comment "Windows Characteristics"@en; 
+rdfs:label "Windows Characteristics"@en .
+
+ped:RoofCharacteristics rdf:type owl:Class;
+rdfs:comment "Roof Characteristics"@en; 
+rdfs:label "Roof Characteristics"@en .
+
+
+
+ped:PostalAddress rdf:type owl:Class ;
+                  rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                    owl:onProperty ped:City ;
+                                    owl:cardinality "1"^^xsd:nonNegativeInteger
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty ped:Country ;
+                                    owl:cardinality "1"^^xsd:nonNegativeInteger
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty ped:addressLine1 ;
+                                    owl:cardinality "1"^^xsd:nonNegativeInteger
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty ped:postalCode ;
+                                    owl:cardinality "1"^^xsd:nonNegativeInteger
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty ped:addressLine2 ;
+                                    owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                  ] ;
+                  rdfs:comment "Physical address of the architecture (site, building, sub-building, entrance room, etc.)" ;
+                  rdfs:label "Postal address"@en  .
+
+ped:EnergyPerformanceCertification rdf:type owl:Class ;
+                                        rdfs:comment "Energy performance certification."@en . 
+
+
+################################## Datatype Properties #########################################
+
+ped:hasEnergyPrice rdf:type owl:DatatypeProperty ;
+                   rdfs:domain ped:EnergyPrice ;
+                   rdfs:range xsd:float ;
+                   rdfs:comment "Numerical value of the energy price." ;
+                   rdfs:label "Has Energy Value" .
+
+
+
+ped:isRegulatedBy rdf:type owl:DatatypeProperty ;
+                  rdfs:domain ped:EnergyPrice ;
+                  rdfs:range xsd:string ;
+                  rdfs:comment "Specifies the organization regulating this energy price." ;
+                  rdfs:label "Is Regulated By" .
+
+ped:Symbol rdf:type owl:DatatypeProperty ;
+           rdfs:domain ped:EnergyUnit ;
+           rdfs:range xsd:string ;
+           rdfs:comment "Symbol representing the energy unit (e.g., €/kWh, CHF/kWh)." ;
+           rdfs:label "Symbol" .
+
+
+
+
+ped:hasStartDate rdf:type owl:DatatypeProperty ;
+                 rdfs:domain ped:EnergyPrice ;
+                 rdfs:range xsd:date ;
+                 rdfs:comment "Start date of the energy price period (e.g., 2024-03-07)." ;
+                 rdfs:label "Has Start Date" .
+
+ped:hasEndDate rdf:type owl:DatatypeProperty ;
+               rdfs:domain ped:EnergyPrice ;
+               rdfs:range xsd:date ;
+               rdfs:comment "End date of the energy price period (e.g., 2024-03-08)." ;
+               rdfs:label "Has End Date" .
+
+ped:hasTimeStamp rdf:type owl:DatatypeProperty ;
+                 rdfs:domain ped:EnergyPrice ;
+                 rdfs:range xsd:dateTimeStamp ;
+                 rdfs:label "Has Time Stamp" .
+
+ped:EnergyPerformanceScore rdf:type owl:DatatypeProperty ;
+    rdfs:domain ped:EnergyPerformanceCertification;
+    rdfs:range xsd:integer ;
+    rdfs:label "EnergyPerformanceScore"@en .
+
+ped:EnergyPerformanceCertificationUnits rdf:type owl:DatatypeProperty ;
+    rdfs:domain ped:EnergyPerformanceCertification;
+    rdfs:range xsd:string ;
+    rdfs:label "EnergyPerformanceCertificationUnits"@en .
+
+
+ped:hasPostalAddress rdf:type owl:ObjectProperty ;
+                     rdfs:domain ped:Building ;
+                     rdfs:domain ped:BuildingUnit;
+                     rdfs:range ped:PostalAddress ;
+                     rdfs:label "hasPostalAddress"@en .
+
+
+ped:addressLine1 rdf:type owl:DatatypeProperty ;
+                 rdfs:domain ped:PostalAddress ;
+                 rdfs:range xsd:string ;
+                 rdfs:label "addressLine1"@en .
+
+
+
+ped:addressLine2 rdf:type owl:DatatypeProperty ;
+                 rdfs:domain ped:PostalAddress ;
+                 rdfs:range xsd:string ;
+                 rdfs:label "addressLine2"@en .
+
+
+ped:City rdf:type owl:DatatypeProperty ;
+         rdfs:domain ped:PostalAddress ;
+         rdfs:range xsd:string ;
+         rdfs:label "City"@en .
+
+###  https://pedvolution.eu/ontology/Country
+ped:Country rdf:type owl:DatatypeProperty ;
+            rdfs:domain ped:PostalAddress ;
+            rdfs:range xsd:string ;
+            rdfs:label "Country"@en .
+
+###  https://pedvolution.eu/ontology/postalCode
+ped:postalCode rdf:type owl:DatatypeProperty ;
+               rdfs:domain ped:PostalAddress ;
+               rdfs:range xsd:string ;
+               rdfs:label "postalCode"@en .
+
+
+ped:culturalClassification rdf:type owl:DatatypeProperty ;
+                           rdfs:domain ped:Building ;
+                           rdfs:range [ rdf:type rdfs:Datatype ;
+                                        owl:oneOf [ rdf:type rdf:List ;
+                                                    rdf:first "Archaeological" ;
+                                                    rdf:rest [ rdf:type rdf:List ;
+                                                               rdf:first "Architectural" ;
+                                                               rdf:rest [ rdf:type rdf:List ;
+                                                                          rdf:first "Heritage Site" ;
+                                                                          rdf:rest [ rdf:type rdf:List ;
+                                                                                     rdf:first "Historical" ;
+                                                                                     rdf:rest [ rdf:type rdf:List ;
+                                                                                                rdf:first "Modernist" ;
+                                                                                                rdf:rest [ rdf:type rdf:List ;
+                                                                                                           rdf:first "Religious" ;
+                                                                                                           rdf:rest [ rdf:type rdf:List ;
+                                                                                                                      rdf:first "UNESCO World Heritage" ;
+                                                                                                                      rdf:rest rdf:nil
+                                                                                                                    ]
+                                                                                                         ]
+                                                                                              ]
+                                                                                   ]
+                                                                        ]
+                                                             ]
+                                                  ]
+                                      ] ;
+                           rdfs:comment "The cultural classification of a building, chosen from a predefined list."@en ;
+                           rdfs:label "Cultural Classification"@en .
+
+
+
+ped:yearBuilt rdf:type owl:DatatypeProperty ;
+              rdfs:domain ped:Building ;
+              rdfs:range [ rdf:type rdfs:Datatype ;
+                           owl:onDatatype xsd:integer ;
+                           owl:withRestrictions ( [ xsd:minInclusive 1000
+                                                  ]
+                                                  [ xsd:maxInclusive 9999
+                                                  ]
+                                                )
+                         ] ;
+              rdfs:comment "Four-digit year that the building was first built." ;
+              rdfs:label "Year built"@en .
+
+
+ped:ShadingSystem rdf:type owl:DatatypeProperty ;
+                  rdfs:domain ped:BuildingConstructionCharacteristics ;
+                  rdfs:range [ rdf:type rdfs:Datatype ;
+                               owl:oneOf [ rdf:type rdf:List ;
+                                           rdf:first "Dynamic" ;
+                                           rdf:rest [ rdf:type rdf:List ;
+                                                      rdf:first "Fixed" ;
+                                                      rdf:rest [ rdf:type rdf:List ;
+                                                                 rdf:first "No Shading" ;
+                                                                 rdf:rest rdf:nil
+                                                               ]
+                                                    ]
+                                         ]
+                             ] ;
+                  rdfs:comment "The type of shading system."@en ;
+                  rdfs:label "Shading System"@en .
+
+
+ped:Total_Roof_Area_In_M2 rdf:type owl:DatatypeProperty ;
+             rdfs:domain ped:RoofCharacteristics ;
+             rdfs:range xsd:float ;
+             rdfs:comment "Total roof area in M2."@en ;
+             rdfs:label "Total roof area in M2"@en .
+
+
+ped:Net_Roof_Window_Area_In_M2 rdf:type owl:DatatypeProperty ;
+             rdfs:domain ped:RoofCharacteristics ;
+             rdfs:range xsd:float ;
+             rdfs:comment "Net roof window area in M2."@en ;
+             rdfs:label "Net roof window area in M2"@en .
+
+
+ped:hasRoofCharacteristics rdf:type owl:ObjectProperty ;
+                                                rdfs:domain ped:BuildingConstructionCharacteristics ;
+                                                rdfs:range  ped:RoofCharacteristics;
+                                                rdfs:comment "Links roofcharacteristics to Building Construction Characteristics ";
+                                                rdfs:label "has Roof Characteristics"   .
+
+
+ped:WindowToWallRatio rdf:type owl:DatatypeProperty ;
+                      rdfs:domain ped:WindowsCharacteristics ;
+                      rdfs:range xsd:float ;
+                      rdfs:comment "If available, the proportion of window area to the total wall area."@en ;
+                      rdfs:label "WindowToWallRatio"@en .
+
+ped:TotalWindowAreaInM2 rdf:type owl:DatatypeProperty ;
+               rdfs:domain ped:WindowsCharacteristics;
+               rdfs:range xsd:float;
+               rdfs:comment "Total Window Area in m2";
+               rdfs:label "Total Window Area In M2"@en .
+
+ped:WindowType rdf:type owl:DatatypeProperty ;
+               rdfs:domain ped:WindowsCharacteristics;
+               rdfs:range [ rdf:type rdfs:Datatype ;
+                            owl:oneOf [ rdf:type rdf:List ;
+                                        rdf:first "Double-glazed" ;
+                                        rdf:rest [ rdf:type rdf:List ;
+                                                   rdf:first "Single" ;
+                                                   rdf:rest [ rdf:type rdf:List ;
+                                                              rdf:first "Triple-glazed" ;
+                                                              rdf:rest rdf:nil
+                                                            ]
+                                                 ]
+                                      ]
+                          ] ;
+               rdfs:comment "Type of windows used in the building  (Single, Double-glazed, Triple-glazed)."@en ;
+               rdfs:label "WindowType"@en .
+
+
+ped:RenovationYear rdf:type owl:DatatypeProperty ;
+                   rdfs:domain ped:RenovationCharacteristics ;
+                   rdfs:range [ rdf:type rdfs:Datatype ;
+                                owl:onDatatype xsd:integer ;
+                                owl:withRestrictions ( [ xsd:minInclusive 1000
+                                                       ]
+                                                       [ xsd:maxInclusive 9999
+                                                       ]
+                                                     )
+                              ] ;
+                   rdfs:comment "Four-digit most recent year that the building was renovated (if applicable)." ;
+                   rdfs:label "Renovation Year"@en .
+
+
+
+ped:hasRenovationCharacteristics rdf:type owl:ObjectProperty ;
+                                                rdfs:domain ped:BuildingConstructionCharacteristics ;
+                                                rdfs:range  ped:RenovationCharacteristics;
+                                                rdfs:comment "Links renovation characteristics to Building Construction Characteristics ";
+                                                rdfs:label "hasRenovationCharacteristics"   .
+
+ped:hasWindowsCharacteristics rdf:type owl:ObjectProperty ;
+                                                rdfs:domain ped:BuildingConstructionCharacteristics ;
+                                                rdfs:range  ped:WindowsCharacteristics;
+                                                rdfs:comment "Links windows characteristics to Building Construction Characteristics ";
+                                                rdfs:label "hasWindowsCharacteristics"   .
+
+
+
+ped:RenovationMeasuresUndertaken rdf:type owl:DatatypeProperty ;
+                                 rdfs:domain ped:RenovationCharacteristics ;
+                                 rdfs:range xsd:string ;
+                                 rdfs:comment "Comma-separated list of renovation measures undertaken (e.g., 'Windows, Walls, Roof, HVAC')."@en ;
+                                 rdfs:label "RenovationMeasuresUndertaken"@en .
+
+
+
+ped:RenovationLevel rdf:type owl:DatatypeProperty ;
+                    rdfs:domain ped:RenovationCharacteristics ;
+                    rdfs:range [ rdf:type rdfs:Datatype ;
+                                 owl:oneOf [ rdf:type rdf:List ;
+                                             rdf:first "Deep" ;
+                                             rdf:rest [ rdf:type rdf:List ;
+                                                        rdf:first "Light" ;
+                                                        rdf:rest [ rdf:type rdf:List ;
+                                                                   rdf:first "Medium" ;
+                                                                   rdf:rest rdf:nil
+                                                                 ]
+                                                      ]
+                                           ]
+                               ] ;
+                    rdfs:comment "The level of renovation (Deep, Medium, Light)."@en ;
+                    rdfs:label "Renovation Level"@en .
+
+
+ped:electricitySupply rdf:type owl:DatatypeProperty ;
+              rdfs:domain ped:Building,ped:BuildingUnit;
+              rdfs:range xsd:string;
+              rdfs:comment "Source of electricity (e.g., grid, solar PV). ."@en ;
+              rdfs:label "electricitySupply"@en .
+
+
+
+
+ped:DHC_Network rdf:type owl:DatatypeProperty ;
+                rdfs:domain ped:DistrictHeatingAndCoolingInfrastructure ;
+                rdfs:range xsd:string ;
+                rdfs:comment "Existing infrastructure (layout of pipes, insulation, pressure zones, heat generator, heating storage etc) ."@en ;
+                rdfs:label "DHC Network"@en .
+
+###  https://pedvolution.eu/ontology/Control_Systems
+ped:Control_Systems rdf:type owl:DatatypeProperty ;
+                    rdfs:domain ped:DistrictHeatingAndCoolingInfrastructure ;
+                    rdfs:range xsd:boolean ;
+                    rdfs:comment "Indicates whether smart control systems are in place to optimize performance and energy use."@en ;
+                    rdfs:label "Control Systems"@en .
+
+
+###  https://pedvolution.eu/ontology/Control_Systems_Category
+ped:Control_Systems_Category rdf:type owl:DatatypeProperty ;
+                             rdfs:domain ped:DistrictHeatingAndCoolingInfrastructure ;
+                             rdfs:range xsd:string ;
+                             rdfs:comment "Indicates whether smart control systems are in place to optimize performance and energy use (e.g. Smart,Manual)."@en ;
+                             rdfs:label "Control Systems Category"@en .
+
+
+ped:Operational_Cost_Per_Year_In_Euro rdf:type owl:ObjectProperty ;
+                              rdfs:domain ped:Substation ;
+                              rdfs:range qudt:QuantityValue ;           
+                              rdfs:comment "Annual running costs Euro/year for operational expenses."@en ;
+                              rdfs:label "Operational Cost Per Year in Euro"@en .
+
+
+ped:Operational_Cost_Per_Year_In_CHF rdf:type owl:ObjectProperty ;
+                              rdfs:domain ped:Substation ;
+                              rdfs:range qudt:QuantityValue ;          
+                              rdfs:comment "Annual running costs Euro/year for operational expenses."@en ;
+                              rdfs:label "Operational Cost Per Year in CHF"@en .
+
+
+ped:ID rdf:type owl:DatatypeProperty ;  
+ rdfs:domain ped:Ped,ped:Building,ped:BuildingUnit,ped:IndustrialProcess,ped:GeothermalPlant,ped:HVAC_System,ped:HVAC_Equipment,ped:DistrictEnergyAssets,ped:Substation,ped:Pipe;
+ rdfs:range xsd:string ;
+ rdfs:comment "Id of building, building units, assets ..."@en .
+
+ped:linkedToPED rdf:type owl:DatatypeProperty ;
+              rdfs:domain ped:Substation, ped:DistrictEnergyAsset,ped:ElectricVehicleChargingStation;
+              rdfs:range xsd:string ;
+              rdfs:comment "Links asset to PED"@en .
+
+
+ped:HasName rdf:type owl:DatatypeProperty ;
+              rdfs:domain ped:Ped;
+              rdfs:range xsd:string;
+              rdfs:comment "The name of the Ped."@en ;
+              rdfs:label "hasName"@en .
+
+ped:AuxiliaryHeatingSystem rdf:type owl:DatatypeProperty ;
+                           rdfs:domain ped:HVACBuildingCharacteristics ;
+                           rdfs:range xsd:string ;
+                           rdfs:comment "Type of auxialary heating system in the building Electric space heaters, Wood-burning stoves, Solar Thermal "@en ;
+                           rdfs:label "Auxiliary Heating System "@en .
+
+ped:Distribution_System rdf:type owl:DatatypeProperty ;
+                              rdfs:domain ped:HVAC_System ;
+                              rdfs:range xsd:string ;
+                              rdfs:comment "The method by cool or heat is distributed throughout the building e.g. Air Ducts,Chilled Beams, Direct Venting."@en ;
+                              rdfs:label "Distribution System"@en .
+
+ped:Cooling_Season_End_Date rdf:type owl:DatatypeProperty ;
+                         rdfs:domain ped:HVACBuildingCharacteristics ;
+                         rdfs:range xsd:string ;
+                         rdfs:comment "End date of the Building's cooling season in (MM-DD) format."@en ;
+                         rdfs:label "Cooling Season end date"@en .
+
+
+ped:Cooling_Season_Start_Date rdf:type owl:DatatypeProperty ;
+                           rdfs:domain ped:HVACBuildingCharacteristics ;
+                           rdfs:range xsd:string ;
+                           rdfs:comment "Start date of the Building's cooling season in (MM-DD) format."@en ;
+                           rdfs:label "Cooling Season start date"@en .
+
+ped:Cooling_System_Type rdf:type owl:DatatypeProperty ;
+                      rdfs:domain ped:Cooling_System ;
+                      rdfs:range xsd:string ;
+                      rdfs:comment "Type of cooling system (e.g., Central Air Conditioning, Split-System AC, Heat Pump (Air/Water), District Cooling, Evaporative Cooling, Natural Ventilation.  "@en ;
+                      rdfs:label "Cooling System Type "@en .
+
+
+ped:Control_System rdf:type owl:DatatypeProperty ;
+                         rdfs:domain ped:HVAC_System;
+                         rdfs:range xsd:string ;
+                         rdfs:comment "The type of control system, Basic Thermostat, Programmable Thermostat, Smart Thermostat."@en ;
+                         rdfs:label "Control system type "@en .
+
+ped:Heating_Season_End_Date rdf:type owl:DatatypeProperty ;
+                         rdfs:domain ped:HVACBuildingCharacteristics ;
+                         rdfs:range xsd:string ;
+                         rdfs:comment "End date of the Building's heating season in (MM-DD) format."@en ;
+                         rdfs:label "Heating Season end date"@en .
+
+
+ped:Heating_Season_Start_Date rdf:type owl:DatatypeProperty ;
+                           rdfs:domain ped:HVACBuildingCharacteristics ;
+                           rdfs:range xsd:string ;
+                           rdfs:comment "Start date of the Building's heating season in (MM-DD) format."@en ;
+                           rdfs:label "Heating Season start date"@en .
+
+ped:NumberOfRadiators rdf:type owl:DatatypeProperty ;
+                      rdfs:domain ped:HVACBuildingCharacteristics ;
+                      rdfs:range xsd:integer ;
+                      rdfs:comment "Number Of radiators in the building."@en ;
+                      rdfs:label "Number Of radiators"@en . 
+
+ped:HVAC_Operating_Mode a owl:DatatypeProperty ;
+    rdfs:domain ped:HVAC_System;
+    rdfs:range xsd:string ;
+    rdfs:comment "HVAC Operating Mode, Heating ,Cooling , Ventilation ."@en ;
+    rdfs:label "HVAC Operating Mode"@en .
+
+ped:Ventilation_System_Type rdf:type owl:DatatypeProperty ;
+                          rdfs:domain ped:Ventilation_System ;
+                          rdfs:range xsd:string ;
+                          rdfs:comment "The type of ventilation system (e.g., mechanical type D or C, natural, hybrid).."@en ;
+                          rdfs:label "Ventilation system type"@en .
+
+ped:panelOrientation rdf:type owl:DatatypeProperty ;
+                     rdfs:subPropertyOf energy:inclination;
+                     rdfs:domain ped:PVSystemCharacteristics ;
+                     rdfs:range [ rdf:type rdfs:Datatype ;
+                                  owl:oneOf [ rdf:type rdf:List ;
+                                              rdf:first 0 ;
+                                              rdf:rest [ rdf:type rdf:List ;
+                                                         rdf:first 135 ;
+                                                         rdf:rest [ rdf:type rdf:List ;
+                                                                    rdf:first 180 ;
+                                                                    rdf:rest [ rdf:type rdf:List ;
+                                                                               rdf:first 225 ;
+                                                                               rdf:rest [ rdf:type rdf:List ;
+                                                                                          rdf:first 270 ;
+                                                                                          rdf:rest [ rdf:type rdf:List ;
+                                                                                                     rdf:first 315 ;
+                                                                                                     rdf:rest [ rdf:type rdf:List ;
+                                                                                                                rdf:first 45 ;
+                                                                                                                rdf:rest [ rdf:type rdf:List ;
+                                                                                                                           rdf:first 90 ;
+                                                                                                                           rdf:rest rdf:nil
+                                                                                                                         ]
+                                                                                                              ]
+                                                                                                   ]
+                                                                                        ]
+                                                                             ]
+                                                                  ]
+                                                       ]
+                                            ]
+                                ] ;
+                     rdfs:comment "The azimuthal orientation (North, South East)."@en ;
+                     rdfs:label "panelOrientation"@en .
+
+ped:isControllable rdf:type owl:DatatypeProperty ;
+              rdfs:domain ped:PVSystemCharacteristics;
+              rdfs:range xsd:boolean ;
+              rdfs:comment "is controllable reducing output during negative electricity pricing."@en ;
+              rdfs:label "isControllable"@en .
+
+
+
+ped:Heating_System_Type rdf:type owl:DatatypeProperty ;
+                      rdfs:domain ped:Heating_System ;
+                      rdfs:range xsd:string ;
+                      rdfs:comment "Type of Heating system in the building (e.g. Boiler (gas/oil) Electric Heating, Heat Pump (Air/water/Ground), District Heating, Geothermal, Stoves "@en ;
+                      rdfs:label "Heating system type "@en .
+
+
+
+ped:Fuel_Source rdf:type owl:DatatypeProperty ;
+                       rdfs:domain ped:HVAC_System ;
+                       rdfs:range xsd:string ;
+                       rdfs:comment "The type of fuel used to power the cooling or heating system, Electricity, Distring Cooling, Renewable Energy"@en ;
+                       rdfs:label "Fuel Source "@en .
+
+
+ped:InstallationYear rdf:type owl:DatatypeProperty ;
+                             rdfs:domain ped:HVAC_System ;
+                             rdfs:range [ rdf:type rdfs:Datatype ;
+                                          owl:oneOf [ rdf:type rdf:List ;
+                                                      rdf:first "Mid-aged" ;
+                                                      rdf:rest [ rdf:type rdf:List ;
+                                                                 rdf:first "New" ;
+                                                                 rdf:rest [ rdf:type rdf:List ;
+                                                                            rdf:first "Old" ;
+                                                                            rdf:rest rdf:nil
+                                                                          ]
+                                                               ]
+                                                    ]
+                                        ] ;
+                             rdfs:comment "System Age, HVAC System Installation Year. New(0-10 years) , Mid-aged (10-20 years), Old (>20 years)"@en ;
+                             rdfs:label "Installation Year "@en .
+
+
+
+
+
+ped:chargingProfile rdf:type owl:DatatypeProperty ;
+                         rdfs:domain ped:ElectricVehicleSupplyEquipment ;
+                         rdfs:comment "Charging profile values: Day,Night."@en;
+                         rdfs:label "Charging Profile"@en;
+                         rdfs:range xsd:string .
+
+ped:numberOfEVChargingStations rdf:type owl:DatatypeProperty ;
+                         rdfs:domain ped:EVChargingCharacteristics;
+                         rdfs:comment "The Number of EV Charging Stations in area of interest."@en;
+                         rdfs:label "Number of EV Charging Stations"@en;
+                         rdfs:range xsd:integer .
+
+ped:totalConditionArea rdf:type owl:DatatypeProperty ;
+                         rdfs:domain ped:EVChargingCharacteristics;
+                         rdfs:comment "The Total Condition Area."@en;
+                         rdfs:label "Total Condition Area"@en;
+                         rdfs:range xsd:integer .
+
+
+################################## Object Properties #########################################
+
+ped:appliesToSector rdf:type owl:ObjectProperty ;
+                    rdfs:domain ped:EnergyPrice ;
+                    rdfs:range ped:Sector ;
+                    rdfs:comment "Defines whether the energy price is for Residential or Commercial users." ;
+                    rdfs:label "Applies to Sector" .
+
+
+ped:hasEnergyType rdf:type owl:ObjectProperty ;
+                  rdfs:domain ped:EnergyPrice ;
+                  rdfs:range ped:EnergyType ;
+                  rdfs:comment "Specifies the type of energy resource for the price (e.g., Electricity, Gas)." ;
+                  rdfs:label "Has Energy Type" .
+
+
+ped:hasEnergyUnit rdf:type owl:ObjectProperty ;
+                  rdfs:domain ped:EnergyPrice ;
+                  rdfs:range ped:EnergyUnit ;
+                  rdfs:comment "Specifies the unit of measurement for the energy price." ;
+                  rdfs:label "Has Energy Unit" .
+
+
+ped:isAssociatedToPED rdf:type owl:ObjectProperty ;
+                      rdfs:domain ped:EnergyPrice ;
+                      rdfs:range ped:Ped ;
+                      rdfs:label "is associated to PED" .
+
+
+
+ped:hasBuildingUnits rdf:type owl:ObjectProperty ;
+                     rdfs:domain ped:Building ;
+                     rdfs:range ped:BuildingUnit .
+
+ped:hasBuildings rdf:type owl:ObjectProperty ;
+                 rdfs:domain ped:Ped ;
+                 rdfs:range ped:Building .
+
+ped:monthlyElectricityConsumption rdf:type owl:ObjectProperty ;
+                     rdfs:domain ped:Building, ped:BuildingUnit ;
+                     rdfs:range qudt:QuantityValue ;
+                     rdfs:comment "Total electricity consumption of the building in a month (kWh, Float)."@en ;
+                     rdfs:label "monthlyElectricityConsumption"@en .
+
+ped:annualElectricityConsumption rdf:type owl:ObjectProperty ;
+                     rdfs:domain ped:Building, ped:BuildingUnit ;
+                     rdfs:range qudt:QuantityValue ;
+                     rdfs:comment "Total electricity consumption of the building in a year (kWh, Float) ."@en ;
+                     rdfs:label "annualElectricityConsumption"@en .
+
+ped:annualNaturalGasConsumption rdf:type owl:ObjectProperty ;
+                     rdfs:domain ped:Building , ped:BuildingUnit;
+                     rdfs:range qudt:QuantityValue ;
+                     rdfs:comment "Total gas consumption of the building in a year,(kWh, Float) ."@en ;
+                     rdfs:label "annualNaturalGasConsumption"@en .
+
+
+ped:electricityConsumption rdf:type owl:ObjectProperty ;
+                     rdfs:domain ped:Building,ped:BuildingUnit ;
+                     rdfs:range qudt:QuantityValue ;
+                     rdfs:comment "Smart meter data (real time)  (kWh, Float) ."@en ;
+                     rdfs:label "electricityConsumption"@en .
+
+ped:electricityProduction rdf:type owl:ObjectProperty ;
+                     rdfs:domain ped:Building, ped:BuildingUnit ;
+                     rdfs:range qudt:QuantityValue ;
+                     rdfs:comment "Electricity production (real time) (kWh, Float)."@en ;
+                     rdfs:label "electricityProduction"@en .
+
+ped:annualOilConsumption rdf:type owl:ObjectProperty ;
+                     rdfs:domain ped:Building, ped:BuildingUnit ;
+                     rdfs:range qudt:QuantityValue ;
+                     rdfs:comment "Annual Oil Consumption (real time) (kWh, Float)."@en ;
+                     rdfs:label "annualOilConsumption"@en .
+
+
+
+
+ped:Capacity_In_KW rdf:type owl:ObjectProperty ;
+                                   rdfs:domain  ped:Heat_Generator,ped:CHP_Plant,ped:Hydro_Power_Plant,ped:Substation,ped:GeothermalPlant ;
+                                   rdfs:range qudt:QuantityValue ;
+                                   rdfs:comment "Installed Capacity of any other heat generator available."@en ;
+                                   rdfs:label "Capacity In KW"@en .
+
+ped:Capacity_In_MW rdf:type owl:ObjectProperty ;
+                                   rdfs:domain ped:Substation;
+                                   rdfs:range qudt:QuantityValue ;
+                                   rdfs:comment "Maximum power can supply in MW."@en ;
+                                   rdfs:label "Capacity In MW"@en .
+
+
+ped:Thermal_Capacity_In_KW rdf:type owl:ObjectProperty ;
+                                   rdfs:domain ped:Heat_Generator,ped:CHP_Plant;
+                                   rdfs:range qudt:QuantityValue ;
+                                   rdfs:comment "Thermal Capacity of station."@en ;
+                                   rdfs:label "Thermal Capacity In KW"@en .
+
+
+ped:Efficiency_Percentage rdf:type owl:ObjectProperty ;
+     rdfs:domain ped:Heat_Generator,ped:CHP_Plant,ped:Hydro_Power_Plant,ped:Substation ; 
+     rdfs:range qudt:QuantityValue ;
+     rdfs:comment "Efficiency (%)."@en ;
+     rdfs:label "Efficiency_Percentage"@en .
+
+ped:District_Cooling_Peak_Power_In_KW rdf:type owl:ObjectProperty ;
+                                      rdfs:domain ped:DistrictHeatingAndCoolingInfrastructure ;
+                                      rdfs:range qudt:QuantityValue ;
+                                      rdfs:comment "Estimating peak demand in KW  ."@en ;
+                                      rdfs:label "District Heating Peak Power in KW"@en .
+
+
+ped:District_Cooling_Peak_Power_In_MW rdf:type owl:ObjectProperty ;
+                                      rdfs:domain ped:DistrictHeatingAndCoolingInfrastructure ;
+                                      rdfs:range qudt:QuantityValue ;
+                                      rdfs:comment "Estimating peak demand in MW  ."@en ;
+                                      rdfs:label "District Heating Peak Power in MW"@en .
+
+
+ped:District_Heating_Peak_Power_In_KW rdf:type owl:ObjectProperty ;
+                                      rdfs:domain ped:DistrictHeatingAndCoolingInfrastructure ;
+                                      rdfs:range qudt:QuantityValue ;
+                                      rdfs:comment "Estimating peak demand in KW ."@en ;
+                                      rdfs:label "District Heating Peak Power in KW"@en .
+
+
+ped:District_Heating_Peak_Power_In_MW rdf:type owl:ObjectProperty ;
+                                      rdfs:domain ped:DistrictHeatingAndCoolingInfrastructure ;
+                                      rdfs:range qudt:QuantityValue ;
+                                      rdfs:comment "Estimating peak demand in MW ."@en ;
+                                      rdfs:label "District Heating Peak Power in MW"@en .
+
+
+ped:Installation_Cost_In_CHF rdf:type owl:ObjectProperty ;
+                             rdfs:domain ped:Substation ;
+                             rdfs:range qudt:QuantityValue ;
+                             rdfs:comment "Capital costs for installing the substation and integrating it into the network."@en ;
+                             rdfs:label "Installation Cost In CHF"@en .
+
+
+ped:Installation_Cost_In_Euro rdf:type owl:ObjectProperty ;
+                              rdfs:domain ped:Substation ;
+                              rdfs:range qudt:QuantityValue ;
+                              rdfs:comment "Capital costs for installing the substation and integrating it into the network."@en ;
+                              rdfs:label "Installation Cost In Euro"@en .
+
+ped:Diameter_In_mm rdf:type owl:ObjectProperty ;
+                        rdfs:domain ped:Pipe ;
+                        rdfs:range qudt:QuantityValue ;
+                        rdfs:comment "Diameter (mm) of pipes in the network, influencing hydraulic performance and heat transfer ."@en ;
+                        rdfs:label "Pipe Diameter in mm"@en .
+
+
+ped:pipes rdf:type owl:ObjectProperty ;
+                        rdfs:domain ped:DistrictHeatingAndCoolingInfrastructure ;
+                        rdfs:range ped:Pipe ;
+                        rdfs:comment "Link a substation to a number of pipes ."@en ;
+                        rdfs:label "Pipes"@en .
+
+ped:Length_In_Meters rdf:type owl:ObjectProperty ;
+                rdfs:domain ped:Pipe ;
+                rdfs:range qudt:QuantityValue ;
+                rdfs:comment "Distance between energy source, substation, and end-users, affecting heat loss and distribution costs in Meters."@en ;
+                rdfs:label "Pipe Length in Meters"@en .
+
+ped:Heat_Exchanger_Size_In_MW rdf:type owl:ObjectProperty ;
+                        rdfs:domain ped:Substation ;
+                        rdfs:range qudt:QuantityValue ;
+                        rdfs:comment "Size of heat exchangers in the substation, which transfers heat from the network to the building (KW or MW) ."@en ;
+                        rdfs:label "Heat Exchanger Size in MW"@en .
+
+ped:Heat_Exchanger_Size_In_KW  rdf:type owl:ObjectProperty ;
+                        rdfs:domain ped:Substation ;
+                        rdfs:range qudt:QuantityValue ;
+                        rdfs:comment "Size of heat exchangers in the substation, which transfers heat from the network to the building (KW or MW) ."@en ;
+                        rdfs:label "Heat Exchanger Size in KW"@en .
+
+
+ped:Supply_Temperature_In_Celcius rdf:type owl:ObjectProperty ;
+    rdfs:domain ped:Pipe ;
+    rdfs:range qudt:QuantityValue ;
+    rdfs:comment "Supply temperature of the network at the district level In Celcius."@en ;
+    rdfs:label "Supply Temperature In Celcius"@en .
+
+ped:Return_Temperature_In_Celcius rdf:type owl:ObjectProperty ; 
+    rdfs:domain ped:Pipe ;
+    rdfs:range qudt:QuantityValue ;
+    rdfs:comment "Return temperature of the network at the district level In Celcius."@en ;  
+    rdfs:label "Return Temperature In Celcius"@en .
+
+
+
+
+
+ped:Annual_Solar_Thermal_Output_In_KW rdf:type owl:ObjectProperty ;
+              rdfs:domain ped:PVSystemCharacteristics;
+              rdfs:range qudt:QuantityValue;
+              rdfs:comment "Annual Solar Thermal Output In KW."@en ;
+              rdfs:label "Annual_Solar_Thermal_Output_In_KW"@en .
+
+
+ped:Annual_Solar_Thermal_Output_In_MW rdf:type owl:ObjectProperty ;
+              rdfs:domain ped:PVSystemCharacteristics;
+              rdfs:range qudt:QuantityValue ;
+              rdfs:comment "Annual Solar Thermal Output In MW."@en ;
+              rdfs:label "Annual_Solar_Thermal_Output_In_MW"@en .
+
+ped:Annual_Solar_PV_Output_In_KW rdf:type owl:ObjectProperty ;
+              rdfs:domain ped:PVSystemCharacteristics;
+              rdfs:range qudt:QuantityValue ;
+              rdfs:comment "Annual Solar PV Output In KW."@en ;
+              rdfs:label "Annual_Solar_PV_Output_In_KW"@en .
+
+
+ped:Annual_Solar_PV_Output_In_MW rdf:type owl:ObjectProperty ;
+              rdfs:domain ped:PVSystemCharacteristics;
+              rdfs:range qudt:QuantityValue ;
+              rdfs:comment "Annual Solar PV Output In MW."@en ;
+              rdfs:label "Annual_Solar_PV_Output_In_MW"@en .
+
+ped:Solar_Thermal_Capacity_in_KW rdf:type owl:ObjectProperty ;
+              rdfs:domain ped:PVSystemCharacteristics;
+              rdfs:range qudt:QuantityValue ;
+              rdfs:comment " Solar Thermal Capacity In KW."@en ;
+              rdfs:label "Solar_Thermal_Capacity_in_KW"@en .
+
+ 
+ped:Solar_Thermal_Capacity_in_MW rdf:type owl:ObjectProperty ;
+              rdfs:domain ped:PVSystemCharacteristics;
+              rdfs:range qudt:QuantityValue ;
+              rdfs:comment " Solar Thermal Capacity In MW."@en ;
+              rdfs:label "Solar_Thermal_Capacity_in_MW"@en .
+
+
+ped:Solar_PV_Installed_Capacity_In_KW rdf:type owl:ObjectProperty ;
+              rdfs:domain ped:PVSystemCharacteristics;
+              rdfs:range qudt:QuantityValue ;
+              rdfs:comment "Solar PV Installed Capacity in KW."@en ;
+              rdfs:label "Solar_PV_Installed_Capacity_In__KW"@en .
+
+ 
+ped:Solar_PV_Installed_Capacity_In_MW rdf:type owl:ObjectProperty ;
+              rdfs:domain ped:PVSystemCharacteristics;
+              rdfs:range qudt:QuantityValue ;
+              rdfs:comment " Solar PV Installed Capacity in MW."@en ;
+              rdfs:label "Solar_PV_Installed_Capacity_In_MW"@en .
+
+
+ped:hasHVAC_System rdf:type owl:ObjectProperty ;
+                   rdfs:domain ped:HVACBuildingCharacteristics ;
+                   rdfs:range ped:HVAC_System ;
+                   rdfs:comment "Associates HVACBuildingCharacteristics to  HVAC System"@en ;
+                   rdfs:label "has HVAC System"@en .
+
+ped:hasBuildings rdf:type owl:ObjectProperty ;
+                 rdfs:domain ped:Ped ;
+                 rdfs:range ped:Building .
+
+ped:hasPeds rdf:type owl:ObjectProperty ;
+                 rdfs:domain ped:SuperPed ;
+                 rdfs:range ped:Ped .
+
+
+ped:belongsTo rdf:type owl:ObjectProperty ;
+                 rdfs:domain ped:Ped ;
+                 rdfs:range ped:SuperPed .
+
+ped:hasDistrictTechnicalCharacteristics rdf:type owl:ObjectProperty ;
+              rdfs:domain ped:Ped;
+              rdfs:range ped:DistrictTechnicalCharacteristics;
+              rdfs:comment "Links District Technical Characteristics to a Ped."@en ;
+              rdfs:label "hasDistrictTechnicalCharacteristics"@en .
+
+ped:installed_substations rdf:type owl:ObjectProperty ;
+                  rdfs:domain ped:DistrictHeatingAndCoolingInfrastructure ;
+                  rdfs:range ped:Substation ;
+                  rdfs:comment "installed_substations."@en ;
+                  rdfs:label "installed_substations "@en .
+
+
+ped:hasDistrictHeatingAndCoolingInfrastructure rdf:type owl:ObjectProperty ;
+              rdfs:domain ped:Ped;
+              rdfs:range ped:DistrictHeatingAndCoolingInfrastructure;
+              rdfs:comment "Links District Heating and Cooling Infrastracture to a Ped."@en ;
+              rdfs:label "hasDistrictHeatingAndCoolingInfrastructure"@en .
+
+
+
+ped:hasBuildingEnergyAssetCharacteristics rdf:type owl:ObjectProperty ;
+                                          rdfs:domain ped:BuildingUnit,ped:Building ;
+                                          rdfs:range ped:BuildingEnergyAssetCharacteristics .
+
+ped:hasDistrictTechnicalCharacteristics rdf:type owl:ObjectProperty ;
+                                rdfs:domain ped:Ped ; 
+                                rdfs:range ped:DistrictTechnicalCharacteristics .
+
+ped:hasPVSystemCharacteristics rdf:type owl:ObjectProperty ;
+                                rdfs:domain ped:BuildingEnergyAssetCharacteristics,ped:DistrictTechnicalCharacteristics; 
+                                rdfs:range ped:PVSystemCharacteristics .
+
+
+ped:hasHVACBuildingCharacteristics rdf:type owl:ObjectProperty ;
+                   rdfs:domain ped:BuildingEnergyAssetCharacteristics; 
+                   rdfs:range ped:HVACBuildingCharacteristics;
+                   rdfs:comment "Links a building or building unit to its HVAC System Characteristics."@en ;
+                   rdfs:label "Has HVACBuildingCharacteristics "@en .
+
+ped:hasStorage rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf s4ener:hasStorage ;
+               rdfs:domain ped:BatterySystemCharacteristics ;
+               rdfs:range s4ener:Storage ;
+               rdfs:label "has storage"@en .
+
+geo:hasGeometry a owl:ObjectProperty ;
+    rdfs:domain ped:PED ;
+    rdfs:range geo:Geometry ;
+    rdfs:label "has Geometry"@en ;
+    rdfs:comment "Associates a spatial object (like PED, Building...) with its geometry."@en .
+
+ped:hasHVACBuildingCharacteristics rdf:type owl:ObjectProperty ;
+                                                rdfs:domain ped:BuildingEnergyAssetCharacteristics;
+                                                rdfs:range ped:HVACBuildingCharacteristics .
+
+ 
+ped:hasEVChargingCharacteristics rdf:type owl:ObjectProperty ;
+  rdfs:domain ped:BuildingEnergyAssetCharacteristics,ped:DistrictTechnicalCharacteristics ;
+  rdfs:range ped:EVChargingCharacteristics;
+  rdfs:label "hasEVChargingCharacteristics";
+  rdfs:comment "Association of EVChargingCharacteristics to a ped DistrictTechnicalCharacteristics or Building unit BuildingEnergyAssetCharacteristics"@en .
+
+ped:hasBatterySystemCharacteristics rdf:type owl:ObjectProperty ;
+  rdfs:domain ped:BuildingEnergyAssetCharacteristics,ped:DistrictTechnicalCharacteristics ;
+  rdfs:range ped:BatterySystemCharacteristics;
+  rdfs:label "hasBatterySystemCharacteristics";
+  rdfs:comment "Association of BatterySystemCharacteristics to a ped DistrictTechnicalCharacteristics or Building unit BuildingEnergyAssetCharacteristics"@en .
+
+ped:includesElectricVehicleChargingStations rdf:type owl:ObjectProperty ;
+                                            rdfs:domain ped:EVChargingCharacteristics ;
+                                            rdfs:range ped:ElectricVehicleChargingStation;
+                                            rdfs:comment "Links ElectricalVehical Charging Stations to EVChargingCharacteristics."@en ;
+                                            rdfs:label "includesElectricVehicleChargingStations"@en   .
+
+
+ped:hasBuildingConstructionCharacteristics rdf:type owl:ObjectProperty ;
+                                                rdfs:domain ped:BuildingUnit ;
+                                                rdfs:range ped:BuildingConstructionCharacteristics;
+                                                rdfs:comment "Links Building Construction Characteristics  to a building";
+                                                rdfs:label "hasBuildingConstructionCharacteristics"   . 
+ 
+
+ped:hasGeoSpatialData rdf:type owl:ObjectProperty ;
+                                                rdfs:domain ped:Ped;
+                                                rdfs:range ped:GeoSpatialData .
+
+
+ped:Capacity_In_KW rdf:type owl:ObjectProperty ;
+                                   rdfs:domain  ped:Heat_Generator,ped:CHP_Plant,ped:Hydro_Power_Plant ;
+                                   rdfs:range qudt:QuantityValue ;
+                                   rdfs:comment "Installed Capacity of any other heat generator available."@en ;
+                                   rdfs:label "Capacity In KW"@en .
+
+
+ped:Thermal_Capacity_In_KW rdf:type owl:ObjectProperty ;
+                                   rdfs:domain ped:Heat_Generator,ped:CHP_Plant;
+                                   rdfs:range qudt:QuantityValue ;
+                                   rdfs:comment "Thermal Capacity of station."@en ;
+                                   rdfs:label "Thermal Capacity In KW"@en .
+
+
+
+
+ped:Heat_Loss_In_KW_Per_Meter rdf:type owl:ObjectProperty ;
+                                       rdfs:domain ped:Pipe ;
+                                       rdfs:range qudt:QuantityValue ;
+                                       rdfs:comment "Amount of heat lost per meter of pipe, affecting overall system efficiency (KW/m) ."@en ;
+                                       rdfs:label "Heat Loss In Pipes in KW/m"@en .
+
+ped:Heat_Loss_Percentage rdf:type owl:ObjectProperty ;
+    rdfs:domain ped:Pipe ;
+    rdfs:range qudt:QuantityValue ;
+    rdfs:comment "Amount of heat lost per meter of pipe, affecting overall system efficiency (%) ."@en ;
+    rdfs:label "Heat Loss In Pipes Percent"@en .
+
+
+ped:Cooling_Capacity rdf:type owl:ObjectProperty ;
+                    rdfs:domain ped:HVAC_Equipment ;
+                    rdfs:range qudt:QuantityValue ;
+                    rdfs:comment "Maximum power can supply in KW ."@en ;
+                    rdfs:label "Cooling Power in KW "@en .
+
+
+ped:Heating_Capacity rdf:type owl:ObjectProperty ;
+                    rdfs:domain ped:HVAC_Equipment ;
+                    rdfs:range qudt:QuantityValue ;
+                    rdfs:comment "Maximum power can supply in KW ."@en ;
+                    rdfs:label "Heating Power in KW "@en .
+
+
+ped:hasBattery rdf:type owl:ObjectProperty ;
+                                            rdfs:domain ped:BatterySystemCharacteristics;
+                                            rdfs:range lec:Battery;
+                                            rdfs:comment "Links Battery System Characteristics to batteries."@en ;
+                                            rdfs:label "hasBattery"@en   .
+
+ped:hasBatteries rdf:type owl:ObjectProperty ;
+                                            rdfs:domain ped:BatterySystemCharacteristics;
+                                            rdfs:range lec:Battery;
+                                            rdfs:comment "Links Battery System Characteristics to batteries."@en ;
+                                            rdfs:label "hasBattery"@en   .
+
+
+ped:hasElectricVehicleChargerDirectionalityShape rdf:type owl:ObjectProperty ;
+                                                 rdfs:domain ped:ElectricVehicleChargingStation ;
+                                                 rdfs:range brick:electricVehicleChargerDirectionality .
+
+ped:hasElectricVehicleChargerType rdf:type owl:ObjectProperty ;
+                                  rdfs:domain ped:ElectricVehicleSupplyEquipment ;
+                                  rdfs:range ped:ElectricVehicleChargerType ;
+                                  rdfs:comment "Indicates which type of EVSE charger this station provides, such as Level 1, Level 2, or Level 3."@en ;
+                                  rdfs:label "has electric vehicle charger type"@en .
+
+ped:hasElectricVehicleChargingPort rdf:type owl:ObjectProperty ;
+                                   rdfs:domain ped:ElectricVehicleSupplyEquipment ;
+                                   rdfs:range ped:ElectricVehicleChargingPort ;
+                                   rdfs:comment "Indicates the relation between an Electric Vehicle Supply Equipment and one or more Electric Vehicle Charging Ports ."@en ;
+                                   rdfs:label "hasElectricVehicleChargingPort"@en .
+
+
+ped:hasElectricVehicleConnectorTypeShape rdf:type owl:ObjectProperty ;
+                                         rdfs:subPropertyOf bsh:haselectricVehicleConnectorTypeShape ;
+                                         rdfs:domain ped:ElectricVehicleChargingPort ;
+                                         rdfs:range ped:ElectricVehicleConnectorTypeShape ;
+                                         rdfs:comment "Indicates the type of EVSE connector shape used at the charging station, such as Type 1 (CSS), Type 2 (CSS), GB/T, Type 1 (SAE J1772), Type 2 (IEC 62196), CHAdeMO, CCS, Tesla Supercharger, or Wireless."@en ;
+                                         rdfs:label "has electric vehicle connector type shape"@en .
+
+
+ped:inputVoltageUnit rdf:type owl:ObjectProperty ;
+                     rdfs:domain ped:ElectricVehicleSupplyEquipment ;
+                     rdfs:range qudt:QuantityValue ;
+                     rdfs:comment "The unit of measurement for input voltage (always Volts)."@en ;
+                     rdfs:label "Input Voltage Unit"@en .
+
+
+
+
+ped:powerOutput rdf:type owl:ObjectProperty ;
+                rdfs:domain ped:ElectricVehicleSupplyEquipment ;
+                rdfs:range qudt:QuantityValue ;
+                rdfs:comment "How much power a charger can generate, expressed in kilowatts (kW)."@en ;
+                rdfs:label "Power Output"@en .
+
+
+ped:batterySize rdf:type owl:ObjectProperty ;
+                         rdfs:domain ped:ElectricVehicleSupplyEquipment ;
+                         rdfs:comment "Battery in KWh."@en;
+                         rdfs:label "Battery size"@en;
+                         rdfs:range qudt:QuantityValue .
+
+
+ped:dailyUsage  rdf:type owl:ObjectProperty ;
+                         rdfs:domain ped:ElectricVehicleSupplyEquipment ;
+                         rdfs:comment "Daily usage in KWh."@en;
+                         rdfs:label "Daily usage"@en;
+                         rdfs:range qudt:QuantityValue ; .
+
+
+ped:population rdf:type owl:ObjectProperty ;
+                         rdfs:domain ped:EVChargingCharacteristics;
+                         rdfs:comment "The population in area of interest."@en;
+                         rdfs:label "population"@en;
+                         rdfs:range qudt:QuantityValue .
+
+
+ped:consistsEVSupplyEquipment rdf:type owl:ObjectProperty ;
+               rdfs:domain ped:ElectricVehicleChargingStation ;
+               rdfs:range ped:ElectricVehicleSupplyEquipment ;
+               rdfs:comment "Links Electric Vehicle Supply Equipment to Electric Vehicle Charging Station."@en ;
+               rdfs:label "consistsEVSupplyEquipment"@en .
+
+
+ped:Temperature_In_Celsius rdf:type owl:ObjectProperty ;
+              rdfs:domain ped:GeothermalPlant,ped:IndustrialProcess;
+              rdfs:range qudt:QuantityValue;
+              rdfs:comment "Temperature In Celsius."@en ;
+              rdfs:label "Temperature In Celsius"@en .
+
+ped:Waste_Heat_In_KW rdf:type owl:ObjectProperty ;
+              rdfs:domain ped:IndustrialProcess;
+              rdfs:range qudt:QuantityValue;
+              rdfs:comment "Waste_Heat_In_KW."@en ;
+              rdfs:label "Waste Heat In KW"@en .
+
+ped:Inlet_Temperature rdf:type owl:ObjectProperty ;
+              rdfs:domain ped:Building;
+              rdfs:range qudt:QuantityValue ;
+              rdfs:comment "Source temperature level at the building level."@en ;
+              rdfs:label "Inlet Temperature In Celsius"@en .
+
+ped:Outlet_Temperature rdf:type owl:ObjectProperty ;
+              rdfs:domain ped:Building;
+              rdfs:range qudt:QuantityValue ;
+              rdfs:comment "Return temperature level at the building level."@en ;
+              rdfs:label "Outlet Temperature In Celsius"@en .
+
+ped:industrialProcesses rdf:type owl:ObjectProperty ;
+                  rdfs:domain ped:HeatRecoveryPotentialCharacteristics;
+                  rdfs:range ped:IndustrialProcess ;
+                  rdfs:comment "industrial Processes."@en ;
+                  rdfs:label "industrialProcesses"@en .
+
+ped:geothermalPlants rdf:type owl:ObjectProperty;
+              rdfs:domain ped:HeatRecoveryPotentialCharacteristics;
+              rdfs:range ped:GeothermalPlant ;
+              rdfs:comment "Geothermal Plant."@en ;
+              rdfs:label "GeothermalPlant"@en .
+
+ped:hasHeatRecoveryPotentialCharacteristics rdf:type owl:ObjectProperty;
+     rdfs:domain ped:DistrictTechnicalCharacteristics;
+     rdfs:range ped:HeatRecoveryPotentialCharacteristics;
+     rdfs:comment "Links District Technical Characteristics to Heat Recovery Potential Characteristics."@en ;
+     rdfs:label "hasHeatRecoveryPotentialCharacteristics"@en .
+
+ped:hasWasteMeter rdf:type owl:ObjectProperty ;
+              rdfs:domain ped:IndustrialProcess;
+              rdfs:range ped:Waste_Meter;
+              rdfs:comment "Links a IndustrialProcess to a waste meter device."@en ;
+              rdfs:label "hasWasteMeter"@en .
+
+
+##################### Individuals ############################
+
+##################### ElectricVehicleConnectorTypeShape #####################
+
+
+
+ped:TeslaSupercharger rdf:type owl:NamedIndividual ,
+                               ped:ElectricVehicleConnectorTypeShape ;
+                      rdfs:comment "Tesla Supercharger connector shape for electric vehicles."@en ;
+                      rdfs:label "Tesla Supercharger"@en .
+
+
+ped:Type1_CSS rdf:type owl:NamedIndividual ,
+                       ped:ElectricVehicleConnectorTypeShape ;
+              rdfs:comment "Type 1 (CSS) connector shape for electric vehicles."@en ;
+              rdfs:label "Type 1 (CSS)"@en .
+
+
+ped:Type1_SAE_J1772 rdf:type owl:NamedIndividual ,
+                             ped:ElectricVehicleConnectorTypeShape ;
+                    rdfs:comment "Type 1 (SAE J1772) connector shape for electric vehicles."@en ;
+                    rdfs:label "Type 1 (SAE J1772)"@en .
+
+
+ped:Type2_CSS rdf:type owl:NamedIndividual ,
+                       ped:ElectricVehicleConnectorTypeShape ;
+              rdfs:comment "Type 2 (CSS) connector shape for electric vehicles."@en ;
+              rdfs:label "Type 2 (CSS)"@en .
+
+
+ped:Type2_IEC_62196 rdf:type owl:NamedIndividual ,
+                             ped:ElectricVehicleConnectorTypeShape ;
+                    rdfs:comment "Type 2 (IEC 62196) connector shape for electric vehicles."@en ;
+                    rdfs:label "Type 2 (IEC 62196)"@en .
+
+
+ped:Wireless rdf:type owl:NamedIndividual ,
+                      ped:ElectricVehicleConnectorTypeShape ;
+             rdfs:comment "Wireless charging system for electric vehicles."@en ;
+             rdfs:label "Wireless"@en .
+
+ped:GBT rdf:type owl:NamedIndividual ,
+                 ped:ElectricVehicleConnectorTypeShape ;
+        rdfs:comment "GB/T connector shape for electric vehicles."@en ;
+        rdfs:label "GB/T"@en .
+
+ped:CCS rdf:type owl:NamedIndividual ,
+                 ped:ElectricVehicleConnectorTypeShape ;
+        rdfs:comment "CCS (Combined Charging System) connector shape for electric vehicles."@en ;
+        rdfs:label "CCS (Combined Charging System)"@en .
+
+
+ped:CHAdeMO rdf:type owl:NamedIndividual ,
+                     ped:ElectricVehicleConnectorTypeShape ;
+            rdfs:comment "CHAdeMO connector shape for electric vehicles."@en ;
+            rdfs:label "CHAdeMO"@en .
+
+
+##################### ChargingSpeed #####################
+
+prop:Standard a owl:NamedIndividual, prop:ChargingSpeedCategory ;
+             rdfs:comment "Standard charging speed. "@en ;
+             rdfs:isDefinedBy ped: ;
+             rdfs:label "Standard"@en .
+
+prop:Fast a owl:NamedIndividual, prop:ChargingSpeedCategory ;
+         rdfs:comment "Fast charging speed. "@en ;
+         rdfs:isDefinedBy ped: ;
+         rdfs:label "Fast"@en .
+
+prop:ExtremelyFast a owl:NamedIndividual, prop:ChargingSpeedCategory ;
+                   rdfs:comment "Extremely Fast Fast charging speed. "@en ;
+                   rdfs:isDefinedBy ped: ;
+                   rdfs:label "Extremely Fast"@en .
+
+
+prop:UltraFast a owl:NamedIndividual, prop:ChargingSpeedCategory ;
+               rdfs:comment "Ultra Fast charging speed. "@en ;
+               rdfs:isDefinedBy ped: ;
+               rdfs:label "Ultra Fast"@en .
+
+prop:Accelerated a owl:NamedIndividual, prop:ChargingSpeedCategory ;
+                rdfs:comment "Accelerated charging speed. "@en ;
+                rdfs:isDefinedBy ped: ;
+                rdfs:label "Accelerated"@en .
+
+########################################## Charger type ##################################################
+ped:Level1 rdf:type owl:NamedIndividual ,
+                    ped:ElectricVehicleChargerType ;
+           rdfs:comment "Level 1 charging (up to 2.5kW of AC power on 1 phase 120V input)."@en ;
+           rdfs:label "Level 1 Charger"@en .
+
+
+ped:Level2 rdf:type owl:NamedIndividual ,
+                    ped:ElectricVehicleChargerType ;
+           rdfs:comment "Level 2 charging (direct AC power but can use higher voltage and up to 3 phases)."@en ;
+           rdfs:label "Level 2 Charger"@en .
+
+
+ped:Level3 rdf:type owl:NamedIndividual ,
+                    ped:ElectricVehicleChargerType ;
+           rdfs:comment "Level 3 charging (direct DC power)."@en ;
+           rdfs:label "Level 3 Charger"@en .
+
