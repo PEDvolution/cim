@@ -69,7 +69,7 @@ ped:Pipe rdf:type owl:Class ;
 
 
 ped:Building rdf:type owl:Class ;
-             rdfs:subClassOf geo:SpatialObject,rec:Building; 
+             rdfs:subClassOf geo:Feature,rec:Building; 
              rdfs:comment "An independent unit of the built environment with a characteristic spatial structure"@en ;
              rdfs:label "Building"@en .
 
@@ -93,7 +93,7 @@ ped:BuildingEnergyAssetCharacteristics rdf:type owl:Class ;
                                        rdfs:label "BuildingEnergyAssetCharacteristics"@en .
 
 ped:PVSystemCharacteristics rdf:type owl:Class ;
-       rdfs:subClassOf geo:SpatialObject;
+       rdfs:subClassOf geo:Feature;
        rdfs:comment "PV SystemCharacteristics."@en ;
        rdfs:label "PV System Characteristics"@en .
 ###
@@ -203,7 +203,7 @@ ped:EnergyUnit rdf:type owl:Class ;
 ped:GeoSpatialData rdf:type owl:Class .
 
 ped:DistrictEnergyAsset rdf:type owl:Class ;
- rdfs:subClassOf geo:SpatialObject ;
+ rdfs:subClassOf geo:Feature ;
  rdfs:label "District Enegy Asset"@en .
 
 ped:CHP_Plant rdf:type owl:Class ;
@@ -346,12 +346,12 @@ ped:ElectricVehicleChargerType rdf:type owl:Class ;
 
 
 ped:IndustrialProcess rdf:type owl:Class ;
-               rdfs:subClassOf geo:SpatialObject; 
+               rdfs:subClassOf geo:Feature; 
                rdfs:comment "Industrial process such as manufacturing, power generation, chemical production."@en ;
                rdfs:label "Industrial Process "@en .
 
 ped:GeothermalPlant rdf:type owl:Class ;
-         rdfs:subClassOf geo:SpatialObject, rec:Building; 
+         rdfs:subClassOf geo:Feature, rec:Building; 
          rdfs:comment "GeothermalPlant."@en ;
          rdfs:label "Geothermal plant "@en .
 
